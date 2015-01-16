@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Library</h1>
+    <p>To return to the simulation, click the "Return to Simulation" button above the Lab Notebook.</p>
+    
+{{ sim.library|safe }}
+
+{% endblock %}
+
+
+{% block lib_return_section %}
+                <a class="btn btn-primary btn-block" href="{{ url_for('index') }}"><i class="icon-ok"></i> Return to Simulation</a>
+{% endblock %}
+

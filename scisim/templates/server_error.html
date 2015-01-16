@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block body_content %}
+    <div class="container">
+      <h1>Oops, something broke!</h1>
+      <div class="row">
+        <div class="span4">
+          <p><img src="{{ url_for('static', filename='img/sim_sea_lions/sad_sea_lion.jpg') }}" width="350" height="233" /></p>
+        </div>
+        <div class="span4">
+          <p><strong>We're very sorry about this, but something went drastically wrong! Try using the back button to get back to a page that works, and then let the instructor know what happened.</strong></p>
+          <p><strong>Error details:</strong><br />{{ error }}</p>
+          <p><a href="{{ url_for('index') }}"><strong>Click here to start over</strong></a></p>
+        </div>
+      </div>
+    </div>
+{% endblock %}
+

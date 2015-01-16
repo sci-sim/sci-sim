@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block body_content %}
+    <div class="container">
+      <h1>View user information</h1>
+    <div class="span8">
+{% for sim in sims %}
+    <h3>Sim #{{ sim.id }} - {{ sim.title }}</h3>
+    <div class="accordion" id="accordion_{{ sim.id }}">
+    {% for user in sim.users %}
+      <div class="accordion-group">
+        <div class="accordion-heading">
+          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_{{ sim.id }}" href="#collapse_{{ sim.id }}_{{ loop.index }}">{{ user.name }}</a>
+        </div>
+        <div id="collapse_{{ sim.id }}_{{ loop.index }}" class="accordion-body collapse">
+          <div class="accordion-inner">
+            <ul>
+              <li><strong>ID:</strong> {{ user.id }}</li>
+              <li><strong>Name:</strong> {{ user.name }}</li>
+              <li><strong>Notes:</strong>
+                <ul class="icons">
+        {% for note in user.notes|reverse %}
+                  <li><i class="{{ note.icon }}"></i>{{ note.content|safe }}</li>
+        {% endfor %}
+                </ul>
+              </li>
+              <li><strong>Logs:</strong>
+                <ul>
+        {% for log in user.logs|reverse %}
+                  <li>#{{ log.id }} - {{ log.timestamp }} - {{ log.content }}</li>
+        {% endfor %}
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+    </div>
+{% endfor %}
+    </div>
+    </div>
+{% endblock %}
+

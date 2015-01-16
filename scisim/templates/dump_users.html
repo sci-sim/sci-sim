@@ -1,0 +1,28 @@
+<html>
+  <head><title>SCISIM Data Dump</title></head>
+  <body>
+{% for sim in sims %}
+  <h3>Sim #{{ sim.id }} - {{ sim.title }}</h3>
+  {% for user in sim.users %}
+  <p><strong>Student name and ID: {{ user.name }} ({{ user.id }})</strong></p>
+  <ul>
+    <li><strong>Student Notes:</strong>
+      <ul class="icons">
+    {% for note in user.notes|reverse %}
+        <li><i class="{{ note.icon }}"></i>{{ note.content|safe }}</li>
+    {% endfor %}
+      </ul>
+    </li>
+    <li><strong>Student Logs:</strong>
+      <ul>
+    {% for log in user.logs|reverse %}
+        <li>#{{ log.id }} - {{ log.timestamp }} - {{ log.content }}</li>
+    {% endfor %}
+      </ul>
+    </li>
+  </ul>
+  {% endfor %}
+{% endfor %}
+  </body>
+</html>
+

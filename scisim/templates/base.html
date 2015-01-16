@@ -1,0 +1,125 @@
+{% extends "bootstrap_base.html" %}
+
+{% block body_navbar %}
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand"><i class="icon-beaker"></i>&nbsp;Science Classroom Inquiry Simulation</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li><a href="#restartModal" data-toggle="modal"><i class="icon-undo"></i>&nbsp;Restart</a></li>
+              <li><a href="#aboutModal" data-toggle="modal"><i class="icon-info-sign"></i>&nbsp;About</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+{% endblock %}
+
+
+
+{% block body_content %}
+<div class="container">
+    <div class="row">
+        <div class="span7">
+{% block content %}
+{% endblock %}
+        </div>
+        <div class="span4">
+{% if sim.show_library %}
+            <div class="span4 well">
+{% block lib_return_section %}
+{% endblock %}
+            </div>
+{% endif %}
+            <div class="span4 well" style="background-color: #FFC;">
+                <h3 style="margin-top: -5px">Lab Notebook</h3>
+                <form class="form-inline" name="form_notebook" method="post" onSubmit="return validate_form_notebook(this.notebook_append);">
+                <div class="input-append">
+                    <textarea name="notebook_append" rows="3" placeholder="Add a new entry..."></textarea>
+                    <button type="submit" class="btn btn-success"><i class="icon-plus-sign"></i>&nbsp;Add</button>
+                </div>
+                </form>
+                <ul class="icons">
+    {% for note in user.notes|reverse %}
+                <li><i class="{{ note.icon }}"></i>{{ note.content|safe }}</li>
+    {% endfor %}
+                </ul>
+                <a class="btn btn-primary" rel="popover" data-html="true" data-content="&lt;i class='icon-info-sign'&gt;&lt;/i&gt; A laboratory notebook (or lab notebook) is an important part of doing scientific research. It is a great way to document your hypothesis, experiments, and analysis. As you work through the pages here, you can record information about your work as you make progress towards solving the problem. You can add new notes using the text box here." data-placement="top"><i class="icon-question-sign"></i>&nbsp;<strong>What is a lab notebook?</strong></a>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+
+
+{% block body_end_content %}
+{% if user_vars %}
+<!--User variables: {{ user_vars|pprint }}-->
+{% endif %}
+    <div class="navbar navbar-inverse navbar-fixed-bottom">
+        <div class="navbar-inner">
+            <div class="container">
+                <span class="muted">Scientific content Copyright &copy; 2014 Melanie E Peffer. Licensed under a <a href="https://creativecommons.org/licenses/by-nc-nd/3.0/">Creative Commons Attribution-NonCommercial-NoDerivs License</a>.</span><br />
+                <span class="muted">SCISIM engine Copyright &copy; 2014 Matthew L Beckler. <a href="https://github.com/sci-sim/scisim">Released</a> under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a>.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Restart Modal Dialog -->
+    <div id="restartModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myRestartModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+            <h3 id="myRestartModalLabel">Restart simulation?</h3>
+        </div>
+        <div class="modal-body">
+            <p>This window will let you clear all your data and start over from scratch.</p>
+            <h3 class="text-error">Are you sure you want to clear all your data and start over?</h3>
+        </div>
+        <div class="modal-footer">
+            <a href="{{ url_for('reset') }}"><button class="btn btn-danger" aria-hidden="true">Start Over</button></a>
+            <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Cancel</button>
+        </div>
+    </div>
+    <!-- END Restart Modal Dialog -->
+
+    <!-- About Modal Dialog -->
+    <div id="aboutModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myAboutModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i></button>
+            <h3 id="myAboutModalLabel">About...</h3>
+        </div>
+        <div class="modal-body">
+            <p>The Science Classroom Inquiry Simluation is a project developed to help teach the scientific method. Scientific content developed by Melanie Peffer with computer/website programming and application development by Matthew Beckler.</p>
+            <p><strong>Contact:</strong>
+            <ul>
+                <li>Email: <a href="mailto:scisim.project@gmail.com">scisim.project@gmail.com</a></p></li>
+            </ul>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</button>
+        </div>
+    </div>
+    <!-- END About Modal Dialog -->
+{% endblock %}
+
+
+
+{% block bootstrap_js_bottom %}
+{{ super() }}
+<script type="text/javascript">
+function validate_form_notebook(text_field)
+{
+    if (text_field.value == "")
+    {
+        alert("You can't add empty notebook entries!");
+        return false;
+    }
+    return true;
+}
+</script>
+{% endblock %}
+

@@ -1,0 +1,8 @@
+{% extends "bootstrap_base.html" %}
+
+{% block style -%}
+{{super()}}
+{%- if not config['BOOTSTRAP_CUSTOM_CSS'] %}
+    <link href="{{url_for('static', filename='css/bootstrap-responsive.css')}}" rel="stylesheet" media="screen">
+{%- endif %}
+{%- endblock style %}

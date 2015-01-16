@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>{{ page.title|safe or '' }}</h1>
+
+    {% for section in sections|sort(attribute='order') %}
+        {% if section.show %}
+        <div>
+            {{ section.content|safe }}
+        </div>
+        {% endif %}
+    {% endfor %}
+
+    {% for link in links %}
+        {% if link.show %}
+            {% if link.link.show_well %}
+             <div class="well well-small">
+               <p><span style="font-size: 24pt; font-weight: bold; line-height: 1;">{{ loop.index }}.
+                {% if link.link.top_text %}
+                    {{ link.link.top_text }}
+                {% endif %}
+               </span></p>
+            {% else %}
+             <div>
+                {% if link.link.top_text %}
+                    <strong>{{ link.link.top_text }}</strong><br />
+                {% endif %}
+            {% endif %}
+
+               <form class="form-inline" name="form_link_{{ loop.index }}" action="{{ url_for('view_page', page_id=link.link.page_dest_id) }}" onSubmit="return validate_form(this);" method="post">
+
+
+            {% for prompt in link.link.prompts|sort(attribute='order') %}
+                {% if link.show %}
+                    <br />
+                    {% if prompt.prompt %}
+                        {{ prompt.prompt|safe }}<br />
+                    {% endif %}
+
+                    <div class="control-group" id="feedback_control_group_{{ prompt.var_name }}">
+                    {% if prompt.text_area %}
+                        <textarea rows="3" class="span6" name="feedback_{{ prompt.var_name }}" data-required="{{ prompt.required|lower }}" onKeyUp="update_parent_error(this);"></textarea>
+                    {% else %}
+                        <input type="text" class="span6" name="feedback_{{ prompt.var_name }}" data-required="{{ prompt.required|lower }}" onKeyUp="update_parent_error(this);" />
+                    {% endif %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+                 <br /><br />
+                 <input type="hidden" name="link_id" value="{{ link.link.id }}">
+                 <button type="submit" class="btn btn-primary">{{ link.link.button_text|safe }}&nbsp;<i class="icon-arrow-right"></i></button>
+               </form>
+             </div>
+        {% endif %}
+    {% endfor %}
+
+    <br />
+{% endblock %}
+
+
+{% if sim.show_library %}
+{% block lib_return_section %}
+                <a class="btn btn-primary btn-block" href="{{ url_for('library') }}"><i class="icon-book"></i> Visit Library</a>
+{% endblock %}
+{% endif %}
+
+
+{% block bootstrap_js_bottom %}
+{{ super() }}
+<script type="text/javascript">
+function validate_form(f)
+{
+   // for textarea and input elements e in form f:
+   //    if (e.data-required && e.value == "")
+   //       alert("Please enter your thoughts into the text box!");
+   //       return false;
+
+   var any_bad = false;
+   for (i = 0; i < f.elements.length; i++)
+   {
+      var e = f.elements[i];
+      if (   e.hasAttribute('data-required') &&
+            (e.getAttribute('data-required') == "true"))
+      {
+         update_parent_error(e);
+         if (e.value == "")
+         {
+            if (any_bad == false)
+               e.focus(); // only focus on the first item found
+            any_bad = true;
+         }
+      }
+   }
+
+   if (any_bad)
+   {
+      alert("Please fill in all required text boxes.");
+      return false;
+   }
+
+   return true;
+}
+
+function update_parent_error(e)
+{
+   if (   e.hasAttribute('data-required') &&
+         (e.getAttribute('data-required') == "true") &&
+         (e.value == ""))
+   {
+      // set error state
+      if (e.parentNode.className.indexOf("error") == -1) // If "error" not in class name, then append it
+      {
+         e.parentNode.className += " error";
+      }
+   }
+   else
+   {
+      // clear error class
+      if (e.parentNode.className.indexOf("error") != -1) // If "error" in class name, then remove it
+      {
+         e.parentNode.className = e.parentNode.className.replace(" error", "");
+      }
+   }
+}
+</script>
+{% endblock %}

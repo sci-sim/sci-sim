@@ -1,8 +1,32 @@
-sci-sim
-=======
+SCI-SIMS
+========
 
-Alias for the main scisim repository
+Science Classroom Inquiry Simulation engine
 
-You should use this repository instead: https://github.com/sci-sim/scisim
+TODO items
+==========
+* Add license info to all the source files
 
-Sorry for the confusion
+Deploying to Heroku
+===================
+todo
+
+Local Development
+=================
+Virtualenv is great for python development. Create a new environment:
+
+```
+virtualenv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+Load the database with the simulation content:
+
+    python db_create.py
+
+Start the application locally:
+
+    python start_local_dev.py
+
+Open the simulation in your browser.

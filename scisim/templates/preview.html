@@ -1,0 +1,44 @@
+<html>
+  <body>
+    <style>
+      #wrap { width: 500px; height: 500px; padding: 0; overflow: hidden; }
+      #frame { width: 1000px; height: 1000px; border: 1px solid black; }
+      #frame {
+        -ms-zoom: 0.5;
+        -moz-transform: scale(0.5);
+        -moz-transform-origin: 0 0;
+        -o-transform: scale(0.5);
+        -o-transform-origin: 0 0;
+        -webkit-transform: scale(0.5);
+        -webkit-transform-origin: 0 0;
+      }
+    </style>
+
+{% for sim in sims %}
+          <h1>Simulation: {{ sim.title }}</h1>
+          <table cellspacing="2" cellpadding="2" border="0">
+{% for page in sim.pages %}
+            <tr>
+              <td valign="top">
+                <strong><a name="page{{ page.id }}" href="#page{{ page.id }}">Page {{ page.id }}</a></strong><br />
+                <a href="{{ url_for('preview_view_page', page_id=page.id) }}" target="_blank">View full size</a><br />
+                Links to:
+                <ul>
+{% for link in page.links_outgoing %}
+                  <li><a href="#page{{ link.page_dest_id }}">Page {{ link.page_dest_id }}</a></li>
+{% endfor %}
+                </ul>
+              </td>
+              <td>
+                <div id="wrap">
+                  <iframe id="frame" src="{{ url_for('preview_view_page', page_id=page.id) }}"></iframe>
+                </div>
+              </td>
+            </tr>
+{% endfor %}
+          </table>
+    <hr /><hr /><hr />
+{% endfor %}
+  </body>
+</html>
+

@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block body_content %}
+    <div class="container">
+      <h1>Science Classroom Inquiry (SCI) Simulations</h1>
+      <p>Welcome to the SCI simulation project! Pick a simulation to explore from the options below:</p>
+    </div>
+    <div class="container">
+    {% if login_error %}
+      <div class="alert alert-error"><h4>Oh no!</h4>{{ login_error }}</div>
+    {% endif %}
+{% set visible_index = 1 %}
+{% for sim in simulations|sort(attribute='order') %}
+    {% if sim.enabled %}
+      <div class="row">
+        <div class="span8">
+          <h3>{{ visible_index }}. {{ sim.title|safe }}</h3>
+          {% set visible_index = visible_index + 1 %}
+          <p>{{ sim.desc|safe }}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span4">
+          <img src="{{ url_for('static', filename='img/'+sim.folder_name+'/'+sim.preview_image_filename) }}" class="img-rounded" />
+          {% if sim.preview_image_credit %}
+          <br /><em>{{ sim.preview_image_credit|safe }}</em>
+          {% endif %}
+        </div>
+        <div class="span3">
+          <p>&nbsp;</p>
+          <p><em>To get started, type in your name or username and the simulation password.</em></p>
+          <form action="{{ url_for('index') }}" method="post" onSubmit="return validate(this.username, this.password);" >
+            <fieldset>
+              <input type="hidden" name="sim_id" value="{{ sim.id }}" />
+              <input type="text" name="username" class="span3" placeholder="Name or username" {% if last_sim_id and last_sim_id|int == sim.id and last_username %}value="{{ last_username }}"{% endif %} /><br />
+              <input type="password" name="password" class="span3" placeholder="Simulation password" /><br />
+              <button type="submit" class="btn btn-success">Login</button>
+            </fieldset>
+          </form>
+        </div>
+      </div><br />
+    {% endif %}
+{% endfor %}
+    </div>
+{% endblock %}
+
+{% block bootstrap_js_bottom %}
+{{ super() }}
+<script type="text/javascript">
+function validate(username, password)
+{
+    if (username.value == "")
+    {
+        alert("Please enter your username in the text box!");
+        return false;
+    }
+    if (password.value == "")
+    {
+        alert("Please enter your password in the text box!");
+        return false;
+    }
+    return true;
+}
+</script>
+{% endblock %}
+
