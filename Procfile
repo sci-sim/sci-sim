@@ -1,2 +1,2 @@
-web: gunicorn scisim:app
+web: gunicorn scisim:app --log-file=-
 init: python db_create.py
