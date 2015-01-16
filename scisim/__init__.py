@@ -38,7 +38,6 @@ def fix_id(my_id):
 PROJECT_ROOT = os.path.dirname(os.path.realpath(__file__))
 
 app = Flask(__name__, static_folder=os.path.join(PROJECT_ROOT, '../scisim/static'), static_url_path='/static')
-app.debug = True # TODO change this for dev
 
 app.config['BOOTSTRAP_FONTAWESOME'] = True
 app.config['BOOTSTRAP_JQUERY_VERSION'] = "1.7.1"
@@ -51,6 +50,12 @@ if 'DATABASE_URL' in os.environ:
 else:
     app.config['HEROKU'] = False
     app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///" + os.path.join(PROJECT_ROOT, "../app.db")
+
+if 'ENABLE_DEBUG' in os.environ:
+    app.debug = True
+else:
+    app.debug = False
+
 
 db = SQLAlchemy(app)
 
