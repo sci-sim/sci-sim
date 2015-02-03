@@ -9,7 +9,7 @@
 
 ### Pages
 - id (integer, primary key)
-- title (string, used in an <h1> at the top of the page)
+- title (string, used in an h1 at the top of the page)
 - sim_id (integer, foreign key to simulations table)
 - sim (auto reference to Simulation object this page belongs to)
 - sections (auto list of sections in this page)
