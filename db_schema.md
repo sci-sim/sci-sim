@@ -15,7 +15,6 @@
 - sections (auto list of sections in this page)
 - links_outgoing (auto list of outgoing Link objects)
 - links_incoming (auto list of incoming Link objects)
-- (proposed) description (string, short desc used for editor)
 
 ### Simulation
 - id (integer, primary key)
@@ -40,7 +39,6 @@
 - content (string, html content of section)
 - page_id (integer, foreign key to pages table)
 - page (auto reference to Page object this section belongs to)
-- (proposed) description (string, short desc used for editor)
 
 ### Link
 - id (integer, primary key)
@@ -65,8 +63,6 @@
 - var_name (string, name for captured user input, usable in actions)
 - link_id (integer, foreign key to links table)
 - link (auto reference to Link object that owns this prompt)
-- (proposed) field_type (type ?, replaces text_area for increased flexibility)
-- (proposed) title or desc (string, if useful for editor?)
 
 ### Action
 - id (integer, primary key)
@@ -90,19 +86,3 @@
 - user_id (integer, foreign key to user table)
 - user (auto reference to the User object that owns this Log)
 - icon (string, the icon to use for the bullet point in the notebook)
-
-Proposed things:
-
-### simulations_users (to track which simulations the user does and which users do which simulations)
-- user_id 
-- sim_id
-
-### prompts_users (to track the answers the user gives to the prompts)
-- prompt_id
-- user_id
-- answer (string)
-
-#### pages_users (to track which pages users go by and when)
-- user_id
-- page_id
-- transition_count (integer, everytime a user visits a page, this is auto-incemented.)
