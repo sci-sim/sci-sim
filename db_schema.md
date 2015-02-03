@@ -61,11 +61,10 @@
 - order (integer, used to sort prompts in link)
 - prompt (string, optional prompt above textbox/textarea)
 - required (boolean, if the javascript should force user to enter something)
-- text_area (boolean, true = use text area instead of single-row textbox)
 - var_name (string, name for captured user input, usable in actions)
 - link_id (integer, foreign key to links table)
 - link (auto reference to Link object that owns this prompt)
-- field_type (type string, replaces test_area boolean for increased flexibility)
+- field_type (string, replaces text_area boolean for increased flexibility)
 - description (string, short desc used for editor)
 
 ### Action
