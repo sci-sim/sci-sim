@@ -59,5 +59,4 @@ else:
 
 db = SQLAlchemy(app)
 
-from scisim import views, models
-
+from scisim import views, models, api
