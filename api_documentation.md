@@ -10,7 +10,7 @@
 
 ### /api/simulations  
 *method:* **GET**  
-*parameters:* **none**
+*parameters:* **none**  
 *description:* fetches all the simulations  
 *onsuccess returns:* list of simulations in the database  
 
