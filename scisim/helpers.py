@@ -8,6 +8,7 @@ def unpack_model(model):
         columns = model.__table__.columns._data.keys()
 
         for c in columns:
+            # convert timestamp object to an actual timestamp
             if c == "timestamp":
                 attr = (getattr(model, c) - datetime(1970,1,1)).total_seconds()
             else:
@@ -30,6 +31,7 @@ def serialize(query):
 
         for c in columns:
             if c == "timestamp":
+                # convert timestamp object to an actual timestamp
                 attr = (getattr(result, c) - datetime(1970,1,1)).total_seconds()
             else:
                 attr = getattr(result, c)
@@ -79,7 +81,7 @@ def check_for_params(params, request):
             missing_params.append(param)
 
     if not missing_params:
-        return True
+        return None
 
     error_string = "Missing Parameters: "
     if missing_params:

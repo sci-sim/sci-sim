@@ -1,3 +1,5 @@
+# In progress
+
 ### User
 - id (integer, primary key)
 - name (string, the username)
@@ -103,4 +105,3 @@
     - user_id
     - page_id
     - transition_count (integer, everytime a user visits a page, this is auto-incemented.)
-

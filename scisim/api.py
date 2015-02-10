@@ -7,7 +7,7 @@ from datetime import datetime
 from json import dumps
 
 @app.route('/api/login')
-def login():
+def api_login():
     username = request.form['username']
     sim_id = request.form['sim_id']
     password = request.form['password']
@@ -27,67 +27,67 @@ def login():
 
 
 @app.route('/api/logout')
-def logout():
+def api_logout():
     # maybe we could create a 'logged in' table that will store logged in users. Put an expiration and remove logged in users with a cron job
     pass
 
 @app.route('/api/simulations', methods=['GET'])
-def simulations():
+def api_simulations():
     return to_json(Simulation.query.all())
 
 @app.route('/api/pages', methods=['POST'])
-def pages():
-    check = check_for_params(['sim_id'], request)
-    if type(check) is type(str()):
+def api_pages():
+    error = check_for_params(['sim_id'], request)
+    if error:
         return error_message(check)
 
     return to_json(Page.query.filter(Page.sim_id == request.form['sim_id']))
 
 @app.route('/api/page', methods=['POST'])
-def page():
-    check = check_for_params(['page_id'], request)
-    if type(check) is type(str()):
+def api_page():
+    error = check_for_params(['page_id'], request)
+    if error:
         return error_message(check)
     return to_json(Page.query.filter(Page.id == request.form['page_id']))
 
 
 @app.route('/api/links', methods=['POST'])
-def links():
-    check = check_for_params(['page_id'], request)
-    if type(check) is type(str()):
+def api_links():
+    error = check_for_params(['page_id'], request)
+    if error:
         return error_message(check)
 
     return to_json(Link.query.filter(Link.page_src_id == request.form['page_id']))
 
 @app.route('/api/sections', methods=['POST'])
-def sections():
-    check = check_for_params(['page_id'], request)
-    if type(check) is type(str()):
+def api_sections():
+    error = check_for_params(['page_id'], request)
+    if error:
         return error_message(check)
 
     return to_json(Section.query.filter(Section.page_id == request.form['page_id']))
 
 @app.route('/api/prompts', methods=['POST'])
-def section():
-    check = check_for_params(['link_id'], request)
-    if type(check) is type(str()):
+def api_section():
+    error = check_for_params(['link_id'], request)
+    if error:
         return error_message(check)
 
     return to_json(Prompt.query.filter(Prompt.link_id == request.form['link_id']))
 
 
 @app.route('/api/notes', methods=['POST'])
-def notes():
-    check = check_for_params(['user_id'], request)
-    if type(check) is type(str()):
+def api_notes():
+    error = check_for_params(['user_id'], request)
+    if error:
         return error_message(check)
 
     return to_json(Note.query.filter(Note.user_id == request.form['user_id']))
 
 @app.route('/api/note/create', methods=['POST'])
-def create_note():
-    check = check_for_params(['user_id', 'note'], request)
-    if type(check) is type(str()):
+def api_create_note():
+    error = check_for_params(['user_id', 'note'], request)
+    if error:
         return error_message(check)
 
     user = User.query.filter(User.id == request.form['user_id']).first()
@@ -95,7 +95,7 @@ def create_note():
 
     note = "<strong>Added notebook entry:</strong><br /><blockquote>" + user_note + "</blockquote>"
 
-    n = Note(content=note, timestamp=datetime.now(), user=user, icon="icon-pencil")
+    n = Note(content=user_note, timestamp=datetime.now(), user=user, icon="icon-pencil")
     db.session.add(n)
     db.session.add(Log(content=note, timestamp=datetime.now(), user=user))
     db.session.commit()
@@ -103,9 +103,9 @@ def create_note():
     return dumps(unpack_model(n))
 
 @app.route('/api/note/destroy', methods=['POST'])
-def destroy_note():
-    check = check_for_params(['note_id'], request)
-    if type(check) is type(str()):
+def api_destroy_note():
+    error = check_for_params(['note_id'], request)
+    if error:
         return error_message(check)
 
     note = Note.query.filter(Note.id == request.form['note_id']).first()

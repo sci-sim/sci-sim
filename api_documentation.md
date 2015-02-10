@@ -1,41 +1,41 @@
 # API Documentation
 
-> Note: all endpoints return JSON
+> Note: all endpoints return JSON  
 
-### /api/login
+### /api/login  
 *method:* **POST**  
 *parameters:* **username**, **sim_id**, **password**  
-*description:* creates a user entry in the database and compares the entered password with the simulation password
+*description:* creates a user entry in the database and compares the entered password with the simulation password  
 *onsuccess returns:* the user model  
 
-### /api/simulations
+### /api/simulations  
 *method:* **GET**  
-*parameters:* **none**  
-*description:* fetches all the simulations
+*parameters:* **none**
+*description:* fetches all the simulations  
 *onsuccess returns:* list of simulations in the database  
 
 ### /api/pages  
 *method:* **POST**  
 *parameters:* **sim_id**  
-*description:* fetches the pages of the simulation
+*description:* fetches the pages of the simulation  
 *onsuccess returns:* list of pages associated with the simulation  
 
 ### /api/links  
 *method:* **POST**  
 *parameters:* **page_id**  
-*description:* fetches the links on the page
+*description:* fetches the links on the page  
 *onsuccess returns:* list of links associated with the page  
 
 ### /api/sections  
 *method:* **POST**  
 *parameters:* **page_id**  
-*description:*  fetches the sections of the page
+*description:*  fetches the sections of the page  
 *onsuccess returns:* list of sections associated with the page  
 
 ### /api/prompts  
 *method:* **POST**  
 *parameters:* **link_id**  
-*description:* fetches the prompts that go with the link
+*description:* fetches the prompts that go with the link  
 *onsuccess returns:* list of prompts associated with the link  
 
 ### /api/notes  
