@@ -109,7 +109,7 @@ class Link(db.Model):
     page_dest = db.relationship("Page", back_populates="links_incoming", foreign_keys="Link.page_dest_id")
     # Manually doing the bidirectional one-to-many / many-to-one linking of relationships
 
-    # A one-to-many relationship between a link and its prompts 
+    # A one-to-many relationship between a link and its prompts
     # Feedback items are for if we want to ask multiple questions as part of this link.
     prompts = db.relationship("Prompt", back_populates="link")
     # Manually doing the bidirectional one-to-many / many-to-one linking of relationships
@@ -208,6 +208,7 @@ class User(db.Model):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(100), default="New User")
+    last_page = db.Column(db.Integer, db.ForeignKey("pages.id"))
 
     # A one-to-many relationship between a simulation and its users
     sim_id = db.Column(db.Integer, db.ForeignKey("simulations.id"))
@@ -257,6 +258,11 @@ class Note(db.Model):
     def __repr__(self):
         return "<Note (user %r) %r (%r)>" % (self.user.name, self.content, self.icon)
 
+class Logged_In(db.Model):
+    __tablename__ = "logged_in_users"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    timestamp = db.Column(db.DateTime)
 
 # class Lib(db.Model):
 #     """ An entry in the user's library. Only updated by links as the user progresses through the simulation. """
@@ -266,12 +272,11 @@ class Note(db.Model):
 #     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
 #     timestamp = db.Column(db.DateTime)
 #     content = db.Column(db.String(500))
-# 
+#
 #     # A one-to-many relationship between a user and his or her logs
 #     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
 #     user = db.relationship("User", back_populates="logs")
 #     # Manually doing the bidirectional one-to-many / many-to-one linking of relationships
-# 
+#
 #     def __repr__(self):
 #         return "<Log (user %r) %r>" % (self.user.name, self.content)
-

@@ -5,9 +5,10 @@ from scisim.helpers import *
 from sqlalchemy import and_
 from datetime import datetime
 from json import dumps
+import datetime
 
-@app.route('/api/login')
-def api_login():
+@app.route('/api/register', methods=["POST"])
+def api_register():
     username = request.form['username']
     sim_id = request.form['sim_id']
     password = request.form['password']
@@ -20,16 +21,91 @@ def api_login():
         return error_message('The simulation password is not correct')
 
     user = User(name=username, sim_id=sim_id)
-    db.add(user)
-    db.commit()
+
+    db.session.add(user)
+    db.session.commit()
+
+    loggedIn = Logged_In(user_id=user.id, timestamp=datetime.datetime.now())
+
+    db.session.add(loggedIn)
+    db.session.commit()
 
     return dumps(unpack_model(user))
 
+@app.route('/api/login', methods=["POST"])
+def api_login():
+    error = check_for_params(["username"], request)
+    if error:
+        return error_message(error)
+    username = request.form['username']
+    user = User.query.filter(User.name == username).first()
+    if not user:
+        return error_message("User with username " + username + " was not found")
 
-@app.route('/api/logout')
+    user_id = user.id
+    userLoggingIn = Logged_In(user_id = user_id, timestamp=datetime.datetime.now())
+    db.session.add(userLoggingIn)
+    db.session.commit()
+
+    return success_message("User successfully logged in.")
+
+@app.route('/api/update_session', methods=["POST"])
+def api_update_session():
+    error = check_for_params(["username", "page_id"], request)
+    if error:
+        return error_message(error)
+
+    username = request.form['username']
+    page_id = request.form['page_id']
+
+    user = User.query.filter(User.name == username).first()
+    if not user:
+        return error_message("User with username " + username + " was not found")
+
+    page = Page.query.filter(Page.id == page_id).first()
+    if not page:
+        return error_message("Page with id " + page_id + " was not found")
+
+    user.last_page = page.id
+
+    db.session.commit()
+
+    return success_message("Last page updated successfully")
+
+@app.route('/api/last_session', methods=["POST"])
+def api_last_session():
+    error = check_for_params(["username"], request)
+    if error:
+        return error_message(error)
+
+    username = request.form["username"]
+
+    user = User.query.filter(User.name == username).first()
+    if not user:
+        return error_message("User with username " + username + " was not found")
+
+    return dumps({"page": user.last_page})
+
+
+@app.route('/api/logout', methods=["POST"])
 def api_logout():
-    # maybe we could create a 'logged in' table that will store logged in users. Put an expiration and remove logged in users with a cron job
-    pass
+    error = check_for_params(["username"], request)
+    if error:
+        return error_message(error)
+    username = request.form['username']
+    user = User.query.filter(User.name == username).first()
+
+    if not user:
+        return error_message("User with username " + username + " was not found")
+
+    loggedInUser = Logged_In.query.filter(Logged_In.user_id == user.id).first()
+    if not loggedInUser:
+        return error_message("User " + user.name + " was not logged in.")
+
+    db.session.delete(loggedInUser)
+    db.session.commit()
+
+    return success_message("User logged out successfully")
 
 @app.route('/api/simulations', methods=['GET'])
 def api_simulations():
@@ -39,7 +115,7 @@ def api_simulations():
 def api_pages():
     error = check_for_params(['sim_id'], request)
     if error:
-        return error_message(check)
+        return error_message(error)
 
     return to_json(Page.query.filter(Page.sim_id == request.form['sim_id']))
 
@@ -47,7 +123,7 @@ def api_pages():
 def api_page():
     error = check_for_params(['page_id'], request)
     if error:
-        return error_message(check)
+        return error_message(error)
     return to_json(Page.query.filter(Page.id == request.form['page_id']))
 
 
@@ -55,7 +131,7 @@ def api_page():
 def api_links():
     error = check_for_params(['page_id'], request)
     if error:
-        return error_message(check)
+        return error_message(error)
 
     return to_json(Link.query.filter(Link.page_src_id == request.form['page_id']))
 
@@ -63,7 +139,7 @@ def api_links():
 def api_sections():
     error = check_for_params(['page_id'], request)
     if error:
-        return error_message(check)
+        return error_message(error)
 
     return to_json(Section.query.filter(Section.page_id == request.form['page_id']))
 
@@ -71,7 +147,7 @@ def api_sections():
 def api_section():
     error = check_for_params(['link_id'], request)
     if error:
-        return error_message(check)
+        return error_message(error)
 
     return to_json(Prompt.query.filter(Prompt.link_id == request.form['link_id']))
 
@@ -80,7 +156,7 @@ def api_section():
 def api_notes():
     error = check_for_params(['user_id'], request)
     if error:
-        return error_message(check)
+        return error_message(error)
 
     return to_json(Note.query.filter(Note.user_id == request.form['user_id']))
 
@@ -88,7 +164,7 @@ def api_notes():
 def api_create_note():
     error = check_for_params(['user_id', 'note'], request)
     if error:
-        return error_message(check)
+        return error_message(error)
 
     user = User.query.filter(User.id == request.form['user_id']).first()
     user_note = clean_text(request.form['note'])
@@ -106,7 +182,7 @@ def api_create_note():
 def api_destroy_note():
     error = check_for_params(['note_id'], request)
     if error:
-        return error_message(check)
+        return error_message(error)
 
     note = Note.query.filter(Note.id == request.form['note_id']).first()
     db.session.delete(note)
