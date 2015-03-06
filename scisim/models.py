@@ -27,7 +27,8 @@ class Simulation(db.Model):
     # Manually doing the bidirectional one-to-many / many-to-one linking of relationships
 
     # A one-to-many relationship between a simulation and its users
-    users = db.relationship("User", back_populates="sim")
+    # EDIT: this can now be accessed through the sim_users pivot table.
+    # users = db.relationship("User", back_populates="sim")
     # Manually doing the bidirectional one-to-many / many-to-one linking of relationships
 
     def __repr__(self):
@@ -207,14 +208,13 @@ class Action(db.Model):
 class User(db.Model):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(100), default="New User")
+    name = db.Column(db.String(100), default="New User", unique=True)
     last_page = db.Column(db.Integer, db.ForeignKey("pages.id"))
 
-    # A one-to-many relationship between a simulation and its users
-    sim_id = db.Column(db.Integer, db.ForeignKey("simulations.id"))
-    sim = db.relationship("Simulation", back_populates="users")
-    # Manually doing the bidirectional one-to-many / many-to-one linking of relationships
+    # sim_id = db.Column(db.Integer, db.ForeignKey("simulations.id"))
+    # sim = db.relationship("Simulation", back_populates="users")
 
+    # Manually doing the bidirectional one-to-many / many-to-one linking of relationships
     # A one-to-many relationship between a user and his or her notes/logs/libs
     notes = db.relationship("Note", back_populates="user")
     logs = db.relationship("Log", back_populates="user")
@@ -263,6 +263,26 @@ class Logged_In(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     timestamp = db.Column(db.DateTime)
+
+class Group(db.Model):
+    __tablename__ = "groups"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(), unique=True)
+    # so when users are using the same computer, we'll make a bunch of users and have a special endpoint to update all users.
+    # or the client side could keep track of all of the users and send requests for each user.
+    shared_computer = db.Column(db.Boolean())
+
+class Group_User_Pivot(db.Model):
+    __tablename__ = "group_users"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    group_id = db.Column(db.Integer, db.ForeignKey("groups.id"))
+
+class Sim_User_Pivot(db.Model):
+    __tablename__ = "sim_users"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    sim_id = db.Column(db.Integer, db.ForeignKey("simulations.id"))
 
 # class Lib(db.Model):
 #     """ An entry in the user's library. Only updated by links as the user progresses through the simulation. """

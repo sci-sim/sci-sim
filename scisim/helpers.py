@@ -1,5 +1,7 @@
 from json import dumps
 from datetime import datetime
+from flask import Response
+from scisim import app
 
 def unpack_model(model):
         # iterate over the models to make the output: ['model': {'key': 'value'}]
@@ -64,14 +66,19 @@ def serialize(query):
 
     return serialized
 
+
+def respond_json(data):
+    return Response(data, status=200, mimetype='application/json')
+
 def to_json(query):
-    return dumps(serialize(query))
+    data = dumps(serialize(query))
+    return respond_json(data)
 
 def error_message(message):
-    return dumps({"error": message})
+    return respond_json(dumps({"error": message}))
 
 def success_message(message = "Success!"):
-    return dumps({"success":message})
+    return respond_json(dumps({"success":message}))
 
 def check_for_params(params, request):
     # TODO: check yet if we NEED the request object passed in or not
