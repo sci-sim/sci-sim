@@ -8,7 +8,7 @@ from json import dumps
 import datetime
 
 @app.route('/api/users/create', methods=["POST"])
-def api_register():
+def api_users_create():
     error = check_for_params(['username'], request)
     if error:
         return error_message(error)
@@ -44,7 +44,7 @@ def api_register():
     return dumps(unpack_model(user))
 
 @app.route('/api/users/login', methods=["POST"])
-def api_login():
+def api_users_login():
     error = check_for_params(["username"], request)
     if error:
         return error_message(error)
@@ -60,51 +60,8 @@ def api_login():
 
     return success_message("User successfully logged in.")
 
-@app.route('/api/users/last_session', methods=["POST"])
-def api_last_session():
-    error = check_for_params(["username"], request)
-    if error:
-        return error_message(error)
-
-    username = request.form["username"]
-
-    user = User.query.filter(User.name == username).first()
-    if not user:
-        return error_message("User with username " + username + " was not found")
-
-    return dumps({"page": user.last_page})
-
-@app.route('/api/users/notes', methods=['POST'])
-def api_notes():
-    error = check_for_params(['user_id'], request)
-    if error:
-        return error_message(error)
-
-    return to_json(Note.query.filter(Note.user_id == request.form['user_id']))
-
-@app.route('/api/users/logout', methods=["POST"])
-def api_logout():
-    error = check_for_params(["username"], request)
-    if error:
-        return error_message(error)
-    username = request.form['username']
-    user = User.query.filter(User.name == username).first()
-
-    if not user:
-        return error_message("User with username " + username + " was not found")
-
-    loggedInUser = Logged_In.query.filter(Logged_In.user_id == user.id).first()
-    if not loggedInUser:
-        return error_message("User " + user.name + " was not logged in.")
-
-    db.session.delete(loggedInUser)
-    db.session.commit()
-
-    return success_message("User was logged out successfully")
-
-
 @app.route('/api/users/update_session', methods=["POST"])
-def api_update_session():
+def api_users_update_session():
     error = check_for_params(["username", "page_id"], request)
     if error:
         return error_message(error)
@@ -126,6 +83,47 @@ def api_update_session():
 
     return success_message("Last page updated successfully")
 
+@app.route('/api/users/last_session', methods=["POST"])
+def api_users_last_session():
+    error = check_for_params(["username"], request)
+    if error:
+        return error_message(error)
+
+    username = request.form["username"]
+
+    user = User.query.filter(User.name == username).first()
+    if not user:
+        return error_message("User with username " + username + " was not found")
+
+    return dumps({"page": user.last_page})
+
+@app.route('/api/users/notes', methods=['POST'])
+def api_users_notes():
+    error = check_for_params(['user_id'], request)
+    if error:
+        return error_message(error)
+
+    return to_json(Note.query.filter(Note.user_id == request.form['user_id']))
+
+@app.route('/api/users/logout', methods=["POST"])
+def api_users_logout():
+    error = check_for_params(["username"], request)
+    if error:
+        return error_message(error)
+    username = request.form['username']
+    user = User.query.filter(User.name == username).first()
+
+    if not user:
+        return error_message("User with username " + username + " was not found")
+
+    loggedInUser = Logged_In.query.filter(Logged_In.user_id == user.id).first()
+    if not loggedInUser:
+        return error_message("User " + user.name + " was not logged in.")
+
+    db.session.delete(loggedInUser)
+    db.session.commit()
+
+    return success_message("User was logged out successfully")
 
 @app.route('/api/groups/create', methods=["POST"])
 def api_groups_create():
@@ -171,7 +169,7 @@ def api_groups_add_user():
     return success_message("User successfully added to the group")
 
 @app.route('/api/simulations/all', methods=['GET'])
-def api_simulations():
+def api_simulations_all():
     return to_json(Simulation.query.all())
 
 @app.route('/api/simulations/add_user', methods=['POST'])
@@ -199,7 +197,7 @@ def api_simulation_add_user():
     return success_message("User successfully added to simulation.")
 
 @app.route('/api/simulations/pages', methods=['POST'])
-def api_pages():
+def api_simulations_pages():
     error = check_for_params(['sim_id'], request)
     if error:
         return error_message(error)
@@ -235,7 +233,7 @@ def api_page():
 
 
 @app.route('/api/pages/links', methods=['POST'])
-def api_links():
+def api_pages_links():
     error = check_for_params(['page_id'], request)
     if error:
         return error_message(error)
@@ -243,7 +241,7 @@ def api_links():
     return to_json(Link.query.filter(Link.page_src_id == request.form['page_id']))
 
 @app.route('/api/pages/sections', methods=['POST'])
-def api_sections():
+def api_pages_sections():
     error = check_for_params(['page_id'], request)
     if error:
         return error_message(error)
@@ -251,7 +249,7 @@ def api_sections():
     return to_json(Section.query.filter(Section.page_id == request.form['page_id']))
 
 @app.route('/api/links/prompts', methods=['POST'])
-def api_section():
+def api_links_prompts():
     error = check_for_params(['link_id'], request)
     if error:
         return error_message(error)
@@ -260,7 +258,7 @@ def api_section():
 
 
 @app.route('/api/notes/create', methods=['POST'])
-def api_create_note():
+def api_notes_create():
     error = check_for_params(['user_id', 'note'], request)
     if error:
         return error_message(error)
@@ -278,7 +276,7 @@ def api_create_note():
     return dumps(unpack_model(n))
 
 @app.route('/api/note/destroy', methods=['POST'])
-def api_destroy_note():
+def api_notes_destroy():
     error = check_for_params(['note_id'], request)
     if error:
         return error_message(error)
