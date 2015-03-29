@@ -62,24 +62,14 @@ def api_users_login():
 
 @app.route('/api/users/update_session', methods=["POST"])
 def api_users_update_session():
-    error = check_for_params(["username", "page_id"], request)
+    error = check_for_params(["username", "new_page_id"], request)
     if error:
         return error_message(error)
 
     username = request.form['username']
-    page_id = request.form['page_id']
+    new_page_id = request.form['new_page_id']
 
-    user = User.query.filter(User.name == username).first()
-    if not user:
-        return error_message("User with username " + username + " was not found")
-
-    page = Page.query.filter(Page.id == page_id).first()
-    if not page:
-        return error_message("Page with id " + page_id + " was not found")
-
-    user.last_page = page.id
-
-    db.session.commit()
+    update_user_session(username, new_page_id)
 
     return success_message("Last page updated successfully")
 
@@ -104,6 +94,21 @@ def api_users_notes():
         return error_message(error)
 
     return to_json(Note.query.filter(Note.user_id == request.form['user_id']))
+
+@app.route('/api/users/log', methods=["POST"])
+def api_users_continue():
+    error = check_for_params(['username', 'page_id', 'action_string'])
+    if error:
+        return error_message(error)
+    username = request.form['username']
+    page_id = request.form['page_id']
+    action_string = request.form['action_string']
+
+    log = Log(timestamp=daatetime.now(), content=action_string, user_id=user_id)
+    # Assume that this page is the last page that the user was on
+    update_user_session(username, page_id)
+
+    return success_message("Logged the user's action")
 
 @app.route('/api/users/logout', methods=["POST"])
 def api_users_logout():

@@ -2,6 +2,7 @@ from json import dumps
 from datetime import datetime
 from flask import Response
 from scisim import app
+from models import *
 
 def unpack_model(model):
         # iterate over the models to make the output: ['model': {'key': 'value'}]
@@ -96,3 +97,16 @@ def check_for_params(params, request):
             error_string += param + " "
 
     return error_string
+
+def update_user_session(username, new_page_id):
+    user = User.query.filter(User.name == username).first()
+    if not user:
+        return error_message("User with username " + username + " was not found")
+
+    page = Page.query.filter(Page.id == new_page_id).first()
+    if not page:
+        return error_message("Page with id " + new_page_id + " was not found")
+
+    user.last_page = page.id
+
+    db.session.commit()

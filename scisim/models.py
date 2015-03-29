@@ -219,8 +219,8 @@ class User(db.Model):
     notes = db.relationship("Note", back_populates="user")
     logs = db.relationship("Log", back_populates="user")
     #libs = db.relationship("Log", back_populates="user")
-    # Manually doing the bidirectional one-to-many / many-to-one linking of relationships
-
+    # Manually doing  the bidirectional one-to-many / many-to-one linking of relationships
+    
     def __repr__(self):
         return "<User %r (%d logs, %d notes)>" % (self.name, len(self.logs), len(self.notes))
 
