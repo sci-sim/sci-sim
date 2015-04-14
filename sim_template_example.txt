@@ -1,6 +1,7 @@
 # each choice is a link
 
 simulation_name = {template example}
+password = {pass}
 
 # First page
 page =  [
@@ -10,7 +11,7 @@ page =  [
 	choice_limit = 1 
 	choice_limit_page = {Patient Evaluation Summary}
 
-	choice = {
+	choice = [
 		# this is the text that goes with the choice
 		prompt = {
 			name: Mr. Smith
@@ -19,9 +20,9 @@ page =  [
 			chief_complaint: Burning feet and toes
 		}
 		goes_to_page = {Examine Mr. Smith} 
-	}
+	]
 
-	choice = {
+	choice = [
 		
 		prompt = {
 			MS. JONES
@@ -31,7 +32,7 @@ page =  [
 		}
 
 		goes_to_page = {Examine Ms. Jones} 
-	}
+	]
 ]
 
 page =  [
@@ -74,7 +75,6 @@ page =  [
 		binary = {Check the patient's blood sugar}
 		goes_to_page = {Check Mr. Smith's Blood Sugar}
 	]
-
 ]
 
 page =  [

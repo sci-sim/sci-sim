@@ -1,6 +1,6 @@
 from scisim import app, db, clean_text
 from flask import request
-from models import *
+from scisim.models import *
 from scisim.helpers import *
 from sqlalchemy import and_
 from datetime import datetime
@@ -97,6 +97,7 @@ def api_users_notes():
 
 @app.route('/api/users/log', methods=["POST"])
 def api_users_continue():
+    #TODO: we need to make it so that the user's actions are recorded in the lab notebook - crate a place where actions are stored AND notes are made
     error = check_for_params(['username', 'page_id', 'action_string'])
     if error:
         return error_message(error)

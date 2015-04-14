@@ -9,7 +9,8 @@ class Simulation(db.Model):
     preview_image_filename = db.Column(db.String(50))
     preview_image_credit = db.Column(db.String(200))
     desc = db.Column(db.String(500))
-    first_page_id = db.Column(db.Integer)#, db.ForeignKey("pages.id")) # TODO how do we fix this?
+    first_page_id = db.Column(db.Integer)
+    #, db.ForeignKey("pages.id")) # TODO how do we fix this? --- we could have a convention. sim 1 starts at 100, 101, 102... and sim 2 starts at 200,201,202...
     # TODO should we make a first_page relationship instead of the ID here? This is just fine.
     order = db.Column(db.Integer, default=9999)
 
@@ -54,10 +55,46 @@ class Page(db.Model):
     links_outgoing = db.relationship("Link", back_populates="page_src", foreign_keys="Link.page_src_id")
     links_incoming = db.relationship("Link", back_populates="page_dest", foreign_keys="Link.page_dest_id")
     # Manually doing the bidirectional one-to-many / many-to-one linking of relationships
+    # 
+    modifiers = db.relationship("Page_Modifier", back_populates="modifiers", foreign_keys="Page_Manager.id")
+    choices = db.relationship("Choice", back_populates="choices", foreign_keys="Choice.id")
 
     def __repr__(self):
         return "<Page %d - \"%s\">" % (int(self.id), self.title)
 
+class Page_Modifier(db.Model):
+    __tablename__ = "page_modifiers"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+
+    name = db.Column(db.String(200))
+    value = db.Column(db.String(200))
+
+    page_id = db.Column(db.Integer, db.ForeignKey("pages.id"))
+    page = db.relationship("Page", back_populates="modifiers")
+
+    def __repr__(self):
+        return "<Page_Modifier %d - \"%s\">" % (int(self.id), self.title)
+
+
+class Choice(db.Model):
+    __tablename__ = "choices"
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+
+    # this could be binary (option that is one or the other) or text
+    type = db.Column(db.String(200))
+
+    # the text to go with the choice.
+    text = db.Column(db.String(200))
+
+    #the page where this choice leads to.
+    destination = db.Column(db.String(200))
+
+    page_id = db.Column(db.Integer, db.ForeignKey("pages.id"))
+    page = db.relationship("Page", back_populates="modifiers")
+
+    def __repr__(self):
+        return "<Choice %d - \"%s\">" % (int(self.id), self.title)
 
 class Section(db.Model):
     __tablename__ = "sections"

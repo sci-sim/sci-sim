@@ -2,7 +2,7 @@ from json import dumps
 from datetime import datetime
 from flask import Response
 from scisim import app
-from models import *
+from scisim.models import *
 
 def unpack_model(model):
         # iterate over the models to make the output: ['model': {'key': 'value'}]
