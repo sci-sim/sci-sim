@@ -11,7 +11,7 @@ page =  [
 	choice_limit = 1 
 	choice_limit_page = {Patient Evaluation Summary}
 
-	choice = [
+	choice = (
 		# this is the text that goes with the choice
 		prompt = {
 			name: Mr. Smith
@@ -20,19 +20,19 @@ page =  [
 			chief_complaint: Burning feet and toes
 		}
 		goes_to_page = {Examine Mr. Smith} 
-	]
+	)
 
-	choice = [
+	choice = (
 		
 		prompt = {
-			MS. JONES
+			Ms. JONES
 			Sex: female
 			Age: 45
 			Chief Complaint: Check up
 		}
 
 		goes_to_page = {Examine Ms. Jones} 
-	]
+	)
 ]
 
 page =  [
@@ -51,30 +51,30 @@ page =  [
 	choice_limit = {5}
 	choice_limit_page = {Choose Patient}
 
-	choice = [
+	choice = (
 		prompt = {Listen to the patient's heart}
 		goes_to_page = {Listen to Mr. Smith's Heart}
-	]
+	)
 
-	choice = [
+	choice = (
 		prompt = {Listen to the patient's lungs}
 		goes_to_page = {Listen to Mr. Smith's Lungs}
-	]
+	)
 
-	choice = [
+	choice = (
 		binary = {Check patient's height, weight, and BMI}
 		goes_to_page = {Check Mr. Smiths Height, Weight, and BMI}
-	]
+	)
 
-	choice = [
+	choice = (
 		binary = {Examine the patient's feet for sores}
 		goes_to_page = {Examine Mr. Smith's feet for sores}
-	]
+	)
 
-	choice = [
+	choice = (
 		binary = {Check the patient's blood sugar}
 		goes_to_page = {Check Mr. Smith's Blood Sugar}
-	]
+	)
 ]
 
 page =  [
@@ -82,11 +82,11 @@ page =  [
 	media = {normal_sounding_clip.mp3} # the value would be the name of the file
 	media = {weird_sounding_clip.mp3}
 
-	choice = [
+	choice = (
 		# binary indicates that this will be a prompt that needs a yes/no response
 		binary = {Do you think your patient's heart sounds normal?}
 		goes_to_page = {Examine Mr. Smith}
-	]
+	)
 ]
 
 page =  [
@@ -94,10 +94,10 @@ page =  [
 	media = {normal_sounding_clip.mp3} # the value would be the name of the file
 	media = {weird_sounding_clip.mp3}
 
-	choice = [
+	choice = (
 		binary = {Do you think your patient's lungs sounds normal?}
 		goes_to_page = {Examine Mr. Smith}
-	]
+	)
 ]
 
 page =  [
@@ -110,10 +110,10 @@ page =  [
 	page_name = {Examine Mr. Smith's feet for sores}
 	media = {healthy_feel.jpg}
 	
-	choice = [
+	choice = (
 		binary = {Do you think Mr. Smith's feet are healthy?}
 		goes_to_page = {Examine Mr. Smith}
-	]
+	)
 ]
 
 page =  [

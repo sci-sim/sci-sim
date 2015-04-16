@@ -3,66 +3,98 @@ from scisim.models import *
 from scisim import next_id
 import re
 
-# fetches everything we need to get going
-def setup():
-	pass
+def debug(exp):
+	print("---------------------")
+	print(exp)
+	print("---------------------")
+	exit()
 
 def parse_sim(sim_template):
-	# reg = re.match(r'\[([\s\S]*?)\]',sim_template, re.MULTILINE)
-	page_re = re.compile(r'page .* = .* \[([\s\S]*?)\]',re.DOTALL|re.VERBOSE)
-	pages = page_re.findall(sim_template)
+	pages = re.findall(r'\[([\s\S]*?)\]',sim_template, re.MULTILINE)
+	# page_re = re.compile(r'page .* = .* \[([\s\S]*?)\]',re.DOTALL|re.VERBOSE)
+	# pages = page_re.findall(sim_template)
 
-	sim_re = re.compile(r'simulation_name.*')
+	simulation_name = find_keyword_value("simulation_name", sim_template)
+	password = find_keyword_value("password", sim_template)
+	description = find_keyword_value("description", sim_template)
+	preview_picture = find_keyword_value("preview_picture", sim_template)
+
+	sim = Simulation(title=simulation_name, desc=description, password=password, preview_image_filename=preview_picture)
+
+	db.session.add(sim)
+	db.session.commit()
+
+	print("Simulation added.")
+
+	page_base = (db.engine.execute("select count() from simulations").fetchone()[0] + 1) * 100
 
 	for page in pages:
-
-def find_keyword(text, keyword, func):
-	expr = re.compile(keyword + '.*=', flags)
-	words = findall(expr)
-
-	if len(words) > 0:
-		func(words)
-		return True
-	else:
-		return None
-
-def process_page(page_text, sim):
+		process_page(page, sim, page_base)
+		page_base += 1
+		
+def process_page(page_text, sim, page_id):
 	page = None
 	order = 0
-	all_lines = page_text.splitlines(page_text)
+	
+	all_lines = page_text.splitlines()
+
 
 	for i, line in enumerate(all_lines):
-		page_id++
-
 		try:
 			keyword, content = split_key_value(line)
+
 		except Exception, e:
 			# this line doesn't have content we want, so go to the next one
 			continue
 
+		# print(line)
 		if keyword == "page_name":
-			page = Page(sim=sim, title=content)
+			print("Adding page")
+			page = Page(sim=sim, title=content, id=page_id)
 			db.session.add(page)
 			db.session.commit()
 
-		else if keyword == "heading_big":
+		elif keyword == "heading_big":
+			print("Found a big heading")
 			add_section(i, all_lines, order, content, "big")
-			order++
+			order += 1
 
-		else if keyword == "heading_small":
+		elif keyword == "heading_small":
+			print("found small heading")
 			add_section(i, all_lines, order, content, "small")
-			order++
+			order += 1
 
-		else if keyword == "text":
+		elif keyword == "text":
+			print("found text")
 			add_section(i, all_lines, order, content, "regular")
-			order++
+			order += 1
 
-		else if keyword == "minimum_choices" or keyword == "choice_minimum":
+		elif keyword == "media":
+			print("Found media")
+			add_section(i, all_lines, order, "media " + content)
+
+		elif keyword == "minimum_choices" or keyword == "choice_minimum" or keyword == "choice_limit":
+			print("found choices")
 			add_page_modifier(page, keyword, content)
 
-		else if keyword == "choice":
-			lines = select_until(i, all_lines, "]")
+		elif keyword == "choice_limit_page" or keyword == "minimum_choices_reached_page":
+			print("adding choice")
+			add_page_modifier(page, keyword, content)
+
+		elif keyword == "minimum_choices_reached_page":
+			print("Fond min choice page")
+			add_page_action(page, keyword, content)
+
+		elif keyword == "choice":
+			print("foune choice")
+			lines = select_until(i, all_lines, ")")
 			parse_choice(lines, page)
+
+		elif keyword == "add_to_notebook":
+			add_page_action(page, keyword, content)
+
+		elif keyword == "pop_up_window":
+			add_page_modifier(page, keyword, content)
 
 def parse_choice(lines, page):
 	type = None
@@ -70,41 +102,47 @@ def parse_choice(lines, page):
 	destination = None
 
 	for i, line in enumerate(lines):
-
 		if "prompt" in line or "textbox" in line:
 			type = "text"
 			text = get_text(i, line, lines)
 
-		else if "binary" in line:
+		elif "binary" in line:
 			type = "binary"
 			text = get_text(i, line, lines)
 
-		else if "goes_to_page" in line:
+		elif "goes_to_page" in line:
 			destination = get_text(i , line, lines)
 
 	print("Adding a choice to the database")
 	db.session.add(Choice(type=type, text=text, destination=destination))
 	db.session.commit()
 
-def add_section(line_number, all_lines, order, content, size):
+def add_section(line_number, all_lines, order, content, size=None):
 	print("Adding section")
 	content = get_text(line_number, content, all_lines)
 	content = content
 
 	if size == "small":
 		tags = "<h3>content</h3>"
-	else if size == "big":
+	elif size == "big":
 		tags = "<h1>content</h1>"
-	else if size == "regular":
+	elif size == "regular":
 		tags = "<p>content</p>"
 
-	content = tags.replace("content", content)
-	db.session.add(Section(show=True, order=order, content=content))
+	if size: # we do this check to make sure that there's no media here. If there's media, then size won't be passed in
+		content = tags.replace("content", content)
+
+	db.session.add(Section(show=True, order=order, content=strip_braces(content)))
 	db.session.commit()
 
 def add_page_modifier(page, name, value):
 	print("adding a page modifier")
-	db.session.add(Page_Modifier(name=name, value=value, page=page))
+	db.session.add(Page_Modifier(name=name, value=value, page_id=page.id))
+	db.session.commit()
+
+def add_page_action(page, name, value):
+	print("adding a page action")
+	db.session.add(Page_Action(name=name, value=value, page_id=page.id))
 	db.session.commit()
 
 def split_key_value(line):
@@ -113,19 +151,26 @@ def split_key_value(line):
 	if len(split) == 1:
 		return None
 	else:
-		return split[0].rstrip(), split[1].lstrip() # key, value
+		return split[0].strip(), split[1].lstrip() # key, value
 
 def get_text(line_number, line, all_lines):
 	if is_multiline(line):
-		return select_until(line_number, all_lines, "}").replace("{", "").replace("}","")
+		return strip_braces(select_until(line_number, all_lines, "}"))
 	else:
-		return line.replace("{", "").replace("}","")
+		return strip_braces(line)
 
 def is_multiline(line):
-	if "}" not in line:
+	if "}" in line:
 		return None
 	else:
 		return True
+
+def find_keyword_value(keyword, sim):
+	for line in sim.splitlines():
+		if keyword in line:
+			return strip_braces(re.findall("{.*}", line)[0])
+
+	return None
 
 def select_until(line_number, lines, item):
 	full = ""
@@ -136,6 +181,9 @@ def select_until(line_number, lines, item):
 			break
 
 	return full
+
+def strip_braces(content):
+	return content.replace("{", "").replace("}","")
 
 if __name__ == '__main__':
 	the_file = argv[1]
