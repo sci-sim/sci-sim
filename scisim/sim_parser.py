@@ -50,7 +50,7 @@ def process_page(page_text, sim, page_id):
 		# print(line)
 		if keyword == "page_name":
 			print("Adding page")
-			page = Page(sim=sim, title=content, id=page_id)
+			page = Page(sim=sim, title=strip_braces(content), id=page_id)
 			db.session.add(page)
 			db.session.commit()
 
@@ -144,6 +144,15 @@ def add_page_action(page, name, value):
 	print("adding a page action")
 	db.session.add(Page_Action(name=name, value=value, page_id=page.id))
 	db.session.commit()
+
+def get_all_media(all_lines):
+	medias = []
+
+	for media in re.findall(r".*media.*=.*",all_lines):
+		medias.append(strip_braces(re.findall("{.*}", media)[0]))
+
+	return medias
+
 
 def split_key_value(line):
 	split = line.split("=")

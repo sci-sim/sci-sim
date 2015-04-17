@@ -6,6 +6,7 @@ from sqlalchemy import and_
 from datetime import datetime
 from json import dumps
 import datetime
+import sim_parser
 
 @app.route('/api/users/create', methods=["POST"])
 def api_users_create():
@@ -174,6 +175,19 @@ def api_groups_add_user():
 
     return success_message("User successfully added to the group")
 
+@app.route('/api/simulations/create', methods=['POST'])
+def api_simulations_create():
+    error = check_for_params(['contents'], request)
+    if error:
+        return error_message(error)
+
+    sim = request.form['contents']
+
+    sim_parser.parse_sim(sim)
+    medias = sim_parser.get_all_media(sim)
+
+    return dumps(medias)
+
 @app.route('/api/simulations/all', methods=['GET'])
 def api_simulations_all():
     return to_json(Simulation.query.all())
@@ -292,3 +306,11 @@ def api_notes_destroy():
     db.session.commit()
 
     return success_message('Note destroyed')
+
+@app.route('/api/media/upload', methods=['POST'])
+def api_media_upload():
+    file = request.files['file']
+    # This is going to need to be replaced on the server.
+    file.save('/vagrant/app/scisim/media/' + file.filename)
+
+    return success_message("File uploaded")
