@@ -49,6 +49,10 @@ class Page(db.Model):
 
     # A one-to-many relationship between a page and its sections
     sections = db.relationship("Section", back_populates="page")
+
+    page_modifiers = db.relationship("Page_Modifier", back_populates="page")
+    choices = db.relationship("Choice", back_populates="page")
+    page_actions = db.relationship("Page_Action", back_populates="page")
     # Manually doing the bidirectional one-to-many / many-to-one linking of relationships
 
     # Two one-to-many relationships between a page and its incoming and outgoing links

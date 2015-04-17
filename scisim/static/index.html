@@ -19,6 +19,12 @@
 			color:white;
 			padding:10px;
 		}
+
+		.failed{
+			background-color: red;
+			color:white;
+			padding:10px;
+		}
 	</style>
 </head>
 <body>
@@ -68,7 +74,7 @@
 
 		formData.append("file", file);
 
-		var xhr = new XMLHttpRequest(); // because reqwest doesn't seem to have an option for files.
+		var xhr = new XMLHttpRequest(); // because reqwest doesn't seem to have an option for files...
 		xhr.open("POST","/api/media/upload", true);
 
 		xhr.onload = function(){
@@ -79,6 +85,7 @@
 			} else {
 				alert('An error occurred!');
 				e.target.previousElementSibling.innerHTML = "Status: Upload Failed";
+				e.target.previousElementSibling.className += "failed";
 			}
 		}
 
@@ -116,7 +123,6 @@
 	}
 
 	document.querySelector("input").addEventListener("change", processSimUpload);
-
 	</script>	
 </body>
 </html>

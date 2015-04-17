@@ -137,12 +137,12 @@ def add_section(line_number, all_lines, order, content, size=None):
 
 def add_page_modifier(page, name, value):
 	print("adding a page modifier")
-	db.session.add(Page_Modifier(name=name, value=value, page_id=page.id))
+	db.session.add(Page_Modifier(name=name, value=strip_braces(value), page_id=page.id))
 	db.session.commit()
 
 def add_page_action(page, name, value):
 	print("adding a page action")
-	db.session.add(Page_Action(name=name, value=value, page_id=page.id))
+	db.session.add(Page_Action(name=name, value=strip_braces(value), page_id=page.id))
 	db.session.commit()
 
 def get_all_media(all_lines):
@@ -152,7 +152,6 @@ def get_all_media(all_lines):
 		medias.append(strip_braces(re.findall("{.*}", media)[0]))
 
 	return medias
-
 
 def split_key_value(line):
 	split = line.split("=")
