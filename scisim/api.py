@@ -39,8 +39,7 @@ def api_users_create():
 
         sim_user_pivot = Sim_User_Pivot(user_id=user.id, sim_id=sim.id)
         db.session.add(sim_user_pivot)
-
-    db.session.commit()
+        db.session.commit()
 
     return dumps(unpack_model(user))
 
@@ -182,11 +181,13 @@ def api_simulations_create():
         return error_message(error)
 
     sim = request.form['contents']
+    
+    errors = sim_parser.parse_sim(sim)
+    if errors:
+        return dumps({"errors":errors})
 
-    sim_parser.parse_sim(sim)
     medias = sim_parser.get_all_media(sim)
-
-    return dumps(medias)
+    return dumps({"medias":medias})
 
 @app.route('/api/simulations/all', methods=['GET'])
 def api_simulations_all():

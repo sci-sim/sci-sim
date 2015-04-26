@@ -1,8 +1,47 @@
-function onSuccessfulParsing (medias) {
+function onSuccessfulParsing (data) {
 	// the client will response with a list of media that needs to be uploaded.
-	var template = "<p class='fileLabel'>filename:</p><span>Status: Not Uploaded Yet.</span> &nbsp; &nbsp; &nbsp; &nbsp;<input type='file' name='filename'>";
+	data = JSON.parse(data);
 
-	medias = JSON.parse(medias);
+	if (data.hasOwnProperty("errors")){
+		displayErrors(data.errors);
+	}else{
+		getMediaInputs(data.medias)
+	}	
+}
+
+function displayErrors(errors){
+	var errors = errors;
+	var html  = "";
+	for(var error in errors){
+		var identifier = ""; // for the tooltip explanation
+
+		if(error.search("Missing closing") > 0){
+			identifier += "closing_tag_error";
+		}else if(error.search("do not exist") > 0){
+			identifier += "page_not_exists";
+		}else if(error.search("continuity errors") > 0){
+			identifier += "continuity_error";
+		}else if(error.search("essential keywords") > 0){
+			identifier += "essential_keyword_errors";
+		}
+
+		html += "<h3 class='help "+identifier+"'>" + error + "</h3>";
+		for (var i = 0; i < errors[error].length; i++) {
+			html += "<p>" + $('<div>').text(errors[error][i]).html() + "</p>";
+		}
+	}
+
+	$('.continuity_error').tooltip({"title": "tooltip text!"})
+
+	$('.reset').removeClass("hidden")
+	$('.reset').click(function(){window.location.reload()})
+
+	$(".errors").removeClass("hidden").append($(html));
+}
+
+function getMediaInputs(medias){
+	var template = "<p class='fileLabel'>filename:</p><span>Status: Not Uploaded Yet.</span> &nbsp; &nbsp; &nbsp; &nbsp;<input type='file' name='filename'>";
+	
 	medias = medias.filter(function(item, pos, self) {
 		return self.indexOf(item) == pos; // filters the duplicates
 	});

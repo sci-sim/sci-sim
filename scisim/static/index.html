@@ -3,7 +3,20 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Sci Upload</title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 	<style>
+		.help{
+			cursor: help;
+		}
+
+		.alert{
+			margin-top:20px;
+		}
+
+		.alert h3:first-child{
+			margin-top:0;
+		}
+
 		.container{
 			max-width: 60%;
 			margin:0 auto;
@@ -37,13 +50,21 @@
 		<h2>Sci Upload</h2>
 		<p>This page is for uploading a simulation. Upload it below.</p>
 		<input type="file" name="sim_template">
+		
+		<div class="alert alert-danger errors hidden" role="alert">
+		</div>
 
 		<div class="mediaUpload hidden">
 			<h3>Upload the media below.</h3>
 		</div>
-	</div>
 
+		<button class="btn btn-warning reset hidden">reset</button>
+	</div>
+	
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script src="js/reqwest.min.js"></script>
+	<script src="js/ErrorHandler.js"></script>
 	<script src="js/app.js"></script>	
 
 	<script>
@@ -66,7 +87,6 @@
 
 			reader.readAsText(file);
 		});
-		
 	</script>
 </body>
 </html>

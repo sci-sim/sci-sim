@@ -1,7 +1,8 @@
 # each choice is a link
 
 simulation_name = {template example}
-password = {pass}
+simulation_password = {pass}
+simulation_description = {this is the description}
 
 # First page
 page =  [
@@ -118,7 +119,6 @@ page =  [
 
 page =  [
 	page_name = {Check Mr. Smith's Blood Sugar}
-	add_to_notebook = {Mr. Smith's blood sugar is XX (that's normal for people)}
 ]
 
 page = [
