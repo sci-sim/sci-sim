@@ -1,3 +1,4 @@
+import codecs
 from sys import argv, exit
 from scisim.models import *
 from scisim import next_id
@@ -14,10 +15,11 @@ def debug(*exps):
 def parse_sim(sim_template):
 	sim_template = clean_comments(sim_template)
 
-	errors = check_for_errors(sim_template)
-	if errors:
-		return errors
-
+	# errors = check_for_errors(sim_template)
+	# if errors:
+	# 	debug(errors)
+	# 	return errors
+		
 	pages = get_all_pages(sim_template)
 
 	simulation_name = find_keyword_value("simulation_name", sim_template)
@@ -32,7 +34,7 @@ def parse_sim(sim_template):
 
 	print("Simulation added.")
 
-	page_base = (db.engine.execute("select count() from simulations").fetchone()[0] + 1) * 100
+	page_base = (db.engine.execute("select count() from simulations").fetchone()[0]) * 1000
 
 	for page in pages:
 		process_page(page, sim, page_base)
@@ -49,27 +51,13 @@ def get_all_pages(sim):
 	return pages
 
 def page_loop(start_line, all_lines):
-	page = ""
-	choice_counter = 0 # instead of counting the text directly
-	end_counter = 0
+	page = all_lines[start_line] + "\n"
 
-	for i,line in enumerate(all_lines[start_line:]):
-		line = line + "\n"
-
-		if "choice" in line and "choice_" not in line:
-			choice_counter += 1
-
-		if "]" in line:
-			end_counter += 1
-
-			if (end_counter - 1) == choice_counter:
-				page += line
-				break
-
-			page += line
-			continue
-
-		page += line
+	for i,line in enumerate(all_lines[(start_line+1):]):
+		if "page" in line and "[" in line:
+			return page
+		else:
+			page += line + "\n"
 
 	return page
 
@@ -96,22 +84,27 @@ def process_page(page_text, sim, page_id):
 
 		elif keyword == "heading_big":
 			print("Found a big heading")
-			add_section(i, all_lines, order, content, "big")
+			add_section(i, all_lines, order, content, page, "big")
+			order += 1
+
+		elif keyword == "heading_medium":
+			print("found medium heading")
+			add_section(i, all_lines, order, content, page, "medium")
 			order += 1
 
 		elif keyword == "heading_small":
 			print("found small heading")
-			add_section(i, all_lines, order, content, "small")
+			add_section(i, all_lines, order, content, page, "small")
 			order += 1
 
 		elif keyword == "text":
 			print("found text")
-			add_section(i, all_lines, order, content, "regular")
+			add_section(i, all_lines, order, content, page, "regular")
 			order += 1
 
 		elif keyword == "media":
 			print("Found media")
-			add_section(i, all_lines, order, "media " + content)
+			add_section(i, all_lines, order, "media " + content, page)
 
 		elif keyword == "minimum_choices" or keyword == "choice_minimum" or keyword == "choice_limit":
 			print("found choices")
@@ -121,20 +114,40 @@ def process_page(page_text, sim, page_id):
 			print("adding choice")
 			add_page_modifier(page, keyword, content)
 
-		elif keyword == "minimum_choices_reached_page":
+		elif keyword == "minimum_choices_reached_page" and keyword == "minimum_choices_reached":
 			print("Fond min choice page")
 			add_page_action(page, keyword, content)
 
 		elif keyword == "choice":
-			print("foune choice")
-			lines = select_until(i, all_lines, ")")
+			print("found choice")
+			lines = select_until(i, all_lines, "]")
 			parse_choice(lines, page)
 
 		elif keyword == "add_to_notebook":
-			add_page_action(page, keyword, content)
+			lines = select_until(i, all_lines, "]")
+			text = find_keyword_value("text", lines)
+			tag = find_keyword_value("tag", lines)
+
+			add_page_action(page, keyword, text + "|" + tag)
 
 		elif keyword == "pop_up_window" or keyword == "popup_window":
 			add_page_modifier(page, keyword, content)
+
+		elif keyword == "link":
+			lines = select_until(i, all_lines, ']')
+			parse_link(lines, page, order)
+			order += 1
+
+		elif keyword == "question":
+			lines = select_until(i, all_lines, ']')
+			parse_question(lines, page)
+
+		elif keyword == "can_add_question_groups":
+			add_page_modifier(page, keyword, strip_braces(content))
+
+		elif keyword == "show_all_student_content":
+			add_page_action(page, keyword, strip_braces(content))
+
 
 def parse_choice(lines, page):
 	type = None
@@ -154,11 +167,29 @@ def parse_choice(lines, page):
 			destination = get_text(i , line, lines)
 
 	print("Adding a choice to the database")
-	db.session.add(Choice(type=type, text=text, destination=destination))
+	db.session.add(Choice(type=type, text=text, destination=destination, page_id = page.id))
 	db.session.commit()
 
-def add_section(line_number, all_lines, order, content, size=None):
+def parse_link(lines, page, order):
+	# get content from lines
+	text = find_keyword_value("text", lines)
+	link = find_keyword_value("url", lines)
+
+	content = "<a href='"+link+"'>"+text+">"
+
+	db.session.add(Section(show=True, order=order, content=content, page_id=page.id))
+	db.session.commit()
+
+def parse_question(lines, page):
+	text = find_keyword_value("text", lines)
+	tag = find_keyword_value("tag", lines)
+
+	db.session.add(Choice(type="question", text=text, page_id = page.id, tag=tag))
+	db.session.commit()
+
+def add_section(line_number, all_lines, order, content, page, size=None):
 	print("Adding section")
+
 	content = get_text(line_number, content, all_lines)
 	content = content
 
@@ -166,17 +197,24 @@ def add_section(line_number, all_lines, order, content, size=None):
 		tags = "<h3>content</h3>"
 	elif size == "big":
 		tags = "<h1>content</h1>"
+	elif size == "medium":
+		tags = "<h2>content</h2>"
 	elif size == "regular":
 		tags = "<p>content</p>"
 
 	if size: # we do this check to make sure that there's no media here. If there's media, then size won't be passed in
 		content = tags.replace("content", content)
 
-	db.session.add(Section(show=True, order=order, content=strip_braces(content)))
+	try:
+		db.session.add(Section(show=True, order=order, content=strip_braces(content), page_id = page.id))
+	except Exception, e:
+		debug(all_lines[line_number:line_number+10], e)
+	
 	db.session.commit()
 
 def add_page_modifier(page, name, value):
 	print("adding a page modifier")
+
 	db.session.add(Page_Modifier(name=name, value=strip_braces(value), page_id=page.id))
 	db.session.commit()
 
@@ -377,7 +415,7 @@ if __name__ == '__main__':
 		print("Please pass in a file path.")
 		exit()
 
-	with open(the_file, "r") as f:
+	with codecs.open(the_file, "r", 'utf-8') as f:
 		sim = f.read()
 		# errors = check_for_errors(sim)
 		# if errors: 

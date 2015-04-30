@@ -94,6 +94,9 @@ class Choice(db.Model):
     #the page where this choice leads to.
     destination = db.Column(db.String(200))
 
+    #in order to grab a group
+    tag = db.Column(db.String(200))
+
     page_id = db.Column(db.Integer, db.ForeignKey("pages.id"))
     page = db.relationship("Page")
 
@@ -308,6 +311,9 @@ class Note(db.Model):
     # A one-to-many relationship between a user and his or her notes
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     user = db.relationship("User", back_populates="notes")
+
+    #in order to grab a group
+    tag = db.Column(db.String(200))
     # Manually doing the bidirectional one-to-many / many-to-one linking of relationships
 
     def __repr__(self):
