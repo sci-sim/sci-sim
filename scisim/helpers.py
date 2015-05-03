@@ -64,7 +64,7 @@ def serialize(query):
                 s[table].append(relationDict)
 
         serialized.append(s)
-
+        
     return serialized
 
 
@@ -72,8 +72,7 @@ def respond_json(data):
     return Response(data, status=200, mimetype='application/json')
 
 def to_json(query):
-    data = dumps(serialize(query))
-    return respond_json(data)
+    return respond_json(dumps(serialize(query)))
 
 def error_message(message):
     return respond_json(dumps({"error": message}))

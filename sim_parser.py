@@ -21,20 +21,21 @@ def parse_sim(sim_template):
 	# 	return errors
 		
 	pages = get_all_pages(sim_template)
+	page_base = (db.engine.execute("select count() from simulations").fetchone()[0]) * 1000
 
 	simulation_name = find_keyword_value("simulation_name", sim_template)
 	password = find_keyword_value("simulation_password", sim_template)
 	description = find_keyword_value("simulation_description", sim_template)
 	preview_picture = find_keyword_value("simulation_preview_picture", sim_template)
 
-	sim = Simulation(title=simulation_name, desc=description, password=password, preview_image_filename=preview_picture)
+	sim = Simulation(title=simulation_name, desc=description, password=password, preview_image_filename=preview_picture, first_page_id=page_base)
 
 	db.session.add(sim)
 	db.session.commit()
 
 	print("Simulation added.")
 
-	page_base = (db.engine.execute("select count() from simulations").fetchone()[0]) * 1000
+	
 
 	for page in pages:
 		process_page(page, sim, page_base)

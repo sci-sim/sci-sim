@@ -10,7 +10,7 @@ import sim_parser
 
 @app.route('/api/users/create', methods=["POST"])
 def api_users_create():
-    error = check_for_params(['username'], request)
+    error = check_for_params(['username', 'sim_id'], request)
     if error:
         return error_message(error)
 
@@ -25,22 +25,20 @@ def api_users_create():
     try:
         db.session.commit()
     except Exception:
-        return error_message("This user has alraedy been created. If you previously got the 'simulation does not exist' error using this route, then please use the /api/simulations/add_user endpount.")
+        return error_message("This user has already been created. If you previously got the 'simulation does not exist' error using this route, then please use the /api/simulations/add_user endpount.")
+
+    sim = Simulation.query.filter(Simulation.id == request.form['sim_id']).first()
+    if not sim:
+        return error_message("That simulation does not exist.")
+
+    sim_user_pivot = Sim_User_Pivot(user_id=user.id, sim_id=sim.id)
+    db.session.add(sim_user_pivot)
 
     logged_in = Logged_In(user_id=user.id, timestamp=datetime.datetime.now())
     db.session.add(logged_in)
 
-    # NOTE: it there is an error message here, then the other route must be used
-    #       because it will cause an error with the name being unique.
-    if request.form['sim_id']:
-        sim = Simulation.query.filter(Simulation.id == reqeust.form['sim_id'])
-        if not sim:
-            return error_message("That simulation does not exist.")
-
-        sim_user_pivot = Sim_User_Pivot(user_id=user.id, sim_id=sim.id)
-        db.session.add(sim_user_pivot)
-        db.session.commit()
-
+    db.session.commit()
+        
     return dumps(unpack_model(user))
 
 @app.route('/api/users/login', methods=["POST"])
@@ -250,8 +248,7 @@ def api_page():
     error = check_for_params(['page_id'], request)
     if error:
         return error_message(error)
-    return to_json(Page.query.filter(Page.id == request.form['page_id']))
-
+    return to_json(Page.query.filter(Page.id == request.form['page_id']).all())
 
 @app.route('/api/pages/links', methods=['POST'])
 def api_pages_links():
