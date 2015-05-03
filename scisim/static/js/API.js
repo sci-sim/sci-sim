@@ -48,3 +48,41 @@ API.prototype.addUsersToGroup = function(group_name, users) {
 
 	return $.when.apply(this, deferreds);
 };
+
+API.prototype.formatData = function(apiData) {
+	// because the data from the api comes back weird. Use this make an array of flat objects
+	// maybe this will be deprecated after a change in the api
+	
+	var formatted = [];
+
+	for (var i = 0; i < apiData.length; i++) {
+		for(var obj in apiData[i]){
+			var newObject = objLoop(apiData[i]);
+			formatted.push(newObject);	
+		} 
+	};
+
+	return formatted;
+};
+
+function objLoop(originalObject){
+	var newObj = {};
+	
+	for(var key in originalObject){
+		var keyValue = originalObject[key];
+		if($.isArray(keyValue)){
+
+			for (var j = 0; j < keyValue.length; j++) {
+				for(var objval in keyValue[j]){
+					if($.isArray(keyValue[j][objval])){
+						// for relationships
+						newObj[objval] = objLoop(keyValue[j]);
+					}else{
+						newObj[objval] = keyValue[j][objval];	
+					}
+				}
+			};
+		}
+	};
+	return newObj;
+}

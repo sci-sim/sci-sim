@@ -1,30 +1,34 @@
 var TemplateFiller = function(){};
+// TODO: rename this to TemplateManager
 
+/**
+ * TODO: lets make these for all the library class functions
+ * Fills the template with data
+ * @param  {object} data     the data to be injected.
+ * @param  {string} pageName the name of the template
+ * @return {string}          plain html of the template
+ */
 TemplateFiller.prototype.fillTemplate = function(data, pageName) {
 	var template = this.getTemplate(pageName);
-	var html = "<div class='screen'>";
 
-	if(data === null) return (html + template + "</div>");
+	if(data === null) return template;
 
-	for (var i = 0; i < data.length; i++) {
-		var sim = data[i].simulations;
+	for(var key in data){
+		fkey = "{" + key + "}";
+		template = template.replace(fkey, data[key]);
+	}
 
-		var title = sim[1].title,
-			description = sim[5].desc,
-			firstPageId = sim[6].first_page_id,
-			sim_id = sim[0].id;
-			parsed_template = template.replace("{sim_title}", title).replace("{sim_desc}", description).replace("{first_page_id}", firstPageId).replace("{sim_id}", sim_id);
+	return  template;
+};
 
-		html += parsed_template;
-	};
-
-	return html += "</div>";
+TemplateFiller.prototype.wrapInParent = function(html) {
+	return "<div class='screen'>" + html + "</div>";
 };
 
 TemplateFiller.prototype.getTemplate = function(pageName) {
 	switch(pageName){
 		case "choose_simulation":
-			return '<div class="list-group-item simluation-item clickable"><span class="badge"><i class="glyphicon glyphicon-chevron-right"></i></span> <div class="media"> <div class="media-left"> <a href="#"> <img class="media-object" src="img/page_1_s.jpg"> </a> </div> <div class="media-body"> <h4 class="media-heading list-item-heading">{sim_title}</h4> <p>{sim_desc}</p> <input type="hidden" value="{first_page_id}" name="first_page_id"> <input type="hidden" value="{sim_id}" name="sim_id"> </div> </div> </div>';	
+			return '<div class="list-group-item simluation-item clickable"><span class="badge"><i class="glyphicon glyphicon-chevron-right"></i></span> <div class="media"> <div class="media-left"> <a href="#"> <img class="media-object" src="img/page_1_s.jpg"> </a> </div> <div class="media-body"> <h4 class="media-heading list-item-heading">{title}</h4> <p>{desc}</p> <input type="hidden" value="{first_page_id}" name="first_page_id"> <input type="hidden" value="{id}" name="sim_id"> </div> </div> </div>';	
 			break;
 
 		case "group_chooser":
