@@ -35,8 +35,6 @@ def parse_sim(sim_template):
 
 	print("Simulation added.")
 
-	
-
 	for page in pages:
 		process_page(page, sim, page_base)
 		page_base += 1
@@ -121,7 +119,7 @@ def process_page(page_text, sim, page_id):
 
 		elif keyword == "choice":
 			print("found choice")
-			lines = select_until(i, all_lines, "]")
+			lines = select_until(i, all_lines, "]").splitlines();
 			parse_choice(lines, page)
 
 		elif keyword == "add_to_notebook":
@@ -162,7 +160,6 @@ def parse_choice(lines, page):
 
 		elif "binary" in line:
 			type = "binary"
-			# TODO: this doesn't work. 
 			text = get_text(i, line, lines)
 
 		elif "goes_to_page" in line:
@@ -353,23 +350,22 @@ def split_key_value(line):
 	else:
 		return split[0].strip(), split[1].lstrip() # key, value
 
-def get_text(line_number, line, all_lines):
-	if is_multiline(line):
-		return strip_braces(select_until(line_number, all_lines, "}"))
+def get_text(line_number, line, lines):
+	if lines[line_number].count("}") != 1:
+		return strip_braces(select_until(line_number, lines, "}"))
 	else:
 		return strip_braces(line)
 
-def is_multiline(line):
-	if "}" in line:
-		return None
-	else:
-		return True
-
 def find_keyword_value(keyword, sim):
 	results = []
-	for line in sim.splitlines():
+	for i, line in enumerate(sim.splitlines()):
 		if keyword in line and "=" in line:
-			results.append(strip_braces(re.findall("{.*}", line)[0]))
+			if "}" not in line:
+				text = select_until(i, sim, "}")
+			else:
+				text = strip_braces(re.findall("{.*}", line)[0])
+
+			results.append(text)
 
 	if len(results) == 1:
 		return results[0]
@@ -385,9 +381,9 @@ def select_until(line_number, lines, item, count = 1):
 
 	for i, line in enumerate(lines[line_number+1:]):
 		if item not in line:
-			full += line
+			full += line + "\n" 
 		else:
-			full += line
+			full += line + "\n"
 			counter += 1
 			if counter == count: break
 
