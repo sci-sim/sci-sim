@@ -39,7 +39,7 @@ def api_users_create():
 
     db.session.commit()
         
-    return dumps(unpack_model(user))
+    return respond_json(dumps(unpack_model(user)))
 
 @app.route('/api/users/login', methods=["POST"])
 def api_users_login():
@@ -67,7 +67,7 @@ def api_users_update_session():
     username = request.form['username']
     new_page_id = request.form['new_page_id']
 
-    update_user_session(username, new_page_id)
+    update_user_session(new_page_id, username=username)
 
     return success_message("Last page updated successfully")
 
@@ -96,16 +96,16 @@ def api_users_notes():
 @app.route('/api/users/log', methods=["POST"])
 def api_users_continue():
     #TODO: we need to make it so that the user's actions are recorded in the lab notebook - crate a place where actions are stored AND notes are made
-    error = check_for_params(['username', 'page_id', 'action_string'])
+    error = check_for_params(['user_id', 'page_id', 'action_string'], request)
     if error:
         return error_message(error)
-    username = request.form['username']
+    user_id = request.form['user_id']
     page_id = request.form['page_id']
     action_string = request.form['action_string']
 
-    log = Log(timestamp=daatetime.now(), content=action_string, user_id=user_id)
+    log = Log(timestamp=datetime.datetime.now(), content=action_string, user_id=user_id)
     # Assume that this page is the last page that the user was on
-    update_user_session(username, page_id)
+    update_user_session(page_id, user_id=user_id)
 
     return success_message("Logged the user's action")
 

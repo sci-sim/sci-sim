@@ -5,20 +5,20 @@ from scisim import app
 from scisim.models import *
 
 def unpack_model(model):
-        # iterate over the models to make the output: ['model': {'key': 'value'}]
-        modelDict = {}
-        relationTable = model.__table__.name
-        columns = model.__table__.columns._data.keys()
+    # iterate over the models to make the output: ['model': {'key': 'value'}]
+    modelDict = {}
+    relationTable = model.__table__.name
+    columns = model.__table__.columns._data.keys()
 
-        for c in columns:
-            # convert timestamp object to an actual timestamp
-            if c == "timestamp":
-                attr = (getattr(model, c) - datetime(1970,1,1)).total_seconds()
-            else:
-                attr = getattr(model, c)
-            modelDict[c] = attr
+    for c in columns:
+        # convert timestamp object to an actual timestamp
+        if c == "timestamp":
+            attr = (getattr(model, c) - datetime(1970,1,1)).total_seconds()
+        else:
+            attr = getattr(model, c)
+        modelDict[c] = attr
 
-        return modelDict
+    return modelDict
 
 def serialize(query):
     # we wantto transform a sqlalchemy query set into something that can be turned into json
@@ -30,7 +30,6 @@ def serialize(query):
         relations = result.__mapper__.relationships._data.keys()
         columns = result.__table__.columns._data.keys()
         table = result.__table__.name
-        s[table] = []
 
         for c in columns:
             if c == "timestamp":
@@ -39,11 +38,11 @@ def serialize(query):
             else:
                 attr = getattr(result, c)
 
-            s[table].append({c: attr})
+            s[c] =  attr
 
         if(relations):
             for relation in relations:
-                relationDict = {relation: []}
+                s[relation] = []
                 relationModels = []
                 relationModels.append(getattr(result, relation))
 
@@ -59,11 +58,11 @@ def serialize(query):
 
                 for model in relationModels:
                     modelDict = unpack_model(model)
-                    relationDict[relation].append(modelDict)
-
-                s[table].append(relationDict)
+                    s[relation].append(modelDict)
 
         serialized.append(s)
+    if len(serialized) == 1:
+        return serialized[0]
         
     return serialized
 
@@ -97,8 +96,12 @@ def check_for_params(params, request):
 
     return error_string
 
-def update_user_session(username, new_page_id):
-    user = User.query.filter(User.name == username).first()
+def update_user_session(new_page_id, username=None, user_id=None):
+    if user_id:
+        user = User.query.filter(User.id == user_id)
+    elif username:
+        user = User.query.filter(User.name == username).first()
+        
     if not user:
         return error_message("User with username " + username + " was not found")
 

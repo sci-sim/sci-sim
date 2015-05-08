@@ -1,7 +1,17 @@
+.clickable-well{
+	max-width:10%;	
+	transition:background-color ease-in-out .2s;
+}
+
+.clickable-well:hover{
+	cursor:pointer;
+	background-color:#fefefe;
+}
 
 .section{
 	border-bottom:1px solid #eee;
 	padding:.7em 0;
+	margin:.7em 0;
 }
 
 .hidden{

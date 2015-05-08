@@ -16,13 +16,17 @@ PageSwitcher.prototype.transitionPage = function(newHtml) {
 	// 	$(newHtml).appendTo($('.page-container'));
 
 	// }else{
-		var newHtml = $(newHtml);
+	
+		var $newHtml = $(newHtml);
+		if($newHtml.find(".screen").length === 0){
+			$newHtml = $(tf.wrapInParent(newHtml)); // we need there to be a parent so that we can remove it whenever. 
+		}
 		
 
 		// http://www.kevinleary.net/jquery-fadein-fadeout-problems-in-internet-explorer/
 		$currentSelector.fadeOut().remove();
-		newHtml.appendTo($('.page-container')).hide().fadeIn();
+		$newHtml.appendTo($('.page-container')).hide().fadeIn();
 	// }
 
-	return newHtml;
+	return $newHtml;
 };

@@ -5,7 +5,14 @@ var EventPublisher = function(){
 EventPublisher.prototype.subscribe = function(eventName, func, recurring) {
 	for (var i = 0; i < this.subscribers.length; i++) {
 		if(this.subscribers[i][0] === eventName){
-			throw "The event " + eventName + " is already in use.";
+			if(!$.isArray(this.subscribers[i].func)){
+				var funcArray = [];
+				funcArray.push(this.subscribers[i].func);
+				this.subscribers[i].func = funcArray;	
+			}
+
+			this.subscribers[i].func.push(func);
+			return;
 		}
 	};
 

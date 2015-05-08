@@ -162,6 +162,7 @@ def parse_choice(lines, page):
 
 		elif "binary" in line:
 			type = "binary"
+			# TODO: this doesn't work. 
 			text = get_text(i, line, lines)
 
 		elif "goes_to_page" in line:

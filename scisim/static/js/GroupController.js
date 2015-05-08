@@ -80,21 +80,16 @@ GroupController.prototype.handleSubmit = function(e) {
 		this.unsetApiError($section)
 
 		api.createUsers([username]).done(function(response){	
-			if (response.hasOwnProperty("error")) {
-				if(response.error.search("already been created") !== -1){
-					
-				}else{
-					alert("Oh no! Something went horribly wrong. You'll have to start over. Wait a few seconds and the page will reload");
-					setTimeout(function(){
-						document.Location.reload(true);
-					}, 3000);
-				}
-			}else{
-				// there wasn't an error
-				publisher.publish("changePage", [PageController]);
+			if(!that.hasApiError(response, $section)){
+				localStorage.setItem("user_id", response.id);
+				console.log(response)
+				console.log(response.id)
+
+				publisher.publish("changePage", [PageController, localStorage.getItem("first_page_id")]);
+				loader.hide();
 			}
-			loader.hide();
 		});
+		return;
 	}
 
 	if(this.sharingComputer){
@@ -112,12 +107,16 @@ GroupController.prototype.handleSubmit = function(e) {
 			if(that.hasApiError(response, $section)){
 				return false
 			}
+			localStorage.setItem("group_name", group_name);
 
 			api.createUsers(usernames).done(function(){
 				var responses = Array.prototype.slice.call(arguments, 0, arguments.length - 2);
 				var errors = false;
+				var user_ids = [];
 
 				for (var i = 0; i < responses.length; i++) {
+					user_ids.push(responses[i].id);
+
 					if(!that.hasApiError(responses[i], $section)){
 						for (var j = 1; j < inputs.length; j++) {
 							if(inputs.eq(i).val() === responses[j]){
@@ -133,6 +132,8 @@ GroupController.prototype.handleSubmit = function(e) {
 					return;
 				}
 
+				localStorage.setItem("user_id", JSON.stringify(user_ids));
+
 				api.addUsersToGroup(group_name, usernames).done(function(){
 					var error = false;
 					var responses = Array.prototype.slice.call(arguments, 0, arguments.length - 2);
@@ -144,11 +145,12 @@ GroupController.prototype.handleSubmit = function(e) {
 
 					if(!error){
 						loader.hide();
-						publisher.publish("changePage", [PageController]);
+						publisher.publish("changePage", [PageController, localStorage.getItem("first_page_id")]);
 					}
 				})
 			});
 		});
+		return;
 	}
 
 	if(!this.sharingComputer && this.groupAlreadyCreated){
@@ -158,13 +160,18 @@ GroupController.prototype.handleSubmit = function(e) {
 		api.createUsers([username]).done(function(response){
 			if(that.hasApiError(response, $section)) return;
 
+			localStorage.setItem("user_id", response.id);
+
 			api.addUsersToGroup(group_name, [username]).done(function(response){
 				if(that.hasApiError(response, $section)) return;
 
+				localStorage.setItem("group_name", response.group_name);
+
 				loader.hide();
-				publisher.publish("changePage", [PageController]);
+				publisher.publish("changePage", [PageController, localStorage.getItem("first_page_id")]);
 			});
 		});
+		return;
 	}
 
 	if(!this.sharingComputer && !this.groupAlreadyCreated){
@@ -175,18 +182,22 @@ GroupController.prototype.handleSubmit = function(e) {
 			if(that.hasApiError(response, $section)) return;
 			// TODO: what if users made a mistake, and then resubmit. The group would already be created and they couldn't get passed this point. 
 			// We could make it so that we ignore the error if we know it's going to fail
+			localStorage.setItem("group_name", response.group_name);
 
 			api.createUsers([username]).done(function(response){
 				if(that.hasApiError(response, $section)) return;
+
+				localStorage.setItem("user_id", response.id);
 
 				api.addUsersToGroup(group_name, [username]).done(function (response) {
 					if(that.hasApiError(response, $section)) return;
 
 					loader.hide();
-					publisher.publish("changePage", [PageController]);
+					publisher.publish("changePage", [PageController, localStorage.getItem("first_page_id")]);
 				});
 			});
 		});
+		return;
 	}
 };
 
@@ -219,6 +230,7 @@ GroupController.prototype.hasErrors = function($section) {
 	return errors;
 };
 
+// TODO: decouple these methods from this class. Maybe an APIHelper class? Or an addition/extension to the API class itself
 GroupController.prototype.hasApiError = function(response, $section) {
 	if(response.hasOwnProperty('error')){
 		this.setApiError($section, response.error);
