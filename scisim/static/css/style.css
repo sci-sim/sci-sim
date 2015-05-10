@@ -1,5 +1,10 @@
+.choice-binary{
+	display:inline-block;
+	max-width: 10%;
+	margin: 0px 30px;
+}
+
 .clickable-well{
-	max-width:10%;	
 	transition:background-color ease-in-out .2s;
 }
 

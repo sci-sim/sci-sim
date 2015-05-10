@@ -59,6 +59,9 @@ TemplateFiller.prototype.getTemplate = function(pageName) {
 		case "submit_btn":
 		return "<button class='btn btn-default'>Submit & Move on to next page</button>"
 
+		case "go_back_btn":
+			return "<button id='go-back' class='btn btn-default'>Go Back</button>"
+
 		default:
 			throw "No template associated with a " + pageName + " page";
 	}
