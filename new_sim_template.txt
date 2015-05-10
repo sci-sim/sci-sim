@@ -30,6 +30,7 @@ text = {Why did you choose this question and hypothesis}
 tag = {hypothesis1}
 ]
 
+goes_to_page = {choose patient}
 can_add_question_groups = {true}
 minimum_questions_answered = {2}
 ]
@@ -129,12 +130,13 @@ choice = [
 ]
 choice = [
 		binary = {Listen to his heart}
-		goes_to_page = {normal_heart} 
+		goes_to_page = {smithheart} 
 		]
 choice = [
 		binary = {Listen to his lungs}
-		goes_to_page = {normal_lungs} 
+		goes_to_page = {smithlungs} 
 	]
+
 choice = [
 		binary = {Check his height, weight, and BMI}
 		goes_to_page = {Mr. Smith’s BMI} 
@@ -145,7 +147,11 @@ choice = [
 		]
 choice = [
 		binary = {Check his feet for sores}
-		goes_to_page = {normal_feet} 
+		goes_to_page = {smithfeet} 
+		]
+choice = [
+		binary = {Check his eyes}
+		goes_to_page = {smitheyes}
 		]
 
 choice = [
@@ -181,35 +187,52 @@ This number is high and means Mr. Smith is a diabetic and not controlling his di
 tag = {patient1}
 	]
 ]
-page = [
-	page_name = {Mr. Smith heart}
-	heading_medium = {Mr. Smith has a normal heart}
-	popup_window = {true}
-	add_to_notebook = [
-		text = {Mr. Smith has a normal heart}
-		tag = {patient1}
-	]
-]
 
 page = [
-page_name = {Mr. Smith lungs}
-heading_medium = {Mr. Smith has normal lungs}
-popup_window = {true}
-add_to_notebook = [
-text = {Mr. Smith has normal lungs}
-tag = {patient1}
+	page_name = {smithheart}
+heading_medium = {This is what a healthy heart sounds like}
+media = {healthy_heart.mp3}
+heading_medium = {This is what this resident’s heart sounds like}
+media = {healthy_heart.mp3}
+choice = [
+	binary = {Do you think this resident’s heart sounds healthy?}
+goes_to_page= {Examine Mr. Smith}
 ]
 ]
 
 page = [
-
-page_name = {burningfeet}
-heading_medium = {Mr. Smith: “My feet feel like they are burning”}
-add_to_notebook = [
-	text = {Mr. Smith: “My feet feel like they are burning”}
-	tag = {patient1}
+page_name = {smithlungs}
+heading_medium = {This is what healthy lungs sound like when someone breaths}
+media = {healthy_lungs.mp3}
+heading_medium = {This is what this resident’s lungs sounds like}
+media = {healthy_lungs.mp3}
+choice = [
+binary = {Do you think this resident’s lungs sound healthy?}
+goes_to_page= {Examine Mr. Smith}
 ]
-popup_window = {true}
+]
+
+page = [
+page_name = {smithfeet}
+heading_medium = {This is what a healthy foot looks like}
+media = {healthyrfoot.jpg}
+heading_medium = {This is what this resident’s foot looks like}
+media = {healthyfoot1.jpg}
+choice = [
+binary = {Do you think this resident’s foot looks healthy?}
+goes_to_page= {Examine Mr. Smith}
+]
+]
+
+page = [
+page_name = {smitheyes}
+heading_medium = {This is what a healthy retina looks like}
+media = {healthyretina.jpg}
+heading_medium = {This is what this resident’s retina looks like}
+media = {healthyretina.jpg}
+choice = [
+binary = {Do you think this resident’s retina looks healthy?}
+goes_to_page= {Examine Mr. Smith}
 ]
 
 page = [
@@ -264,51 +287,45 @@ choice = [
 ]
 choice = [
 		binary = {Listen to her heart}
-		goes_to_page = {normal_heart} 
+		goes_to_page = {jonesheart} 
 	]
 choice = [
 		binary = {Listen to her lungs}
-		goes_to_page = {normal_lungs} 
+		goes_to_page = {joneslungs} 
 ]
 choice = [
-	binary = {check her eyes}
-	goes_to_page = {normal eyes}
+	binary = {Check her eyes}
+	goes_to_page = {joneseyes}
 	]
+
 choice = [
 		binary = {Check her height, weight, and BMI}
 		goes_to_page = {Ms. Jones’ BMI} 
 		]
 
 choice = [
-		binary = {Check her feet for sensation}
-		goes_to_page = {normal_sensation} 
-		]
-choice = [
 		binary = {Check her feet for sores}
-		goes_to_page = {normal_feet} 
+		goes_to_page = {jonesfeet} 
 		]
+
 choice = [
 		binary = {Check her blood sugar}
 goes_to_page = {Ms. Jones Blood Sugar}
 ]
 
-choice = [
-	binary = {Check her temperature}
-	popup_window = {
-	98.6 degrees
-	This resident does not have a fever}
 ]
 
-]
 page = [
-	page_name = {Ms. Jones heart}
-	heading_medium = {Ms. Jones
- has a normal heart}
-	popup_window = {true}
-	add_to_notebook = [
-		text = {Ms. Jones
- has a normal heart}
-		tag = {patient1}
+	page_name = {jonesheart}
+	heading_medium = {This is what a healthy heart sounds like}
+
+media = {healthy_heart.mp3}
+heading_medium = {This is what this resident’s heart sounds like}
+
+media = {healthy_heart.mp3}
+choice = [
+	binary = {Do you think this resident’s heart sounds healthy?}
+goes_to_page = {Examine Ms. Jones} 
 	]
 ]
 
@@ -323,12 +340,26 @@ tag = {patient1}
 ]
 
 page = [
-page_name = {Ms. Jones lungs}
-heading_medium = {Ms. Jones has normal lungs}
-popup_window = {true}
-add_to_notebook = [
-text = {Ms. Jones has a normal heart}
-tag = {patient1}
+page_name = {joneslungs}
+heading_medium = {This is what healthy lungs sound like when someone breaths}
+media = {healthy_lungs.mp3}
+heading_medium = {This is what this resident’s lungs sounds like}
+media = {healthy_lungs.mp3}
+choice = [
+binary = {Do you think this resident’s lungs sound healthy?}
+goes_to_page = {Examine Ms. Jones} 
+]
+]
+
+page = [
+page_name = {joneseyes}
+heading_medium = {This is what a healthy retina looks like}
+media = {healthyretina.jpg}
+heading_medium = {This is what this resident’s retina looks like}
+media = {healthyretina.jpg}
+choice = [
+binary = {Do you think this resident’s retina looks healthy?}
+goes_to_page = {Examine Ms. Jones} 
 ]
 ]
 
@@ -350,6 +381,20 @@ heading_medium = {I’m feeling much better since I changed my diet.}
 add_to_notebook = [
 	text = {I’m feeling much better since I changed my diet.}
 	tag = {patient1}
+]
+popup_window = {true}
+]
+
+page = [
+page_name = {jonesfeet}
+heading_medium = {This is what a healthy foot looks like}
+media = {healthyfoot.jpg}
+heading_medium = {This is what your patient’s foot looks like}
+media = {healthyfoot1.jpg}
+choice = [
+binary = {Do you think this resident’s foot looks healthy?}
+goes_to_page = {Examine Ms. Jones} 
+]
 ]
 
 page = [
@@ -402,18 +447,19 @@ choice = [
 ]
 
 
-choice = [
+hoice = [
 		binary = {Listen to his heart}
-		goes_to_page = {normal_heart} 
+		goes_to_page = {andersonheart} 
 		]
 choice = [
 		binary = {Listen to his lungs}
-		goes_to_page = {normal_lungs} 
+		goes_to_page = {andersonlungs} 
 ]
 choice = [
 	binary = {check his eyes}
-	goes_to_page = {normal eyes}
+	goes_to_page = {andersoneyes}
 ]
+
 choice = [
 		binary = {Check his height, weight, and BMI}
 		goes_to_page = {Mr. Anderson’s BMI} 
@@ -424,7 +470,7 @@ choice = [
 		]
 choice = [
 		binary = {Check his feet for sores}
-		goes_to_page = {normal_feet} 
+		goes_to_page = {andersonfeet} 
 		]
 choice = [
 		binary = {Check his blood sugar}
@@ -450,6 +496,19 @@ page = [
 ]
 
 page = [
+	page_name = {andersonheart}
+	heading_medium = {This is what a healthy heart sounds like}
+media = {healthy_heart.mp3}
+heading_medium = {This is what this resident’s heart sounds like}
+media = {healthy_heart.mp3}
+choice = [
+	binary = {Do you think this resident’s heart sounds healthy?}
+	goes_to_page = {Examine Mr. Anderson} 
+	]
+]
+
+
+page = [
 page_name = {Mr. Anderson feeling}
 heading_medium = {Mr. Anderson has a normal heart}
 popup_window = {true}
@@ -460,18 +519,46 @@ tag = {patient1}
 ]
 
 page = [
-page_name = {Mr. Anderson lungs}
-heading_medium = {Mr. Anderson has normal lungs}
-popup_window = {true}
-add_to_notebook = [
-text = {Mr. Anderson has a normal heart}
-tag = {patient1}
+page_name = {andersoneyes}
+heading_medium = {This is what a healthy retina looks like}
+media = {healthyretina.jpg}
+heading_medium = {This is what this resident’s retina looks like}
+media = {healthyretina.jpg}
+choice = [
+binary = {Do you think this resident’s retina looks healthy?}
+goes_to_page = {Examine Mr. Anderson} 
 ]
 ]
+
+
+page = [
+page_name = {andersonfeet}
+heading_medium = {This is what a healthy foot looks like}
+media = {healthyfoot.jpg}
+heading_medium = {This is what this resident’s foot looks like}
+media = {healthyfoot1.jpg}
+choice = [
+binary = {Do you think this resident’s foot looks healthy?}
+goes_to_page = {Examine Mr. Anderson} 
+]
+]
+
+page = [
+page_name = {andersonlungs}
+heading_medium = {This is what healthy lungs sound like when someone breaths}
+media = {healthy_luns.mp3}
+heading_medium = {This is what this resident’s lungs sounds like}
+media = {healthy_luns.mp3}
+choice = [
+binary = {Do you think this resident’s lungs sound healthy?}
+goes_to_page = {Examine Mr. Anderson} 
+]
+]
+
 
 page = [ 
 
-	page_name = {andersonbatheroom}
+	page_name = {andersonbathroom}
 	heading_medium =  {Ms. Anderson: “I need to go to the bathroom a lot”}
 	add_to_notebook = [
 	text =  {Ms. Anderson: “I need to go to the bathroom a lot”}
@@ -550,16 +637,21 @@ choice = [
 ]
 choice = [
 		binary = {Listen to her heart}
-		goes_to_page = {abnormal_heart} 
+		goes_to_page = {williamsheart} 
 		]
 choice = [
 		binary = {Listen to her lungs}
-		goes_to_page = {abnormal_lungs} 
+		goes_to_page = {wiliamslungs} 
 ]
 choice = [
 	binary = {check her eyes}
-	goes_to_page = {abnormal eyes}
+	goes_to_page = {williamseyes}
 ]
+choice = [
+		binary = {Check her feet for sores}
+		goes_to_page = {williamsfeet} 
+		]
+
 choice = [
 		binary = {Check her height, weight, and BMI}
 		goes_to_page = {Ms. Williams’ BMI} 
@@ -570,17 +662,13 @@ choice = [
 		goes_to_page = {abnormal_sensation} 
 		]
 choice = [
-		binary = {Check his feet for sores}
-		goes_to_page = {normal_feet} 
-		]
-choice = [
 	binary = {Check his blood sugar}
 	goes_to_page = {Check Ms. Williams blood sugar}
 		]
 
 choice = [
 	binary = {Check her temperature}
-	goes_to_page = {Check Ms. Williams  temperate}
+	goes_to_page = {Check Ms. Williams temperature}
 ]
 
 ]
@@ -590,37 +678,41 @@ page = [
 	binary = {Why do you think Ms. Williams can’t sleep laying down?}
 	goes_to_page = {Examine Ms. Williams}	
 ]
-
-
 page = [
-	page_name = {Ms. WIlliams heart}
-	heading_medium = {Ms. WIlliams
- has an abnormal heart}
-	popup_window = {true}
-	add_to_notebook = [
-		text = {Ms. Williams has an abnormal heart}
- has an abnormal heart}
-		tag = {patient1}
+	page_name = {williamsheart}
+	heading_medium = {This is what a healthy heart sounds like}
+media = {healthy_heart.mp3}
+heading_medium = {This is what this resident’s heart sounds like}
+media = {abnormal_heart.mp3}
+choice = [
+	binary = {Do you think this resident’s heart sounds healthy?}
+goes_to_page = {Examine Ms. Williams}
 	]
+}
+]
+
+
+page = [
+page_name = {williamslungs}
+heading_medium = {This is what healthy lungs sound like when someone breaths}
+media = {healthy_lungs.mp3}
+heading_medium = {This is what this resident’s lungs sounds like}
+media = {healthy_lungs.mp3}
+choice = [
+binary = {Do you think this resident’s lungs sound healthy?}
+goes_to_page = {Examine Ms. Williams}
+]
 ]
 
 page = [
-page_name = {Ms. WIlliams eyes}
-heading_medium = {Ms. WIlliams has abnormal eyes}
-popup_window = {true}
-add_to_notebook = [
-text = {Ms. WIlliams has abnormal eyes}
-tag = {patient1}
-]
-]
-
-page = [
-page_name = {Ms. WIlliams lungs}
-heading_medium = {Ms. WIlliams has normal lungs}
-popup_window = {true}
-add_to_notebook = [
-text = {Ms. WIlliams has a normal heart}
-tag = {patient1}
+page_name = {williamseyes}
+heading_medium = {This is what a healthy retina looks like}
+media = {healthyretina.jpg}
+heading_medium = {This is what this resident’s retina looks like}
+media = {unhealthyretina.jpg}
+choice = [
+binary = {Do you think this resident’s retina looks healthy?}
+goes_to_page = {Examine Ms. Williams}
 ]
 ]
 
@@ -702,15 +794,19 @@ choice = [
 
 choice = [
 		binary = {Listen to his heart}
-		goes_to_page = {normal_heart} 
+		goes_to_page = {laneheart} 
 		]
 choice = [
 		binary = {Listen to his lungs}
-		goes_to_page = {normal_lungs} 
+		goes_to_page = {lanelungs} 
 ]
 choice = [
 	binary = {check his eyes}
-	goes_to_page = {normal eyes}
+	goes_to_page = {laneeyes}
+]
+choice = [
+	binary = {check his eyes}
+	goes_to_page = {normal_eyes}
 ]
 choice = [
 		binary = {Check his height, weight, and BMI}
@@ -734,35 +830,29 @@ goes_to_page = {Check Mr. Lane’s blood sugar}
 goes_to_page = {Check Mr. Lane’s temperature}
 ]
 ]
+
+
 page = [
-	page_name = {Mr. Lane heart}
-	heading_medium = {Mr. Lane
- has a normal heart}
-	popup_window = {true}
-	add_to_notebook = [
-		text = {Mr. Lane has a normal heart}
- has an abnormal heart}
-		tag = {patient1}
+	page_name = {laneheart}
+	heading_medium = {This is what a healthy heart sounds like}
+media = {healthy_heart.mp3}
+heading_medium = {This is what this resident’s heart sounds like}
+media = {healthy_heart.mp3}
+choice = [
+	binary = {Do you think this resident’s heart sounds healthy?}
+goes_to_page = {Examine Mr. Lane}
 	]
 ]
 
 page = [
-page_name = {Mr. Lane eyes}
-heading_medium = {Mr. Lane has normal eyes}
-popup_window = {true}
-add_to_notebook = [
-text = {Mr. Lane has abnormal eyes}
-tag = {patient1}
-]
-]
-
-page = [
-page_name = {Mr. Lane lungs}
-heading_medium = {Mr. Lane has normal lungs}
-popup_window = {true}
-add_to_notebook = [
-text = {Mr. Lane has normal lungs}
-tag = {patient1}
+page_name = {lanelungs}
+heading_medium = {This is what healthy lungs sound like when someone breaths}
+media = {healthy_lungs.mp3}
+heading_medium = {This is what this resident’s lungs sounds like}
+media = {healthy_lungs.mp3}
+choice = [
+binary = {Do you think this resident’s lungs sound healthy?}
+goes_to_page = {Examine Mr. Lane}
 ]
 ]
 
@@ -780,6 +870,19 @@ tag = {patient1}
 ]
 ]
 
+page = [
+page_name = {laneeyes}
+heading_medium = {This is what a healthy retina looks like}
+media = {healthyretina.jpg}
+heading_medium = {This is what this resident’s retina looks like}
+media = {healthyretina.jpg}
+choice = [
+binary = {Do you think this resident’s retina looks healthy?}
+goes_to_page = {Examine Mr. Lane}
+]
+]
+
+
 
 page = [
 	page_name = {Check Mr. Lane’s temperature}
@@ -793,6 +896,18 @@ add_to_notebook = [
 This resident has a fever!
 		}
 tag = {patient1}
+]
+]
+
+page = [
+page_name = {lanefeet}
+heading_medium = {This is what a healthy foot looks like}
+media = {healthyfoot.jpg}
+heading_medium = {This is what this resident’s foot looks like}
+media = {uhealthyfeet.jpg}
+choice = [
+binary = {Do you think this resident’s foot looks healthy?}
+goes_to_page = {Examine Mr. Lane}
 ]
 ]
 
@@ -819,7 +934,7 @@ heading_medium = {Mr. Lane is: underweight, healthy weight, overweight, or obese
 
 choice = [
 	binary = {underweight}
-	goes_to_page = {Mr. Lane}
+	goes_to_page = {Examine Mr. Lane}
 ]
 choice = [
 	binary = {healthy weight}
@@ -855,28 +970,27 @@ choice = [
 
 choice = [
 		binary = {Listen to her heart}
-		goes_to_page = {normal_heart} 
+		goes_to_page = {watsonheart} 
 		]
 choice = [
 		binary = {Listen to her lungs}
-		goes_to_page = {normal_lungs} 
+		goes_to_page = {watsonlungs} 
 ]
 choice = [
 	binary = {check her eyes}
-	goes_to_page = {normal eyes}
+	goes_to_page = {watsoneyes}
 ]
+
 choice = [
 		binary = {Check her height, weight, and BMI}
 		goes_to_page = {Ms. Watson’s BMI} 
 		]
-choice = [
-		binary = {Check her feet for sensation}
-		goes_to_page = {normal_sensation} 
-		]
+
 choice = [
 		binary = {Check her feet for sores}
-		goes_to_page = {abnormal_feet} 
+		goes_to_page = {watsonfeet} 
 		]
+
 choice = [
 binary = {Check her blood sugar}
 	goes_to_page = {Check Ms. Watson’s blood sugar}	
@@ -890,48 +1004,65 @@ page = [
 	page_name = {Check Ms. Watson’s blood sugar}
 	heading_medium = {
 Fasting Blood Sugar = 120
-This number is higher than normal, and means Ms. Jones is either becoming diabetic, or is reversing Type II diabetes.
+This number is higher than normal, and means Ms. Watson is either becoming diabetic, or is reversing Type II diabetes.
 		}
 popup_window = {true}
 add_to_notebook = [
 	text = {Fasting Blood Sugar = 120
-This number is higher than normal, and means Ms. Jones is either becoming diabetic, or is reversing Type II diabetes.
+This number is higher than normal, and means Ms. Watson is either becoming diabetic, or is reversing Type II diabetes.
 		}
 tag = {patient1}
 ]
 ]
 
 page = [
-	page_name = {Ms. Watson heart}
-	heading_medium = {Ms. Watson
- has a normal heart}
-	popup_window = {true}
-	add_to_notebook = [
-		text = {Ms. Watson has a normal heart}
- has an abnormal heart}
-		tag = {patient1}
+	page_name = {watsonheart}
+	heading_medium = {This is what a healthy heart sounds like}
+media = {healthy_heart.mp3}
+heading_medium = {This is what this resident’s heart sounds like}
+media = {healthy_heart.mp3}
+choice = [
+	binary = {Do you think this resident’s heart sounds healthy?}
+goes_to_page = {Examine Ms. Watson}
 	]
 ]
 
 page = [
-page_name = {Ms. Watson eyes}
-heading_medium = {Ms. Watson has normal eyes}
-popup_window = {true}
-add_to_notebook = [
-text = {Ms. Watson has abnormal eyes}
-tag = {patient1}
+page_name = {watsonlungs}
+heading_medium = {This is what healthy lungs sound like when someone breaths}
+media = {healthy_lungs.mp3}
+heading_medium = {This is what this resident’s lungs sounds like}
+media = {healthy_lungs.mp3}
+choice = [
+binary = {Do you think this resident’s lungs sound healthy?}
+goes_to_page = {Examine Ms. Watson}
 ]
 ]
 
 page = [
-page_name = {Ms. Watson lungs}
-heading_medium = {Ms. Watson has normal lungs}
-popup_window = {true}
-add_to_notebook = [
-text = {Ms. Watson has normal lungs}
-tag = {patient1}
+page_name = {watsoneyes}
+heading_medium = {This is what a healthy retina looks like}
+media = {healthyretina.jpg}
+heading_medium = {This is what this resident’s retina looks like}
+media = {healthyretina.jpg}
+choice = [
+binary = {Do you think this resident’s retina looks healthy?}
+goes_to_page = {Examine Ms. Watson}
 ]
 ]
+
+page = [
+page_name = {watsonfeet}
+heading_medium = {This is what a healthy foot looks like}
+media = {healthyfoot.jpg}
+heading_medium = {This is what this resident’s foot looks like}
+media = {healthyfoot1.jpg}
+choice = [
+binary = {Do you think this resident’s foot looks healthy?}
+goes_to_page = {Examine Ms. Watson}
+]
+]
+
 
 
 page = [
@@ -980,166 +1111,6 @@ choice = [
 ]
 mimimum_choices_reached = {conclusions1}
 	#Text on button “I’ve collected enough data”
-]
-page = [
-	page_name = {abnormal_sensation}
-	popup_window = {true}
-heading_medium = {“My feet feel like they are burning. They also feel like they are tingling”}
-add_to_notebook=[
-text = {“My feet feel like they are burning. They also feel like they are tingling”}
-tag = {patient1}
-]
-]
-
-page = [
-	page_name = {normal_sensation}
-	popup_window = {true}
-heading_medium = {“I don’t have any burning or tingling in my feet”}
-add_to_notebook=[
-text = {“I don’t have any burning or tingling in my feet”}
-tag = {patient1}
-]
-]
-page = [
-	page_name = {normal_heart}
-heading_medium = {This is what a healthy heart sounds like}
-# media = { http://www.easyauscultation.com/cases-listing-details?caseID=32}
-media = {healthy_heart.mp3}
-heading_medium = {This is what your patient’s heart sounds like}
-# media = { http://www.easyauscultation.com/cases-listing-details?caseID=32}
-media = {healthy_heart.mp3}
-choice = [
-	binary = {Do you think your patient’s heart sounds healthy?}
-goes_to_page = {???}	
-]
-
-add_to_notebook=[
-text = {The patient has a normal heart}
-tag = {patient1}
-]
-]
-
-page = [
-	page_name = {abnormal_heart}
-heading_medium = {This is what a healthy heart sounds like}
-# media = {http://www.easyauscultation.com/cases-listing-details?caseID=32}
-media = {healthy_heart.mp3}
-heading_medium = {This is what your patient’s heart sounds like}
-# media = {http://www.easyauscultation.com/cases-listing-details?caseID=7}
-media = {abnormal_heart.mp3}
-choice = [
-binary = {Do you think your patient’s heart sounds healthy?}
-goes_to_page = {???}	
-]
-add_to_notebook=[
-text = {The patient has an abnormal heart}
-tag = {patient1}
-]
-
-]
-
-page = [
-	page_name = {normal_lungs}
-heading_medium = {This is what healthy lungs sound like when someone breaths}
-media = {http://www.easyauscultation.com/cases-listing-details?caseID=76}
-heading_medium = {This is what your patient’s lungs sounds like}
-media = {http://www.easyauscultation.com/cases-listing-details?caseID=76}
-choice = [
-binary = {Do you think your patient’s lungs sound healthy?}
-goes_to_page = {???}	
-]
-
-add_to_notebook=[
-text = {The patient has normal lungs}
-tag = {patient1}
-]
-
-]
-
-page = [
-	page_name = {abnormal_lungs}
-heading_medium = {This is what healthy lungs sound like when someone breaths}
-# media = {http://www.easyauscultation.com/cases-listing-details?caseID=76}
-media = {normal_lungs.mp3}
-heading_medium = {This is what your patient’s heart sounds like}
-# media = {http://www.easyauscultation.com/cases-listing-details?caseID=72}
-media = {abnormal_lungs.mp3}
-choice = [
-binary = {Do you think your patient’s lungs sound healthy?}
-goes_to_page = {???}	
-]
-
-add_to_notebook=[
-text = {The patient has abnormal lungs}
-tag = {patient1}
-]
-]
-
-page = [
-	page_name = {normal_eyes}
-heading_medium = {This is what a healthy retina looks like}
-media = {healthyretina.jpg}
-heading_medium = {This is what your patient’s retina looks like}
-media = {healthyretina.jpg}
-choice = [
-binary = {Do you think your patient’s retina looks healthy?}
-goes_to_page = {???}	
-]
-add_to_notebook=[
-text = {The patient has normal eyes}
-tag = {patient1}
-]
-]
-	
-page = [
-	page_name = {abnormal_eyes}
-heading_medium = {This is what a healthy retina looks like}
-media = {healthyretina.jpg}
-heading_medium = {This is what your patient’s retina looks like}
-media = {unhealthyretina.jpg}
-choice = [
-binary = {Do you think your patient’s retina looks healthy?}
-goes_to_page = {???}	
-]
-
-add_to_notebook=[
-text = {The patient has abnormal eyes}
-tag = {patient1}
-]
-]
-
-
-page = [
-	page_name = {normal_feet}
-heading_medium = {This is what a healthy foot looks like}
-media = {healthyrfoot.jpg}
-heading_medium = {This is what your patient’s foot looks like}
-media = {healthyfoot1.jpg}
-choice = [
-binary = {Do you think your patient’s foot looks healthy?}
-goes_to_page = {???}	
-]
-add_to_notebook=[
-text = {The patient has normal feet}
-tag = {patient1}
-]
-]
-
-page = [
-	page_name = {abnormal_feet}
-heading_medium = {This is what a healthy foot looks like}
-media = {healthyrfoot.jpg}
-heading_medium = {This is what your patient’s foot looks like}
-media = {uhealthyfeet.jpg}
-choice = [
-binary = {Do you think your patient’s foot looks healthy?}
-goes_to_page = {???}	
-]
-add_to_notebook=[
-text = {The patient has abnormal feet}
-tag = {patient1}
-]
-
 ]
 
 page = [
@@ -1443,7 +1414,7 @@ add_to_notebook = [
 
 page = [
 page_name = {NO Type II genes}
-popup_window = true
+popup_window = {true}
 heading_medium = {This resident has very few genes that are risk factors for developing Type II diabetes}
 
 add_to_notebook = [
@@ -1455,7 +1426,7 @@ add_to_notebook = [
 page = [
 
 page_name = {several obese genes}
-popup_window = true
+popup_window = {true}
 heading_medium = {This resident has very several genes that are risk factors for developing obesity}
 
 add_to_notebook = [
@@ -1617,7 +1588,7 @@ goes_to_page = {Several Type II genes}
 ]
 page = [
 page_name = {NO Type I genes}
-popup_window = true
+popup_window = {true}
 heading_medium = {This resident has very few genes that are risk factors for developing Type I diabetes}
 }
 add_to_notebook = [
@@ -1629,7 +1600,7 @@ add_to_notebook = [
 
 page = [
 page_name = {Several Type II genes}
-popup_window = true
+popup_window = {true}
 heading_medium = {This resident has several genes that are risk factors for developing Type II diabetes}
 add_to_notebook = [
 	text = {This resident has several genes that are risk factors for developing Type II diabetes}
@@ -1641,7 +1612,7 @@ add_to_notebook = [
 page = [
 
 page_name = {lots of obese genes}
-popup_window = true
+popup_window = {true}
 heading_medium = {This resident has lots of genes that are risk factors for obesity}
 add_to_notebook = [
 	text = {This resident has lots of genes that are risk factors for obesity}
@@ -1795,7 +1766,7 @@ goes_to_page = {NO Type I genes}
 ]
 page = [
 page_name = {many Type II genes}
-popup_window = true
+popup_window = {true}
 heading_medium = {This resident has several genes that are risk factors for developing Type II diabetes}
 add_to_notebook = [
 	text = {This resident has several genes that are risk factors for developing Type II diabetes}
@@ -1807,7 +1778,7 @@ add_to_notebook = [
 page = [
 
 page_name = {several obese genes}
-popup_window = true
+popup_window = {true}
 heading_medium = {This resident has very several genes that are risk factors for developing obesity}
 add_to_notebook = [
 	text = {This resident has very several genes that are risk factors for developing obesity}
@@ -2118,7 +2089,7 @@ goes_to_page = {some obese genes}
 
 page = [
 page_name = {many Type II genes}
-popup_window = true
+popup_window = {true}
 heading_medium = {This resident has several genes that are risk factors for developing Type II diabetes}
 
 add_to_notebook = [
@@ -2130,7 +2101,7 @@ add_to_notebook = [
 page = [
 
 page_name = {some obese genes}
-popup_window = true
+popup_window = {true}
 heading_medium = {This resident has a few genes that are risk factors for developing obesity}
 add_to_notebook = [
 	text = {Mr. Lane  has a few genes that are risk factors for developing obesity}
@@ -2297,7 +2268,7 @@ goes_to_page = {many obese genes}
 ]
 page = [
 page_name = {some Type II genes}
-popup_window = true
+popup_window = {true}
 heading_medium = {This resident has some genes that are risk factors for developing Type II diabetes}
 add_to_notebook = [
 	text = {This resident has some genes that are risk factors for developing Type II diabetes}
@@ -2309,7 +2280,7 @@ add_to_notebook = [
 page = [
 
 page_name = {many obese genes}
-popup_window = true
+popup_window = {true}
 heading_medium = {This resident has many genes that are risk factors for developing obesity}
 add_to_notebook = [
 	text = {This resident has many genes that are risk factors for developing obesity}

@@ -14,7 +14,8 @@ def debug(*exps):
 
 def parse_sim(sim_template):
 	sim_template = clean_comments(sim_template)
-
+	page_names = find_keyword_value("page_name", sim_template)
+	page_names = map(lambda x:x.strip(), page_names)
 	# errors = check_for_errors(sim_template)
 	# if errors:
 	# 	debug(errors)
@@ -36,7 +37,7 @@ def parse_sim(sim_template):
 	print("Simulation added.")
 
 	for page in pages:
-		process_page(page, sim, page_base)
+		process_page(page, sim, page_base, page_names)
 		page_base += 1
 
 	return None
@@ -60,14 +61,17 @@ def page_loop(start_line, all_lines):
 
 	return page
 
-def process_page(page_text, sim, page_id):
+def process_page(page_text, sim, page_id, page_names):
 	page = None
 	order = 0
-	
+	skip = 0
 	all_lines = page_text.splitlines()
 
 
 	for i, line in enumerate(all_lines):
+		if skip is not 0:
+			skip = skip - 1
+			continue
 		try:
 			keyword, content = split_key_value(line)
 
@@ -83,27 +87,27 @@ def process_page(page_text, sim, page_id):
 
 		elif keyword == "heading_big":
 			print("Found a big heading")
-			add_section(i, all_lines, order, content, page, "big")
+			add_section(i, all_lines, order, content, page, "big_heading")
 			order += 1
 
 		elif keyword == "heading_medium":
 			print("found medium heading")
-			add_section(i, all_lines, order, content, page, "medium")
+			add_section(i, all_lines, order, content, page, "medium_heading")
 			order += 1
 
 		elif keyword == "heading_small":
 			print("found small heading")
-			add_section(i, all_lines, order, content, page, "small")
+			add_section(i, all_lines, order, content, page, "small_heading")
 			order += 1
 
 		elif keyword == "text":
 			print("found text")
-			add_section(i, all_lines, order, content, page, "regular")
+			add_section(i, all_lines, order, content, page, "regular_heading")
 			order += 1
 
 		elif keyword == "media":
 			print("Found media")
-			add_section(i, all_lines, order, "media " + content, page)
+			add_section(i, all_lines, order, content, page, "media")
 
 		elif keyword == "minimum_choices" or keyword == "choice_minimum" or keyword == "choice_limit":
 			print("found choices")
@@ -119,8 +123,10 @@ def process_page(page_text, sim, page_id):
 
 		elif keyword == "choice":
 			print("found choice")
-			lines = select_until(i, all_lines, "]").splitlines();
-			parse_choice(lines, page)
+			lines = select_until(i, all_lines, "]").splitlines()
+			parse_choice(lines, page, page_names)
+			skip = len(lines)
+
 
 		elif keyword == "add_to_notebook":
 			lines = select_until(i, all_lines, "]")
@@ -128,6 +134,7 @@ def process_page(page_text, sim, page_id):
 			tag = find_keyword_value("tag", lines)
 
 			add_page_action(page, keyword, text + "|" + tag)
+			skip = len(lines.splitlines())
 
 		elif keyword == "pop_up_window" or keyword == "popup_window":
 			add_page_modifier(page, keyword, content)
@@ -136,22 +143,39 @@ def process_page(page_text, sim, page_id):
 			lines = select_until(i, all_lines, ']')
 			parse_link(lines, page, order)
 			order += 1
+			skip = len(lines.splitlines())
 
 		elif keyword == "question":
 			lines = select_until(i, all_lines, ']')
+			skip = len(lines.splitlines())
 			parse_question(lines, page)
 
 		elif keyword == "can_add_question_groups":
 			add_page_modifier(page, keyword, strip_braces(content))
 
+		elif keyword == "goes_to_page":
+			content = strip_braces(content).strip()
+			try:
+				dest_id = page_names.index(content) + int(str(page.id)[0]) * 1000
+			except ValueError, e:
+				continue # to guard for ??? errors
+
+			add_page_modifier(page, keyword, dest_id)
+
 		elif keyword == "show_all_student_content":
 			add_page_action(page, keyword, strip_braces(content))
 
 
-def parse_choice(lines, page):
+def parse_choice(lines, page, page_names):
 	type = None
 	text = None
-	destination = None
+
+	page_base = int(str(page.id)[0]) * 1000
+
+	try:
+		destination = page_base + page_names.index(find_keyword_value("goes_to_page", lines))
+	except Exception, e:
+		return # TODO: this fails sometimes because we need to make a solution on dynamic pages (normal_heart, etcself.)
 
 	for i, line in enumerate(lines):
 		if "prompt" in line or "textbox" in line:
@@ -161,9 +185,6 @@ def parse_choice(lines, page):
 		elif "binary" in line:
 			type = "binary"
 			text = get_text(i, line, lines)
-
-		elif "goes_to_page" in line:
-			destination = get_text(i , line, lines)
 
 	print("Adding a choice to the database")
 	db.session.add(Choice(type=type, text=text, destination=destination, page_id = page.id))
@@ -186,23 +207,30 @@ def parse_question(lines, page):
 	db.session.add(Choice(type="question", text=text, page_id = page.id, tag=tag))
 	db.session.commit()
 
-def add_section(line_number, all_lines, order, content, page, size=None):
+def add_section(line_number, all_lines, order, content, page, content_type=None):
 	print("Adding section")
 
 	content = get_text(line_number, content, all_lines)
 	content = content
 
-	if size == "small":
+	if content_type == "small_heading":
 		tags = "<h3>content</h3>"
-	elif size == "big":
+	elif content_type == "big_heading":
 		tags = "<h1>content</h1>"
-	elif size == "medium":
+	elif content_type == "medium_heading":
 		tags = "<h2>content</h2>"
-	elif size == "regular":
+	elif content_type == "regular_heading":
 		tags = "<p>content</p>"
+	elif content_type == "media":
+		if content_type[-3:] == "jpg" or content_type[-3:] == "jpeg":
+			tags = "<img src='content'/>"
+		else:
+			tags = "<audio src='content'/>";
 
-	if size: # we do this check to make sure that there's no media here. If there's media, then size won't be passed in
+	if content_type: # we do this check to make sure that there's no media here. If there's media, then size won't be passed in
 		content = tags.replace("content", content)
+		
+		
 
 	try:
 		db.session.add(Section(show=True, order=order, content=strip_braces(content), page_id = page.id))
@@ -214,7 +242,7 @@ def add_section(line_number, all_lines, order, content, page, size=None):
 def add_page_modifier(page, name, value):
 	print("adding a page modifier")
 
-	db.session.add(Page_Modifier(name=name, value=strip_braces(value), page_id=page.id))
+	db.session.add(Page_Modifier(name=name, value=value, page_id=page.id))
 	db.session.commit()
 
 def add_page_action(page, name, value):
@@ -354,16 +382,20 @@ def get_text(line_number, line, lines):
 	if lines[line_number].count("}") != 1:
 		return strip_braces(select_until(line_number, lines, "}"))
 	else:
-		return strip_braces(line)
+		return strip_braces(re.findall("{.*}", line)[0])
+		
 
 def find_keyword_value(keyword, sim):
 	results = []
-	for i, line in enumerate(sim.splitlines()):
+	if not isinstance(sim, list):
+		sim = sim.splitlines()
+
+	for i, line in enumerate(sim):
 		if keyword in line and "=" in line:
-			if "}" not in line:
+			if "}" not in line and "[" not in line:
 				text = select_until(i, sim, "}")
 			else:
-				text = strip_braces(re.findall("{.*}", line)[0])
+				text = strip_braces(re.findall("{.*}", line)[0].strip())
 
 			results.append(text)
 
