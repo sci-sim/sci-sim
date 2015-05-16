@@ -1,7 +1,7 @@
 var PageController = function(page_id){
 	this.page_id = parseInt(page_id);
 	this.render();
-}
+};
 
 PageController.prototype.render = function() {
 	var that = this;
@@ -10,9 +10,8 @@ PageController.prototype.render = function() {
 		if($.isEmptyObject(response)){
 			alert("this page doesn't exist");
 		}else{
-			// TODO: process modifiers first
-			that.composePage(response);
 			that.applyDirectives(response);
+			that.composePage(response);
 			that.init();
 		}
 	});
@@ -22,24 +21,28 @@ PageController.prototype.composePage = function(pageResponse) {
 	var sections = pageResponse.sections,
 		choices = pageResponse.choices,
 	 	html = "";
-	 
-	 this.hasBinary = false
 
 	 for (var i = 0; i < sections.length; i++) {
 	 	var section_html = tf.fillTemplate({"content": sections[i].content}, "page_section");
-	 	console.log($(section_html).children().eq(0).prop("tagName"));
 	 	if($(section_html).children().eq(0).prop("tagName") === "IMG"){
-	 		html += "<p> There's supposed to be an image here, but images aren't currently supported. Just move along as normal...";
+	 		html += "<p> There's supposed to be an image here, but images aren't currently supported. Just move along as normal...</p>";
 	 		continue;
 	 	}
 
 	 	if($(section_html).children().eq(0).prop("tagName") === "AUDIO"){
-	 		html += "<p> There's supposed to be an audio track here, but it's not currently supported. Just move along as normal...";
+	 		html += "<p> There's supposed to be an audio track here, but it's not currently supported. Just move along as normal...</p>";
 	 		continue;
 		}
 
 	 	html += section_html;
 	 };
+	 
+	if(this.isPopup){
+		smoke.alert($(html).text() + " (this was added to your lab notebook)", function(e){}, {ok: "Okay, thanks!"});
+		return;	
+	}
+	
+	this.hasBinary = false;
 
 	 for (var i = 0; i < choices.length; i++) {
 	 	var templateType = "";
@@ -64,27 +67,41 @@ PageController.prototype.composePage = function(pageResponse) {
 	 if(!this.hasBinary) html += tf.fillTemplate(null, "submit_btn");
 
 	 // don't put on first page
-	 var subbed = parseInt(String(this.page_id).substring(1));
-	 console.log(subbed, this.page_id);
-	 if(subbed !== 1 && subbed !== 0) html += tf.fillTemplate(null, 'go_back_btn');
+	 console.log(chain);
+	 if(chain.count() >= 1) html += tf.fillTemplate(null, 'go_back_btn');
+	 
+	 html = tf.wrapInParent(html);
 	 ps.transitionPage(html);
+	 this.$html = $(html);
+	 chain.add(this);
 };
 
 
 PageController.prototype.applyDirectives = function(pageResponse) {
 	var actions = pageResponse.page_actions,
 		modifiers = pageResponse.page_modifiers;
+	
+	for (var i = 0; i < actions.length; i++) {
+		switch(actions[i].name){
+			case "add_to_notebook":
+				labnotebook.add(actions[i].value);
+				break;
+		}
+		
+	}
 
 	for (var i = 0; i < modifiers.length; i++) {
 		switch(modifiers[i].name){
 			case "goes_to_page":
 				this.needsPageButton = true;
 				this.goes_to_page = parseInt(modifiers[i].value);
-				console.log("modifier attached:" + this.goes_to_page);
+				break;
+			
+			case "popup_window":
+				this.isPopup = true;
 				break;
 		}
 	};
-
 };
 
 PageController.prototype.init = function() {
@@ -92,14 +109,14 @@ PageController.prototype.init = function() {
 
 	if($('#go-back')){
 		$('#go-back').click(function(e){
-			console.log("Clicked");
-
-			publisher.publish("changePage", [PageController, localStorage.getItem('last_page_id')])
-		})
+			chain.goBack();
+			return;
+		});
 	}
 
 	// if they click the button, then they were responding to inputs. otherwise, they were responding to a binary choice.
-	$('button').click(this.processButtonClick.bind(this));
+	
+	$('#submit').click(this.processButtonClick.bind(this));
 	$('.choice-binary .well').click(this.processBinaryClick.bind(this));
 
 	publisher.subscribe("choiceLimitReached", function(pageId){
@@ -112,12 +129,12 @@ PageController.prototype.processBinaryClick = function(e) {
 
 	var value = $elem.text(),
 		choiceId = $elem.data('choice-id'),
-		destinationId = $elem.data('destination');
+		destinationId = $elem.data('destination'),
 		action_string = getActionString(value, choiceId, this.page_id),
 		user_ids = JSON.parse(localStorage.getItem("user_id"));
 
 	if(!$.isArray(user_ids)){
-		var user_ids = [user_ids];
+		user_ids = [user_ids];
 	}
 
 	var requests = [];
@@ -162,7 +179,7 @@ PageController.prototype.processButtonClick = function(e) {
 
 	if(!$.isArray(user_ids)){
 		//this means there's just 1 user going through the simulation
-		var user_ids = [user_ids];
+		user_ids = [user_ids];
 	}
 
 	var requests = [];
@@ -182,8 +199,6 @@ PageController.prototype.logActions = function(data, destination) {
 		var responses = arguments;
 		
 		for (var i = 0; i < responses.length; i++) {
-			var response = responses[i][0];
-			
 			if(responses[i].hasOwnProperty('error')){
 				console.log("things didn't go well.. " + responses[i].error);
 				return; //TODO: provide an error here
@@ -193,6 +208,7 @@ PageController.prototype.logActions = function(data, destination) {
 		loader.hide();
 		if(destination){
 			localStorage.setItem('last_page_id', that.page_id);
+			
 			publisher.publish('changePage', [PageController, destination]); // assume that that's all we need to do on the page	
 		}
 	});
@@ -203,6 +219,16 @@ PageController.prototype.disableChoices = function() {
 	for (var i = 0; i < choices.length; i++) {
 		choices.eq(i).addClass("disabled");
 	};
+};
+
+PageController.prototype.sleepPage = function(){
+	$('.screen').fadeOut().remove();
+};
+
+PageController.prototype.revive = function(){
+	this.$html.appendTo(".page-container").hide().fadeIn();
+	this.init();
+	this.visits += 1;
 };
 
 function min_choice_modifier(page_id, limit, destination){
@@ -217,8 +243,8 @@ function min_choice_modifier(page_id, limit, destination){
 		if(f && f['current'] === f['limit']){
 			publisher.publish("choiceLimitReached", f['page_id']);
 		}
-	}, true)
-}
+	}, true);
+};
 
 function getActionString(action, choice_id, page_id){
 	return "Choice made: "+ action + " on the choice with id: " + choice_id + " on page: " + page_id;
