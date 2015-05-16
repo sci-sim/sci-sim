@@ -1,4 +1,4 @@
-var API = function(){}
+var API = function(){};
 
 API.prototype.getSimulations = function(func) {
 	return $.ajax({

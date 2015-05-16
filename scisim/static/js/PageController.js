@@ -65,10 +65,6 @@ PageController.prototype.composePage = function(pageResponse) {
 	 };
 
 	 if(!this.hasBinary) html += tf.fillTemplate(null, "submit_btn");
-
-	 // don't put on first page
-	 console.log(chain);
-	 if(chain.count() >= 1) html += tf.fillTemplate(null, 'go_back_btn');
 	 
 	 html = tf.wrapInParent(html);
 	 ps.transitionPage(html);
@@ -86,8 +82,7 @@ PageController.prototype.applyDirectives = function(pageResponse) {
 			case "add_to_notebook":
 				labnotebook.add(actions[i].value);
 				break;
-		}
-		
+		}	
 	}
 
 	for (var i = 0; i < modifiers.length; i++) {
@@ -107,12 +102,10 @@ PageController.prototype.applyDirectives = function(pageResponse) {
 PageController.prototype.init = function() {
 	var that = this;
 
-	if($('#go-back')){
-		$('#go-back').click(function(e){
-			chain.goBack();
-			return;
-		});
-	}
+	$('#go-back').click(function(e){
+		e.stopImmediatePropagation();
+		chain.goBack();
+	});
 
 	// if they click the button, then they were responding to inputs. otherwise, they were responding to a binary choice.
 	
@@ -221,7 +214,7 @@ PageController.prototype.disableChoices = function() {
 	};
 };
 
-PageController.prototype.sleepPage = function(){
+PageController.prototype.sleep = function(){
 	$('.screen').fadeOut().remove();
 };
 

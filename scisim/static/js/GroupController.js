@@ -4,8 +4,8 @@ var GroupController = function(){
 
 GroupController.prototype.render = function() {
 	var template = tf.fillTemplate(null, "group_chooser");
-	ps.transitionPage(template);
-	this.$html = $('.choose_group_panel');
+	ps.transitionPage(tf.wrapInParent(template));
+	this.$html = $('.section');
 
 	this.init();
 };
@@ -60,7 +60,7 @@ GroupController.prototype.toggleButton = function(condition, $shownOnTrue, $show
 GroupController.prototype.addUsernameInput = function(e) {
 	e.preventDefault();
 	var inputs = $('.sharing_computer input');
-	var newInput = $('<input class="form-control" type="text" name="username'+ (inputs.length - 1) +'" placeholder="Username">')
+	var newInput = $('<input class="form-control" type="text" name="username'+ (inputs.length - 1) +'" placeholder="Username">');
 
 	inputs.eq(inputs.length - 1).after(newInput).hide().fadeIn();
 };
@@ -68,7 +68,7 @@ GroupController.prototype.addUsernameInput = function(e) {
 GroupController.prototype.handleSubmit = function(e) {
 	e.preventDefault();
 
-	$section = $(e.target).parent().parent();
+	var $section = $(e.target).parent().parent();
 
 	if(this.hasErrors($section)) return false;
 
@@ -77,13 +77,11 @@ GroupController.prototype.handleSubmit = function(e) {
 
 	if(!this.inGroup){
 		var username = $section.find('input[name=username]').val();
-		this.unsetApiError($section)
+		this.unsetApiError($section);
 
 		api.createUsers([username]).done(function(response){	
 			if(!that.hasApiError(response, $section)){
 				localStorage.setItem("user_id", response.id);
-				console.log(response)
-				console.log(response.id)
 
 				publisher.publish("changePage", [PageController, localStorage.getItem("first_page_id")]);
 				loader.hide();
@@ -105,7 +103,7 @@ GroupController.prototype.handleSubmit = function(e) {
 
 		api.createGroup(group_name, 0).done(function(response){
 			if(that.hasApiError(response, $section)){
-				return false
+				return false;
 			}
 			localStorage.setItem("group_name", group_name);
 
@@ -216,7 +214,7 @@ GroupController.prototype.hasErrors = function($section) {
 				errors = true;
 				group.addClass("has-error");
 				if(input.next().prop("tagName") !== "P"){
-					input.after($('<p class="text-danger">This field has to be more than 2 letters long</p>'))
+					input.after($('<p class="text-danger">This field has to be more than 2 letters long</p>'));
 				}
 			}else{
 				group.removeClass("has-error");
@@ -242,7 +240,7 @@ GroupController.prototype.hasApiError = function(response, $section) {
 };
 
 GroupController.prototype.setApiError = function($section, error) {
-	$section.find('.form-group').eq(0).append('<p id="api_error" class="text-danger">'+error+'</p>')
+	$section.find('.form-group').eq(0).append('<p id="api_error" class="text-danger">'+error+'</p>');
 };
 
 GroupController.prototype.unsetApiError = function($section) {

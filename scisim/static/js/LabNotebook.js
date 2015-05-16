@@ -9,6 +9,7 @@ LabNotebook.prototype = Object.create(ListContainer.prototype);
 
 LabNotebook.prototype.init = function(){
 	$('.create-note').click(this.addNoteField.bind(this));
+	$('body').click(this.removeInput.bind(this));
 };
 
 LabNotebook.prototype.addNoteField = function(e){
