@@ -12,14 +12,18 @@ LabNotebook.prototype.init = function(){
 };
 
 LabNotebook.prototype.addNoteField = function(e){
-	var field = $("<li class='note-creator'><input class='form-control' type='text' name='newNote' placeholder='New Note'><button class='btn btn-default'>Add</button></li>");
+	var field = $("<li class='note-creator'><input class='form-control' type='text' name='newNote' placeholder='New Note'><button id='add' class='btn btn-default'>Add</button><button id='cancel' class='btn btn-default'>Cancel</button></li>");
 	this.$list.append(field);
 	
-	$('.note-creator .btn').click(function(e){
+	$('.note-creator #add').click(function(){
 		var text = field.find('input').val();
 		this.add(text);
 		this.removeInput();
-	}.bind(this));	
+	}.bind(this));
+	
+	$('.note-creator #cancel').click(function(e){
+		this.removeInput();
+	}.bind(this));
 };
 
 LabNotebook.prototype.removeInput = function(){
