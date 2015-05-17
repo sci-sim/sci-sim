@@ -12,6 +12,8 @@ ssh root@104.131.26.12 <<'ENDSSH'
 	rm -rf ./*
 	rm -rf src/.git
 	tar -zxvf ../latest.tar.gz
+	python db_create
+	python sim_parser.py new_sim_telate.txt
 ENDSSH
 
-echo Done!           
+echo Done!
