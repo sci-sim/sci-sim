@@ -40,6 +40,10 @@ PageChain.prototype.revivePage = function(current, newPage){
 	this.chain[newPage].revive();
 };
 
+PageChain.prototype.getLastPage = function(){
+	return this.chain[this.chain.length - 1];
+}
+
 PageChain.prototype.count = function(){
 	return this.chain.length;
 };

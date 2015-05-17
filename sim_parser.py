@@ -117,9 +117,11 @@ def process_page(page_text, sim, page_id, page_names):
 			print("adding choice")
 			add_page_modifier(page, keyword, content)
 
-		elif keyword == "minimum_choices_reached_page" and keyword == "minimum_choices_reached":
+		elif keyword == "minimum_choices_reached_page" or keyword == "minimum_choices_reached":
 			print("Fond min choice page")
-			add_page_action(page, keyword, content)
+			page_base = int(str(page.id)[0]) * 1000
+			page_id = page_base + page_names.index(strip_braces(content))
+			add_page_action(page, keyword, page_id)
 
 		elif keyword == "choice":
 			print("found choice")
@@ -195,7 +197,7 @@ def parse_link(lines, page, order):
 	text = find_keyword_value("text", lines)
 	link = find_keyword_value("url", lines)
 
-	content = "<a href='"+link+"'>"+text+">"
+	content = "<a href='"+link+"'>"+text+" </a>"
 
 	db.session.add(Section(show=True, order=order, content=content, page_id=page.id))
 	db.session.commit()
@@ -247,7 +249,10 @@ def add_page_modifier(page, name, value):
 
 def add_page_action(page, name, value):
 	print("adding a page action")
-	db.session.add(Page_Action(name=name, value=strip_braces(value), page_id=page.id))
+	if type(value) is not int and "}" in value and "{" in value:
+		value = strip_braces(value)
+		
+	db.session.add(Page_Action(name=name, value=value, page_id=page.id))
 	db.session.commit()
 
 def check_for_errors(sim):

@@ -56,8 +56,8 @@ TemplateFiller.prototype.getTemplate = function(pageName) {
 		case "question_choice":
 			return '<div class="choice choice-question"> <p>{text}</p> <input class="form-control" type="text" data-choice-id="{id}" data-destination="{destination}" placeholder="Enter your response here"> </div>';
 
-		case "submit_btn":
-		return "<button id='submit' class='btn btn-default'>Submit & Move on to next page</button>"
+		case "btn":
+		return "<button id='{id}' class='btn btn-default'>{text}</button>";
 
 		case "go_back_btn":
 			return "<button id='go-back' class='btn btn-default'>Go Back</button>"

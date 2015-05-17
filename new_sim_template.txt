@@ -171,7 +171,7 @@ page = [
 	popup_window = {true}
 	add_to_notebook = [
 		text = {98.6 degrees
-	This resident does not have a fever.}
+	Mr. Smith does not have a fever.}
 tag = {patient1}
 	]
 ]
@@ -1109,25 +1109,19 @@ choice = [
 	binary = {overweight}
 	goes_to_page = {Examine Ms. Watson}
 ]
-mimimum_choices_reached = {conclusions1}
 	#Text on button “I’ve collected enough data”
 ]
 
 page = [
 page_name = {conclusions1} 
-	heading_big = {Here are the notes that you’ve taken:}
-show_all_student_content = {last patient tested} 
+	heading_big = {Here are your initial questions and hypotheses}
+show_all_content = {patient1} 
 
-prompt = {TBD} 
-]
-page = [
-
-page_name = {patient evaluation summary}
-
-prompt = {TBD}
+text = {For each hypothesis, mark if you think it was “supported” “refuted” or “neither”
+In the box underneath, explain why you think your hypothesis was supported, refuted, or neither supported nor refuted. Use your lab notebook to include examples of evidence that you collected.}
 
 goes_to_page = {hypothesis2}
-#student can not move forward until they have reached this point. 
+
 ]
 
 page = [
@@ -1162,7 +1156,7 @@ tag = {hypothesis2}
 ]
 
 can_add_multiple_question_groups = {true}
-minimum_questions_answered = {2}
+goes_to_page= {choose patient2}
 ]
 
 
@@ -2291,26 +2285,33 @@ add_to_notebook = [
 
 page = [
 page_name = {patientsummary2} 
-mimimum_choices = 
 mimimum_choices_reached = {conclusions2}
 heading_big = {Here are the notes that you’ve taken for this resident:}
-show_student_content_for = {last resident} 
+show_all_student_content = {true} 
 
 text = {Remember, your goal is to determine why the residents of Katzville are unhealthy}
 
-question = {What was the most important piece of evidence that you obtained about this resident? Why was this the most important?}
+question = [
+	text = {What was the most important piece of evidence that you obtained about this resident? Why was this the most important?}
+	tag = {patientSummary2}
+]
+question = [
+	text = {Why did you choose the tests or questions that you did?}
+	tag = {patientSummary2}
+]
+question = [
+	text = {Do you think this patient is unhealthy? Why?}
+	tag = {patientSummary2}
+]
 
-question = {Why did you choose the tests or questions that you did?}
-
-question = {Do you think this patient is unhealthy? Why?}
-
+goes_to_page={conclusions2}
 ]
 
 page = [
 
 page_name = {conclusions2}
 heading_big = {Here are your initial questions and hypotheses}
-show_all_content = {patient2} 
+show_all_student_content = {true} 
 
 text = {For each hypothesis, mark if you think it was “supported” “refuted” or “neither”
 In the box underneath, explain why you think your hypothesis was supported, refuted, or neither supported nor refuted. Use your lab notebook to include examples of evidence that you collected}
@@ -2320,11 +2321,20 @@ page = [
 
 page_name = {finalrecommendation}
 heading_big = {Recommendation to the Mayor of Katzville}
-text = {Now that you’ve had a chance to meet residents of Katzville, examine them to determine what makes them unhealthy and why its time to make your final report to the mayor of Katzville. You can use your lab notebook to help you answer these questions. Make sure you give evidence to support all of your answers! 
+text = {Now that you’ve had a chance to meet residents of Katzville, examine them to determine what makes them unhealthy and why its time to make your final report to the mayor of Katzville. You can use your lab notebook to help you answer these questions. Make sure you give evidence to support all of your answers!}
 
-question = {What health problems do the residents have?}
-question = {Why do they have these health problems?}
-question = {What do you recommend that the residents of Katzville do to become healthier?}
+question = [
+	text = {What health problems do the residents have?}
+	tag = {patientSummary2}
+	]
+question = [
+	text = {Why do they have these health problems?}
+	tag = {patientSummary2}
+	]
+question = [
+	text = {What do you recommend that the residents of Katzville do to become healthier?}
+	tag = {patientSummary2}
+	]
 goes_to_page = {End}
 ]
 

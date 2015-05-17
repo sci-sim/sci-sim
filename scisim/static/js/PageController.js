@@ -1,6 +1,7 @@
 var PageController = function(page_id){
 	this.page_id = parseInt(page_id);
 	this.render();
+	this.visits = 0;
 };
 
 PageController.prototype.render = function() {
@@ -39,6 +40,11 @@ PageController.prototype.composePage = function(pageResponse) {
 	 
 	if(this.isPopup){
 		smoke.alert($(html).text() + " (this was added to your lab notebook)", function(e){}, {ok: "Okay, thanks!"});
+		var lastpage = chain.getLastPage();
+		console.log(lastpage);
+		lastpage.visits +=1;
+		lastpage.checkVisits();
+		console.log(lastpage, lastpage.visits);
 		return;	
 	}
 	
@@ -50,6 +56,7 @@ PageController.prototype.composePage = function(pageResponse) {
 	 	switch(choices[i].type){
 	 		case "question":
 	 			templateType = "question_choice";
+				 this.hasTextInput = true;
 	 			break;
 	 		case "binary":
 	 			templateType = "binary_choice";
@@ -57,6 +64,7 @@ PageController.prototype.composePage = function(pageResponse) {
 	 			break;
 	 		case "prompt":
 	 			templateType = "prompt_choice";
+				 this.hasTextInput = true;
 	 			break;
 	 	}
 
@@ -64,7 +72,8 @@ PageController.prototype.composePage = function(pageResponse) {
 	 	html += tf.fillTemplate({"text": choices[i].text, "id":choices[i].id, "destination": choices[i].destination}, templateType);
 	 };
 
-	 if(!this.hasBinary) html += tf.fillTemplate(null, "submit_btn");
+	 if(this.hasTextInput) html += tf.fillTemplate({"text": "Submit and continue", "id": "submit-btn"}, "btn");
+	 if(this.goes_to_page && !this.hasTextInput) html += tf.fillTemplate({"text": "Continue", "id": "continue-btn"}, "btn");
 	 
 	 html = tf.wrapInParent(html);
 	 ps.transitionPage(html);
@@ -82,42 +91,63 @@ PageController.prototype.applyDirectives = function(pageResponse) {
 			case "add_to_notebook":
 				labnotebook.add(actions[i].value);
 				break;
-		}	
+			case "minimum_choices_reached":
+				this.minimum_choice_page = parseInt(actions[i].value);
+				break;
+			case "show_all_student_content":
+				labnotebook.toggle();
+				break;
+		}
 	}
 
 	for (var i = 0; i < modifiers.length; i++) {
 		switch(modifiers[i].name){
 			case "goes_to_page":
-				this.needsPageButton = true;
 				this.goes_to_page = parseInt(modifiers[i].value);
 				break;
 			
 			case "popup_window":
 				this.isPopup = true;
 				break;
+			
+			case "minimum_choices":
+				this.minimum_choices = parseInt(modifiers[i].value.replace("}", "").replace("{", ""));
 		}
 	};
 };
 
 PageController.prototype.init = function() {
-	var that = this;
+	if(this.checkVisits()) return;
 
 	$('#go-back').click(function(e){
 		e.stopImmediatePropagation();
 		chain.goBack();
 	});
-
-	// if they click the button, then they were responding to inputs. otherwise, they were responding to a binary choice.
 	
-	$('#submit').click(this.processButtonClick.bind(this));
-	$('.choice-binary .well').click(this.processBinaryClick.bind(this));
+	$('#continue-btn').click(this.processContinueClick.bind(this));
 
-	publisher.subscribe("choiceLimitReached", function(pageId){
-		that.disableChoices();
-	}, true);
+	$('#submit-btn').click(this.processButtonClick.bind(this));
+	$('.choice-binary .well').click(this.processBinaryClick.bind(this));
+};
+
+PageController.prototype.checkVisits = function(){
+	if(this.minimum_choices === this.visits || this.minimum_choices < this.visits){
+		smoke.alert("Alright, that's enough experimenting! Time to move on.", function(e){
+			publisher.publish('changePage', [PageController, this.minimum_choice_page]);
+		}.bind(this), {ok:"Okay, let's go!"});
+		
+		return true;
+	}
+	
+	return false;
+};
+
+PageController.prototype.processContinueClick = function(e){
+		publisher.publish('changePage', [PageController, this.goes_to_page]);
 };
 
 PageController.prototype.processBinaryClick = function(e) {
+	e.stopImmediatePropagation();
 	var $elem = $(e.currentTarget);
 
 	var value = $elem.text(),
@@ -125,6 +155,7 @@ PageController.prototype.processBinaryClick = function(e) {
 		destinationId = $elem.data('destination'),
 		action_string = getActionString(value, choiceId, this.page_id),
 		user_ids = JSON.parse(localStorage.getItem("user_id"));
+		labnotebook.add(action_string);
 
 	if(!$.isArray(user_ids)){
 		user_ids = [user_ids];
@@ -149,6 +180,7 @@ PageController.prototype.processBinaryClick = function(e) {
 };
 
 PageController.prototype.processButtonClick = function(e) {
+	e.stopImmediatePropagation();
 	var $inputs = $('input'),
 		choicesMade = [],
 		destination = "";
@@ -222,21 +254,7 @@ PageController.prototype.revive = function(){
 	this.$html.appendTo(".page-container").hide().fadeIn();
 	this.init();
 	this.visits += 1;
-};
-
-function min_choice_modifier(page_id, limit, destination){
-	localStorage.setItem("min_choice_watcher_"+page_id, JSON.stringify({"page_id": page_id, "limit": limit, "current": 0, "destination": destination}));
-
-	publisher.subscribe("choiceMade", function(page_id){
-		if(localStorage.getItem('current_page_id') === page_id){
-			var f = JSON.parse(localStorage.getItem("min_choice_watcher_" + page_id));
-			f['current'] += 1;
-		};
-
-		if(f && f['current'] === f['limit']){
-			publisher.publish("choiceLimitReached", f['page_id']);
-		}
-	}, true);
+	this.checkVisits();
 };
 
 function getActionString(action, choice_id, page_id){
