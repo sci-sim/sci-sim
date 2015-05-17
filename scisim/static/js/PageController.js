@@ -77,8 +77,14 @@ PageController.prototype.composePage = function(pageResponse) {
 	 			break;
 	 	}
 
-	 	//TODO: questions are special because they don't 
-	 	html += tf.fillTemplate({"text": choices[i].text, "id":choices[i].id, "destination": choices[i].destination}, templateType);
+	 	//TODO: questions are special because they don't
+		var n = tf.fillTemplate({"text": choices[i].text, "id":choices[i].id, "destination": choices[i].destination}, templateType);
+		var choices_made = JSON.parse(localStorage.getItem("choices_made"));
+		if($.inArray(choices[i].id, choices_made) > -1){
+			n = n.replace("choice-binary", "choice-binary disabled");
+		} 
+		
+	 	html += n;
 	 };
 
 	 if(this.hasTextInput) html += tf.fillTemplate({"text": "Submit and continue", "id": "submit-btn"}, "btn");
@@ -142,8 +148,8 @@ PageController.prototype.checkVisits = function(){
 			var button = $(tf.fillTemplate({"id": "minimum-choice-continue", 'text': "I've collected enough data"}, "btn"));
 			$('.screen').append(button);
 			var that = this;
-			button.click(function(){
 				console.log(that.minimum_choice_page);
+			button.click(function(){
 				publisher.publish('changePage', [PageController, that.minimum_choice_page]);
 			});		
 		}
@@ -159,7 +165,8 @@ PageController.prototype.processContinueClick = function(e){
 PageController.prototype.processBinaryClick = function(e) {
 	e.stopImmediatePropagation();
 	var $elem = $(e.currentTarget);
-
+	if($elem.parent().hasClass("disabled")) return;
+	
 	var value = $elem.text(),
 		choiceId = $elem.data('choice-id'),
 		destinationId = $elem.data('destination'),
@@ -176,6 +183,10 @@ PageController.prototype.processBinaryClick = function(e) {
 		
 		loggableString += value;
 		labnotebook.add(loggableString.replace("}", ""));
+		
+		var choices_made = JSON.parse(localStorage.getItem("choices_made"));
+		choices_made.push(choiceId);
+		localStorage.setItem("choices_made", JSON.stringify(choices_made));
 
 	if(!$.isArray(user_ids)){
 		user_ids = [user_ids];

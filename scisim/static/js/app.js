@@ -8,6 +8,7 @@ var labnotebook = new LabNotebook($('.labenotebook'));
 var library = new Library($('.library'));
 
 localStorage.clear();
+localStorage.setItem("choices_made", JSON.stringify([]));
 
 window.onbeforeunload = function(){
 	return "If you leave this page, you'll lose all you have so far!";

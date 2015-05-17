@@ -95,6 +95,12 @@ ul{
 	margin: 0px 30px;
 }
 
+.choice-binary.disabled .well{
+	background-color:#454545;
+	color:#fff;
+	cursor:default;
+}
+
 .clickable-well{
 	transition:background-color ease-in-out .2s;
 }
