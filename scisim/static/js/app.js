@@ -10,7 +10,7 @@ var library = new Library($('.library'));
 localStorage.clear();
 
 window.onbeforeunload = function(){
-	return "If you exit this page, you'll lose all you have so far!";
+	return "If you leave this page, you'll lose all you have so far!";
 }
 
 $("#libraryToggle").click(function(e){

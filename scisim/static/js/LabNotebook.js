@@ -13,8 +13,12 @@ LabNotebook.prototype.init = function(){
 };
 
 LabNotebook.prototype.addNoteField = function(e){
-	var field = $("<li class='note-creator'><input class='form-control' type='text' name='newNote' placeholder='New Note'><button id='add' class='btn btn-default'>Add</button><button id='cancel' class='btn btn-default'>Cancel</button></li>");
-	this.$list.append(field);
+	var field = "<li class='note-creator'><input class='form-control' type='text' name='newNote' placeholder='New Note'><button id='add' class='btn btn-default'>Add</button><button id='cancel' class='btn btn-default'>Cancel</button></li>";
+	
+	console.log($('.labenotebook').children())
+	$('.labenotebook').append($(field));
+	console.log($('.labenotebook').children())
+	
 	
 	$('.note-creator #add').click(function(){
 		var text = field.find('input').val();

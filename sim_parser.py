@@ -135,7 +135,7 @@ def process_page(page_text, sim, page_id, page_names):
 			text = find_keyword_value("text", lines)
 			tag = find_keyword_value("tag", lines)
 
-			add_page_action(page, keyword, text + "|" + tag)
+			add_page_action(page, keyword, text)
 			skip = len(lines.splitlines())
 
 		elif keyword == "pop_up_window" or keyword == "popup_window":
@@ -197,7 +197,7 @@ def parse_link(lines, page, order):
 	text = find_keyword_value("text", lines)
 	link = find_keyword_value("url", lines)
 
-	content = "<a href='"+link+"'>"+text+" </a>"
+	content = "<a taget='_blank' href='"+link+"'>"+text+" </a>"
 
 	db.session.add(Section(show=True, order=order, content=content, page_id=page.id))
 	db.session.commit()
@@ -227,12 +227,10 @@ def add_section(line_number, all_lines, order, content, page, content_type=None)
 		if content[-3:] == "jpg":
 			tags = "<img src='img/content'/>"
 		else:
-			tags = "<audio src='content'/>";
+			tags = "<a target='_blank' href='content'>Listen here</a>";
 
 	if content_type: # we do this check to make sure that there's no media here. If there's media, then size won't be passed in
 		content = tags.replace("content", content)
-		
-		
 
 	try:
 		db.session.add(Section(show=True, order=order, content=strip_braces(content), page_id = page.id))
@@ -387,7 +385,7 @@ def get_text(line_number, line, lines):
 	if lines[line_number].count("}") != 1:
 		return strip_braces(select_until(line_number, lines, "}"))
 	else:
-		return strip_braces(re.findall("{.*}", line)[0])
+		return strip_braces(re.findall("{.+}", lines[line_number])[0])
 		
 
 def find_keyword_value(keyword, sim):

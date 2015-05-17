@@ -15,7 +15,6 @@ PageChain.prototype.add = function (page) {
 	
 	this.chain.push(page);
 	this.currentPointer += 1;
-
 };
 
 PageChain.prototype.goBack = function(){

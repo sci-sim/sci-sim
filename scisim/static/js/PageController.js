@@ -32,7 +32,12 @@ PageController.prototype.composePage = function(pageResponse) {
 
 	 for (var i = 0; i < sections.length; i++) {
 	 	var section_html = tf.fillTemplate({"content": sections[i].content}, "page_section");
-	 
+		 
+	 	if(sections[i].content.search("Mr") > 0 || sections[i].content.search("Ms") > 0){
+			 var split = sections[i].content.split(" ");
+			 this.patient = split.splice(split.length - 2).join(" ").replace(/(<([^>]+)>)/ig,"");
+		 }
+		 
 	 	if($(section_html).children().eq(0).prop("tagName") === "AUDIO"){
 	 		html += "<p> There's supposed to be an audio track here, but it's not currently supported. Just move along as normal...</p>";
 	 		continue;
@@ -160,7 +165,13 @@ PageController.prototype.processBinaryClick = function(e) {
 		destinationId = $elem.data('destination'),
 		action_string = getActionString(value, choiceId, this.page_id),
 		user_ids = JSON.parse(localStorage.getItem("user_id"));
-		labnotebook.add(action_string);
+		
+		var loggableString = "";
+		
+		if(chain.getLastPage().patient) loggableString += chain.getLastPage().patient;
+		
+		loggableString += value;
+		labnotebook.add(loggableString);
 
 	if(!$.isArray(user_ids)){
 		user_ids = [user_ids];
