@@ -7,6 +7,12 @@ var chain = new PageChain();
 var labnotebook = new LabNotebook($('.labenotebook'));
 var library = new Library($('.library'));
 
+localStorage.clear();
+
+window.onbeforeunload = function(){
+	return "If you exit this page, you'll lose all you have so far!";
+}
+
 $("#libraryToggle").click(function(e){
 	if(e.target === this){
 		library.toggle();	

@@ -5,12 +5,18 @@ ul{
 
 .screen img{
 	max-height:350px;
-	float:left;
-	margin-right:25px;
 }
 
 .screen .page-section{
 	margin: 30px 0px;
+}
+
+.screen .page-section p{
+	max-width: 75%;
+}
+
+.screen #minimum-choice-continue{
+	display:block;
 }
 
 .menu-bar{

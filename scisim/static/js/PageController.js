@@ -1,7 +1,13 @@
 var PageController = function(page_id){
+	if(localStorage.getItem(page_id)){
+			localStorage.setItem(page_id, parseInt(localStorage.getItem(page_id)) + 1);
+	}else{
+		localStorage.setItem(page_id, 1);
+	}
+	
 	this.page_id = parseInt(page_id);
 	this.render();
-	this.visits = 0;
+	this.visits = parseInt(localStorage.getItem(page_id));
 };
 
 PageController.prototype.render = function() {
@@ -9,10 +15,11 @@ PageController.prototype.render = function() {
 
 	api.getPage(this.page_id).done(function(response){
 		if($.isEmptyObject(response)){
-			alert("this page doesn't exist");
+			throw "this page doesn't exist:";
 		}else{
 			that.applyDirectives(response);
 			that.composePage(response);
+			that.checkVisits();
 			that.init();
 		}
 	});
@@ -36,10 +43,12 @@ PageController.prototype.composePage = function(pageResponse) {
 	 
 	if(this.isPopup){
 		smoke.alert($(html).text() + " (this was added to your lab notebook)", function(e){}, {ok: "Okay, thanks!"});
-		// TODO: the page we want is not always the last page. 
-		var lastpage = chain.getLastPage();
-		lastpage.visits +=1;
-		lastpage.checkVisits();
+		var last_page = chain.getLastPage(),
+			page_id = last_page.page_id;
+			
+		localStorage.setItem(page_id, parseInt(localStorage.getItem(page_id)) + 1);
+		last_page.visits += 1;
+		last_page.checkVisits();
 		return;	
 	}
 	
@@ -68,9 +77,8 @@ PageController.prototype.composePage = function(pageResponse) {
 	 };
 
 	 if(this.hasTextInput) html += tf.fillTemplate({"text": "Submit and continue", "id": "submit-btn"}, "btn");
-	 if(this.goes_to_page && !this.hasTextInput) html += tf.fillTemplate({"text": "Continue", "id": "continue-btn"}, "btn");
+	 if(this.goes_to_page && !this.hasTextInput && choices.length === 0) html += tf.fillTemplate({"text": "Continue", "id": "continue-btn"}, "btn");
 	 
-	 html = tf.wrapInParent(html);
 	 ps.transitionPage(html);
 	 this.$html = $(html);
 	 chain.add(this);
@@ -112,8 +120,6 @@ PageController.prototype.applyDirectives = function(pageResponse) {
 };
 
 PageController.prototype.init = function() {
-	if(this.checkVisits()) return;
-
 	$('#go-back').click(function(e){
 		e.stopImmediatePropagation();
 		chain.goBack();
@@ -127,13 +133,17 @@ PageController.prototype.init = function() {
 
 PageController.prototype.checkVisits = function(){
 	if(this.minimum_choices === this.visits || this.minimum_choices < this.visits){
-		smoke.alert("Alright, that's enough experimenting! Time to move on.", function(e){
-			publisher.publish('changePage', [PageController, this.minimum_choice_page]);
-		}.bind(this), {ok:"Okay, let's go!"});
-		
+		if($('#minimum-choice-continue').length === 0){ // there's a bug that makes it appear multiple times when it shouldn't..
+			var button = $(tf.fillTemplate({"id": "minimum-choice-continue", 'text': "I've collected enough data"}, "btn"));
+			$('.screen').append(button);
+			var that = this;
+			button.click(function(){
+				console.log(that.minimum_choice_page);
+				publisher.publish('changePage', [PageController, that.minimum_choice_page]);
+			});		
+		}
 		return true;
 	}
-	
 	return false;
 };
 
@@ -187,7 +197,8 @@ PageController.prototype.processButtonClick = function(e) {
 		obj['value'] = input.val();;
 		obj['id'] = input.data("choice-id");
 		
-		destination = this.goes_to_page; // assume that this is a modified page
+		destination = this.goes_to_page;
+		if(!destination) destination = input.data("destination");
 
 		obj['action_string'] = getActionString(obj['value'], obj['id'], this.page_id);
 
@@ -216,14 +227,6 @@ PageController.prototype.logActions = function(data, destination) {
 	var that = this;
 
 	api.aggregateRequests(api.logUserAction, data).then(function(){
-		var responses = arguments;
-		
-		for (var i = 0; i < responses.length; i++) {
-			if(responses[i].hasOwnProperty('error')){
-				console.log("things didn't go well.. " + responses[i].error);
-				return; //TODO: provide an error here
-			}
-		};
 
 		loader.hide();
 		if(destination){

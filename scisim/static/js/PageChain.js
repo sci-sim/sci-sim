@@ -15,10 +15,7 @@ PageChain.prototype.add = function (page) {
 	
 	this.chain.push(page);
 	this.currentPointer += 1;
-	
-	if(this.count() > 1){
-		$('#go-back').removeClass('hidden'); // TODO: move this to somewhere more appropriate
-	}
+
 };
 
 PageChain.prototype.goBack = function(){

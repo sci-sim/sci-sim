@@ -2,6 +2,29 @@ simulation_name = {template example}
 simulation_password = {pass}
 simulation_description = {this is the description}
 
+page = [
+	page_name = {introduction1}
+	heading_big = {Introduction}
+text = {Katzville is a small town near a big city, not unlike your home. The citizens of Katzville go to school or work everyday and enjoy cheering on their local baseball team. But everything is not well in Katzville. In fact, Katzville just received an award for the unhealthiest town.}
+media = {katzville.jpg}
+goes_to_page = {introduction2}
+	]
+
+page = [
+	page_name = {introduction2}
+	heading_big ={Introduction}
+text = {The mayor of Katzville has reached out to you for help because you are an epidemiologist. An epidemiologist is a scientist who studies what makes people unhealthy. Sometimes epidemiologists are called disease detectives because they figure out why people are unhealthy or sick and how to make them feel better. 
+
+The mayor of Katzville wants you to come in and put your skills to test. You will visit Katzville and meet with the residents. Your goals are to: 
+
+1. Identify the resident’s health problems
+2. Determine why the residents have these health problems
+
+You will examine each person to determine what what health problems they have and why. After you have finished collecting data, you will make a recommendation to the mayor of Katzville.}
+media = {trophy.jpg}
+goes_to_page = {hypothesis1}
+]
+
 
 page = [
 	page_name = {hypothesis1} 
@@ -40,12 +63,12 @@ page_name = {choose patient}
 heading_big = {Which resident of Katzville would you like to examine first?}
 text = {You may choose to examine patients in any order. You can examine anywhere from 3 to 6 patients total.}
 minimum_choices = {3} 
-		minimum_choice_reached = {Patient Evaluation Summary}
+minimum_choices_reached = {patientsummary}
 choice = [
 		binary = {
-			name: Mr. Smith
-			sex: male
-			age: 25
+			Mr. Smith
+			Sex: male
+			Age: 25
 		}
 		goes_to_page = {Examine Mr. Smith} 
 ]
@@ -121,7 +144,7 @@ If you are not sure why a particular test is important, you can use the library 
 	media = {mrsmith.jpg}
 	heading_medium = {This is Mr. Smith}
 minimum_choices = {4}
-minimum_choices_reached ={conclusions1}
+minimum_choices_reached ={choose patient}
 #text display on button “I’ve collected enough data” 
 
 choice = [
@@ -194,10 +217,16 @@ heading_medium = {This is what a healthy heart sounds like}
 media = {healthy_heart.mp3}
 heading_medium = {This is what this resident’s heart sounds like}
 media = {healthy_heart.mp3}
+text = {Do you think this resident’s heart sounds healthy?}
 choice = [
-	binary = {Do you think this resident’s heart sounds healthy?}
+	binary = {yes}
+	goes_to_page= {Examine Mr. Smith}
+]
+choice = [
+binary = {no}
 goes_to_page= {Examine Mr. Smith}
 ]
+
 ]
 
 page = [
@@ -206,8 +235,13 @@ heading_medium = {This is what healthy lungs sound like when someone breaths}
 media = {healthy_lungs.mp3}
 heading_medium = {This is what this resident’s lungs sounds like}
 media = {healthy_lungs.mp3}
+text = {Do you think this resident’s lungs sound healthy?}
 choice = [
-binary = {Do you think this resident’s lungs sound healthy?}
+binary = {yes}
+goes_to_page= {Examine Mr. Smith}
+]
+choice = [
+binary = {no}
 goes_to_page= {Examine Mr. Smith}
 ]
 ]
@@ -215,13 +249,19 @@ goes_to_page= {Examine Mr. Smith}
 page = [
 page_name = {smithfeet}
 heading_medium = {This is what a healthy foot looks like}
-media = {healthyrfoot.jpg}
+media = {healthyfoot.jpg}
 heading_medium = {This is what this resident’s foot looks like}
 media = {healthyfoot1.jpg}
+text = {Do you think this resident’s foot looks healthy?}
 choice = [
-binary = {Do you think this resident’s foot looks healthy?}
+binary = {yes}
 goes_to_page= {Examine Mr. Smith}
 ]
+choice = [
+binary = {no}
+goes_to_page= {Examine Mr. Smith}
+]
+
 ]
 
 page = [
@@ -230,9 +270,15 @@ heading_medium = {This is what a healthy retina looks like}
 media = {healthyretina.jpg}
 heading_medium = {This is what this resident’s retina looks like}
 media = {healthyretina.jpg}
+text = {Do you think this resident’s retina looks healthy?}
 choice = [
-binary = {Do you think this resident’s retina looks healthy?}
+binary = {yes}
 goes_to_page= {Examine Mr. Smith}
+]
+choice = [
+binary = {no}
+goes_to_page= {Examine Mr. Smith}
+]
 ]
 
 page = [
@@ -277,7 +323,7 @@ If you are not sure why a particular test is important, you can use the library 
 	media = {msjones.jpg}
 	heading_media = {This is Ms. Jones}
 	minimum_choices = {3} 
-minimum_choices_reached ={conclusions1}
+minimum_choices_reached ={choose patient}
 #text display on button “I’ve collected enough data” 
 
 
@@ -323,10 +369,15 @@ media = {healthy_heart.mp3}
 heading_medium = {This is what this resident’s heart sounds like}
 
 media = {healthy_heart.mp3}
+text = {Do you think this resident’s heart sounds healthy?}
 choice = [
-	binary = {Do you think this resident’s heart sounds healthy?}
+	binary = {yes}
 goes_to_page = {Examine Ms. Jones} 
 	]
+	choice = [
+binary = {no}
+goes_to_page = {Examine Ms. Jones} 
+]
 ]
 
 page = [
@@ -345,8 +396,13 @@ heading_medium = {This is what healthy lungs sound like when someone breaths}
 media = {healthy_lungs.mp3}
 heading_medium = {This is what this resident’s lungs sounds like}
 media = {healthy_lungs.mp3}
+text = {Do you think this resident’s lungs sound healthy?}
 choice = [
-binary = {Do you think this resident’s lungs sound healthy?}
+binary = {yes}
+goes_to_page = {Examine Ms. Jones} 
+]
+choice = [
+binary = {no}
 goes_to_page = {Examine Ms. Jones} 
 ]
 ]
@@ -357,8 +413,13 @@ heading_medium = {This is what a healthy retina looks like}
 media = {healthyretina.jpg}
 heading_medium = {This is what this resident’s retina looks like}
 media = {healthyretina.jpg}
+text = {Do you think this resident’s retina looks healthy?}
 choice = [
-binary = {Do you think this resident’s retina looks healthy?}
+binary = {yes}
+goes_to_page = {Examine Ms. Jones} 
+]
+choice = [
+binary = {no}
 goes_to_page = {Examine Ms. Jones} 
 ]
 ]
@@ -391,10 +452,16 @@ heading_medium = {This is what a healthy foot looks like}
 media = {healthyfoot.jpg}
 heading_medium = {This is what your patient’s foot looks like}
 media = {healthyfoot1.jpg}
+text = {Do you think this resident’s foot looks healthy?}
 choice = [
-binary = {Do you think this resident’s foot looks healthy?}
+binary = {yes}
 goes_to_page = {Examine Ms. Jones} 
 ]
+choice = [
+binary = {no}
+goes_to_page = {Examine Ms. Jones} 
+]
+
 ]
 
 page = [
@@ -436,7 +503,7 @@ If you are not sure why a particular test is important, you can use the library 
 	media = {mranderson.jpg}
 	heading_media = {This is Mr. Anderson}
 	minimum_choices = {3} 
-minimum_choices_reached ={conclusions1}
+minimum_choices_reached ={choose patient}
 #text display on button “I’ve collected enough data” 
 
 
@@ -501,8 +568,13 @@ page = [
 media = {healthy_heart.mp3}
 heading_medium = {This is what this resident’s heart sounds like}
 media = {healthy_heart.mp3}
+text = {Do you think this resident’s heart sounds healthy?}
 choice = [
-	binary = {Do you think this resident’s heart sounds healthy?}
+	binary = {yes}
+	goes_to_page = {Examine Mr. Anderson} 
+	]
+	choice = [
+	binary = {no}
 	goes_to_page = {Examine Mr. Anderson} 
 	]
 ]
@@ -524,10 +596,15 @@ heading_medium = {This is what a healthy retina looks like}
 media = {healthyretina.jpg}
 heading_medium = {This is what this resident’s retina looks like}
 media = {healthyretina.jpg}
+text = {Do you think this resident’s retina looks healthy?}
 choice = [
-binary = {Do you think this resident’s retina looks healthy?}
+binary = {yes}
 goes_to_page = {Examine Mr. Anderson} 
 ]
+choice = [
+	binary = {no}
+	goes_to_page = {Examine Mr. Anderson} 
+	]
 ]
 
 
@@ -537,10 +614,16 @@ heading_medium = {This is what a healthy foot looks like}
 media = {healthyfoot.jpg}
 heading_medium = {This is what this resident’s foot looks like}
 media = {healthyfoot1.jpg}
+text = {Do you think this resident’s foot looks healthy?}
 choice = [
-binary = {Do you think this resident’s foot looks healthy?}
+binary = {yes}
 goes_to_page = {Examine Mr. Anderson} 
 ]
+choice = [
+	binary = {no}
+	goes_to_page = {Examine Mr. Anderson} 
+	]
+
 ]
 
 page = [
@@ -549,10 +632,15 @@ heading_medium = {This is what healthy lungs sound like when someone breaths}
 media = {healthy_luns.mp3}
 heading_medium = {This is what this resident’s lungs sounds like}
 media = {healthy_luns.mp3}
+text = {Do you think this resident’s lungs sound healthy?}
 choice = [
-binary = {Do you think this resident’s lungs sound healthy?}
+binary = {yes}
 goes_to_page = {Examine Mr. Anderson} 
 ]
+choice = [
+	binary = {no}
+	goes_to_page = {Examine Mr. Anderson} 
+	]
 ]
 
 
@@ -627,7 +715,7 @@ If you are not sure why a particular test is important, you can use the library 
 	media = {mswilliams.jpg}
 	heading_media = {This is Ms. Williams}
 minimum_choices = {3} 
-minimum_choices_reached ={conclusions1}
+minimum_choices_reached ={choose patient}
 #text display on button “I’ve collected enough data” 
 
 
@@ -674,9 +762,11 @@ choice = [
 ]
 page = [
 	page_name = {Ms. Williams’ sleep}
-	heading_medium = {Ms. Williams: “I can’t sleep laying down”
-	binary = {Why do you think Ms. Williams can’t sleep laying down?}
-	goes_to_page = {Examine Ms. Williams}	
+	heading_medium = {Ms. Williams: “I can’t sleep laying down”}
+	choice = [
+		prompt = {Why do you think Ms. Williams can’t sleep laying down?}
+		goes_to_page = {Examine Ms. Williams} 
+	]	
 ]
 page = [
 	page_name = {williamsheart}
@@ -684,8 +774,13 @@ page = [
 media = {healthy_heart.mp3}
 heading_medium = {This is what this resident’s heart sounds like}
 media = {abnormal_heart.mp3}
+text = {Do you think this resident’s heart sounds healthy?}
 choice = [
-	binary = {Do you think this resident’s heart sounds healthy?}
+	binary = {yes}
+goes_to_page = {Examine Ms. Williams}
+	]
+	choice = [
+	binary = {no}
 goes_to_page = {Examine Ms. Williams}
 	]
 }
@@ -698,10 +793,16 @@ heading_medium = {This is what healthy lungs sound like when someone breaths}
 media = {healthy_lungs.mp3}
 heading_medium = {This is what this resident’s lungs sounds like}
 media = {healthy_lungs.mp3}
+text = {Do you think this resident’s lungs sound healthy?}
 choice = [
-binary = {Do you think this resident’s lungs sound healthy?}
+binary = {yes}
 goes_to_page = {Examine Ms. Williams}
 ]
+choice = [
+	binary = {no}
+goes_to_page = {Examine Ms. Williams}
+	]
+
 ]
 
 page = [
@@ -710,10 +811,16 @@ heading_medium = {This is what a healthy retina looks like}
 media = {healthyretina.jpg}
 heading_medium = {This is what this resident’s retina looks like}
 media = {unhealthyretina.jpg}
+text = {Do you think this resident’s retina looks healthy?}
 choice = [
-binary = {Do you think this resident’s retina looks healthy?}
+binary = {yes}
 goes_to_page = {Examine Ms. Williams}
 ]
+choice = [
+	binary = {no}
+goes_to_page = {Examine Ms. Williams}
+	]
+
 ]
 
 page = [
@@ -783,7 +890,7 @@ If you are not sure why a particular test is important, you can use the library 
 	media = {mrlane.jpg}
 	heading_media = {This is Mr. Lane}
 minimum_choices = {3} 
-minimum_choices_reached ={conclusions1}
+minimum_choices_reached ={choose patient}
 #text display on button “I’ve collected enough data” 
 
 
@@ -803,10 +910,6 @@ choice = [
 choice = [
 	binary = {check his eyes}
 	goes_to_page = {laneeyes}
-]
-choice = [
-	binary = {check his eyes}
-	goes_to_page = {normal_eyes}
 ]
 choice = [
 		binary = {Check his height, weight, and BMI}
@@ -838,8 +941,13 @@ page = [
 media = {healthy_heart.mp3}
 heading_medium = {This is what this resident’s heart sounds like}
 media = {healthy_heart.mp3}
+text = {Do you think this resident’s heart sounds healthy?}
 choice = [
-	binary = {Do you think this resident’s heart sounds healthy?}
+	binary = {yes}
+goes_to_page = {Examine Mr. Lane}
+	]
+	choice = [
+	binary = {no}
 goes_to_page = {Examine Mr. Lane}
 	]
 ]
@@ -850,10 +958,15 @@ heading_medium = {This is what healthy lungs sound like when someone breaths}
 media = {healthy_lungs.mp3}
 heading_medium = {This is what this resident’s lungs sounds like}
 media = {healthy_lungs.mp3}
+text = {Do you think this resident’s lungs sound healthy?}
 choice = [
-binary = {Do you think this resident’s lungs sound healthy?}
+binary = {yes}
 goes_to_page = {Examine Mr. Lane}
 ]
+choice = [
+	binary = {no}
+goes_to_page = {Examine Mr. Lane}
+	]
 ]
 
 page = [
@@ -876,10 +989,16 @@ heading_medium = {This is what a healthy retina looks like}
 media = {healthyretina.jpg}
 heading_medium = {This is what this resident’s retina looks like}
 media = {healthyretina.jpg}
+text = {Do you think this resident’s retina looks healthy?}
 choice = [
-binary = {Do you think this resident’s retina looks healthy?}
+binary = {yes}
 goes_to_page = {Examine Mr. Lane}
 ]
+choice = [
+	binary = {no}
+goes_to_page = {Examine Mr. Lane}
+	]
+
 ]
 
 
@@ -905,10 +1024,16 @@ heading_medium = {This is what a healthy foot looks like}
 media = {healthyfoot.jpg}
 heading_medium = {This is what this resident’s foot looks like}
 media = {uhealthyfeet.jpg}
+text = {Do you think this resident’s foot looks healthy?}
 choice = [
-binary = {Do you think this resident’s foot looks healthy?}
+binary = {yes}
 goes_to_page = {Examine Mr. Lane}
 ]
+choice = [
+	binary = {no}
+goes_to_page = {Examine Mr. Lane}
+	]
+
 ]
 
 
@@ -959,7 +1084,7 @@ If you are not sure why a particular test is important, you can use the library 
 	media = {mswatson.jpg}
 	heading_medium = {This is Ms. Watson}
 	minimum_choices = {3} 
-minimum_choices_reached ={conclusions1}
+minimum_choices_reached ={choose patient}
 #text display on button “I’ve collected enough data” 
 
 
@@ -1021,8 +1146,13 @@ page = [
 media = {healthy_heart.mp3}
 heading_medium = {This is what this resident’s heart sounds like}
 media = {healthy_heart.mp3}
+text = {Do you think this resident’s heart sounds healthy?}
 choice = [
-	binary = {Do you think this resident’s heart sounds healthy?}
+	binary = {yes}
+goes_to_page = {Examine Ms. Watson}
+	]
+	choice = [
+	binary = {no}
 goes_to_page = {Examine Ms. Watson}
 	]
 ]
@@ -1033,10 +1163,16 @@ heading_medium = {This is what healthy lungs sound like when someone breaths}
 media = {healthy_lungs.mp3}
 heading_medium = {This is what this resident’s lungs sounds like}
 media = {healthy_lungs.mp3}
+text = {Do you think this resident’s lungs sound healthy?}
 choice = [
-binary = {Do you think this resident’s lungs sound healthy?}
+binary = {yes}
 goes_to_page = {Examine Ms. Watson}
 ]
+choice = [
+	binary = {no}
+goes_to_page = {Examine Ms. Watson}
+	]
+
 ]
 
 page = [
@@ -1045,10 +1181,16 @@ heading_medium = {This is what a healthy retina looks like}
 media = {healthyretina.jpg}
 heading_medium = {This is what this resident’s retina looks like}
 media = {healthyretina.jpg}
+text = {Do you think this resident’s retina looks healthy?}
 choice = [
-binary = {Do you think this resident’s retina looks healthy?}
+binary = {yes}
 goes_to_page = {Examine Ms. Watson}
 ]
+choice = [
+	binary = {no}
+goes_to_page = {Examine Ms. Watson}
+	]
+
 ]
 
 page = [
@@ -1057,10 +1199,15 @@ heading_medium = {This is what a healthy foot looks like}
 media = {healthyfoot.jpg}
 heading_medium = {This is what this resident’s foot looks like}
 media = {healthyfoot1.jpg}
+text = {Do you think this resident’s foot looks healthy?}
 choice = [
-binary = {Do you think this resident’s foot looks healthy?}
+binary = {yes}
 goes_to_page = {Examine Ms. Watson}
 ]
+choice = [
+	binary = {no}
+goes_to_page = {Examine Ms. Watson}
+	]
 ]
 
 
@@ -1113,9 +1260,41 @@ choice = [
 ]
 
 page = [
+
+page_name = {patientsummary} 
+
+heading_big = {Here are the notes that you’ve taken for this resident:}
+show_student_content = {true} 
+
+text = {Remember, your goal was to determine what health problems this resident has.}
+
+question = [
+	text = {What was the most important piece of evidence that you obtained about this resident?}
+	tag = {patientsumary1}
+]
+
+question = [
+	text = {Why was this the most important?}
+	tag = {patientsumary1}
+]
+
+question = [
+	text = {Why did you choose the tests or questions that you did?}
+	tag = {patientsumary1}
+]
+
+question = [
+	text = {Do you think this resident is unhealthy? Why?}
+	tag ={patientsumary1}
+]
+goes_to_page = {hypothesis2}
+]
+
+
+page = [
 page_name = {conclusions1} 
 	heading_big = {Here are your initial questions and hypotheses}
-show_all_content = {patient1} 
+show_all_student_content = {true} 
 
 text = {For each hypothesis, mark if you think it was “supported” “refuted” or “neither”
 In the box underneath, explain why you think your hypothesis was supported, refuted, or neither supported nor refuted. Use your lab notebook to include examples of evidence that you collected.}
@@ -1165,7 +1344,7 @@ page_name = {choose patient2}
 heading_big = {Which resident of Katzville would you like to examine first?}
 text = {You may choose to examine patients in any order. You can examine anywhere from 3 to 6 patients total.}
 minimum_choices = {3} 
-		minimum_choice_reached= {conclusions}
+		minimum_choices_reached= {patientsummary2}
 choice = [
 		binary = {
 			name: Mr. Smith
@@ -1248,7 +1427,7 @@ If you are not sure why a particular test is important, you can use the library 
 	media = {mrsmith.jpg}
 	heading_medium = {This is Mr. Smith}
 minimum_choices = {3}
-minimum_choices_reached ={patientsummary2}
+minimum_choices_reached ={choose patient2}
 #text display on button “I’ve collected enough data” 
 choice = [
 	binary = {Ask the resident if he has diabetes}
@@ -1380,34 +1559,34 @@ mimimum_choices_reached = {Examine Mr. Smith 2}
 
 choice = [
 binary = {Genes that increase the chance of getting Type 1 Diabetes}
-goes_to_page = {Type I genes}
+goes_to_page = {Smith Type I genes}
 ]
 choice = [
 binary ={Genes that increase the chance of getting Type 2 Diabetes}
-goes_to_page = {NO Type II genes}
+goes_to_page = {Smith NO Type II genes}
 ]
 
 choice = [
 binary = {Genes that increase the change of being obese}
-goes_to_page = {several obese genes}
+goes_to_page = {Smith several obese genes}
 ]
 
 ]
 page = [
-page_name = {Type I genes}
+page_name = {Smith Type I genes}
 popup_window = {true}
 
 heading_medium = {This resident has the IDDM1 gene which increases their risk of having Type I diabetes by 40-50%}
 
 add_to_notebook = [
-	text = {This resident has the IDDM1 gene which increases their risk of having Type I diabetes 
-	tag = {patient2}by 40-50%}
-
-]]
+	text = {This resident has the IDDM1 gene which increases their risk of having Type I diabetes by 40-50%} 
+	tag = {patient2}
+]
+]
 
 
 page = [
-page_name = {NO Type II genes}
+page_name = {Smith NO Type II genes}
 popup_window = {true}
 heading_medium = {This resident has very few genes that are risk factors for developing Type II diabetes}
 
@@ -1419,7 +1598,7 @@ add_to_notebook = [
 
 page = [
 
-page_name = {several obese genes}
+page_name = {Smith several obese genes}
 popup_window = {true}
 heading_medium = {This resident has very several genes that are risk factors for developing obesity}
 
@@ -1441,7 +1620,7 @@ If you are not sure why a particular test is important, you can use the library 
 	media = {msjones.jpg}
 	heading_medium = {This is Ms. Jones}
 minimum_choices = {3}
-minimum_choices_reached ={patientsummary2}
+minimum_choices_reached ={choose patient2}
 #text display on button “I’ve collected enough data” 
 
 
@@ -1559,29 +1738,25 @@ page = [
 
 page_name = {jonesgenetics}
 mimimum_choices = {1}
-	mimimum_choices_reached = {Examine Ms. Jones 2}
+	mimimum_choices_reached = {Examine Ms. Jones2}
 
 text = {Which genes would you like to test for?}
 choice = [
 binary = {Genes that increase the chance of getting Type 1 Diabetes}
-goes_to_page = {NO Type I genes}
-]
-choice = [
-	binary = {Perform genetic testing}
-	goes_to_page = {jonesgenetics}
+goes_to_page = {Jones NO Type I genes}
 ]
 choice = [
 binary = {Genes that increase the change of being obese}
-goes_to_page = {lots of obese genes}
+goes_to_page = {Jones lots of obese genes}
 ]
 choice = [
 binary ={Genes that increase the chance of getting Type 2 Diabetes}
-goes_to_page = {Several Type II genes}
+goes_to_page = {Jones Several Type II genes}
 ]
 
 ]
 page = [
-page_name = {NO Type I genes}
+page_name = {Jones NO Type I genes}
 popup_window = {true}
 heading_medium = {This resident has very few genes that are risk factors for developing Type I diabetes}
 }
@@ -1593,7 +1768,7 @@ add_to_notebook = [
 
 
 page = [
-page_name = {Several Type II genes}
+page_name = {Jones Several Type II genes}
 popup_window = {true}
 heading_medium = {This resident has several genes that are risk factors for developing Type II diabetes}
 add_to_notebook = [
@@ -1605,7 +1780,7 @@ add_to_notebook = [
 
 page = [
 
-page_name = {lots of obese genes}
+page_name = {Jones lots of obese genes}
 popup_window = {true}
 heading_medium = {This resident has lots of genes that are risk factors for obesity}
 add_to_notebook = [
@@ -1626,7 +1801,7 @@ If you are not sure why a particular test is important, you can use the library 
 	media = {mranderson.jpg}
 	heading_medium = {This is Mr. Anderson}
 minimum_choices = {3}
-minimum_choices_reached ={patientsummary2}
+minimum_choices_reached ={choose patient2}
 #text display on button “I’ve collected enough data” 
 
 
@@ -1660,16 +1835,8 @@ choice = [
 	goes_to_page = {andersonfamilyobese}
 ]
 choice = [
-binary ={Genes that increase the chance of getting Type 2 Diabetes}
-goes_to_page = {many Type II genes}
-]
-choice = [
 	binary = {Ask resident if he has family members who have had a stroke}
 	goes_to_page = {andersonfamilystroke}
-]
-choice = [
-binary = {Genes that increase the change of being obese}
-goes_to_page = {several obese genes}
 ]
 ]
 page = [
@@ -1678,8 +1845,8 @@ page_name = {Andersondiet}
 popup_window = {true}
 heading_medium = {Mr. Anderson: “I eat fried chicken, hamburgers, French fries and I drink coke and Mountain Dew”}
 add_to_notebook = [
-	text = {Mr. Anderson: “I eat fried chicken, hamburgers, French fries and I drink coke and 
-	tag = {patient2}Mountain Dew”}
+	text = {Mr. Anderson: “I eat fried chicken, hamburgers, French fries and I drink coke and Mountain Dew”} 
+	tag = {patient2}
 	]
 ]
 
@@ -1753,13 +1920,22 @@ page = [
 
 page_name = {andersongenetics}
 text = {Which genes would you like to test for?}
+
+minimum_choices = {1} 
+minimum_choices_reached = {Examine Mr. Anderson2}
+
 choice = [
-binary = {Genes that increase the chance of getting Type 1 Diabetes}
-goes_to_page = {NO Type I genes}
+binary ={Genes that increase the chance of getting Type 2 Diabetes}
+goes_to_page = {Anderson many Type II genes}
 ]
+choice = [
+binary = {Genes that increase the change of being obese}
+goes_to_page = {Anderson several obese genes}
+]
+
 ]
 page = [
-page_name = {many Type II genes}
+page_name = {Anderson many Type II genes}
 popup_window = {true}
 heading_medium = {This resident has several genes that are risk factors for developing Type II diabetes}
 add_to_notebook = [
@@ -1771,7 +1947,7 @@ add_to_notebook = [
 
 page = [
 
-page_name = {several obese genes}
+page_name = {Anderson several obese genes}
 popup_window = {true}
 heading_medium = {This resident has very several genes that are risk factors for developing obesity}
 add_to_notebook = [
@@ -1792,7 +1968,7 @@ If you are not sure why a particular test is important, you can use the library 
 	media = {mswilliams.jpg}
 	heading_medium = {This is Ms. Williams}
 minimum_choices = {3}
-minimum_choices_reached ={patientsummary2}
+minimum_choices_reached ={choose patient2}
 #text display on button “I’ve collected enough data” 
 
 
@@ -1916,19 +2092,23 @@ page = [
 
 page_name = {williamsgenetics}
 text = {Which genes would you like to test for?}
+
+minimum_choices = {1} 
+minimum_choices_reached = {Examine Ms. Williams2}
+
 choice = [
 binary = {Genes that increase the chance of getting Type 1 Diabetes}
-goes_to_page = {NO Type I genes}
+goes_to_page = {william NO Type I genes}
 ]
 
 choice = [
 binary ={Genes that increase the chance of getting Type 2 Diabetes}
-goes_to_page = {NO Type II genes}
+goes_to_page = {william NO Type II genes}
 ]
 
 choice = [
 binary = {Genes that increase the change of being obese}
-goes_to_page = {several obese genes}
+goes_to_page = {william several obese genes}
 	]
 
 choice = [
@@ -1948,7 +2128,7 @@ If you are not sure why a particular test is important, you can use the library 
 	media = {mrlane.jpg}
 	heading_medium = {This is Mr. Lane}
 minimum_choices = {3}
-minimum_choices_reached ={patientsummary2}
+minimum_choices_reached ={choose patient2}
 #text display on button “I’ve collected enough data” 
 
 choice = [
@@ -2065,24 +2245,24 @@ add_to_notebook = [
 page = [
 
 page_name = {lanegenetics}
-binary = {Which genes would you like to test for?}
-choice = [
-binary = {Genes that increase the chance of getting Type 1 Diabetes}
-goes_to_page = {NO Type I genes}
-]
+heading_medium = {Which genes would you like to test for?}
+
+minimum_choices = {1} 
+minimum_choices_reached = {Examine Mr. Lane2}
+
 
 choice = [ 
 binary ={Genes that increase the chance of getting Type 2 Diabetes}
-goes_to_page = {many Type II genes}
+goes_to_page = {lane many Type II genes}
 ]
 choice = [
 binary = {Genes that increase the change of being obese}
-goes_to_page = {some obese genes}
+goes_to_page = {lane some obese genes}
 ]
 ]
 
 page = [
-page_name = {many Type II genes}
+page_name = {lane many Type II genes}
 popup_window = {true}
 heading_medium = {This resident has several genes that are risk factors for developing Type II diabetes}
 
@@ -2094,7 +2274,7 @@ add_to_notebook = [
 
 page = [
 
-page_name = {some obese genes}
+page_name = {lane some obese genes}
 popup_window = {true}
 heading_medium = {This resident has a few genes that are risk factors for developing obesity}
 add_to_notebook = [
@@ -2115,7 +2295,7 @@ If you are not sure why a particular test is important, you can use the library 
 	media = {mswatson.jpg}
 	heading_medium = {This is Ms. Watson}
 minimum_choices = {3}
-minimum_choices_reached ={patientsummary2}
+minimum_choices_reached ={choose patient2}
 #text display on button “I’ve collected enough data” 
 
 
@@ -2246,22 +2426,24 @@ page = [
 
 page_name = {watsongenetics}
 binary = {Which genes would you like to test for?}
-choice = {
-binary = {Genes that increase the chance of getting Type 1 Diabetes}
-goes_to_page = {NO Type I genes}
-}
+
+minimum_choices = {1} 
+minimum_choices_reached = {Examine Ms. Watson2}
 
 choice = [
 binary ={Genes that increase the chance of getting Type 2 Diabetes}
-goes_to_page = {some Type II genes}
+goes_to_page = {watson some Type II genes}
 ]
 choice = [
 binary = {Genes that increase the change of being obese}
-goes_to_page = {many obese genes}
+goes_to_page = {watson many obese genes}
 ]
+
+min
+
 ]
 page = [
-page_name = {some Type II genes}
+page_name = {watson some Type II genes}
 popup_window = {true}
 heading_medium = {This resident has some genes that are risk factors for developing Type II diabetes}
 add_to_notebook = [
@@ -2270,10 +2452,9 @@ add_to_notebook = [
 ]
 ]
 
-
 page = [
 
-page_name = {many obese genes}
+page_name = {watson many obese genes}
 popup_window = {true}
 heading_medium = {This resident has many genes that are risk factors for developing obesity}
 add_to_notebook = [
@@ -2304,7 +2485,8 @@ question = [
 	tag = {patientSummary2}
 ]
 
-goes_to_page={conclusions2}
+
+goes_to_page={finalrecommendation}
 ]
 
 page = [

@@ -181,7 +181,7 @@ def parse_choice(lines, page, page_names):
 
 	for i, line in enumerate(lines):
 		if "prompt" in line or "textbox" in line:
-			type = "text"
+			type = "prompt"
 			text = get_text(i, line, lines)
 
 		elif "binary" in line:
