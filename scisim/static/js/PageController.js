@@ -97,7 +97,7 @@ PageController.prototype.applyDirectives = function(pageResponse) {
 	for (var i = 0; i < actions.length; i++) {
 		switch(actions[i].name){
 			case "add_to_notebook":
-				labnotebook.add(actions[i].value);
+				labnotebook.add(actions[i].value.replace("}", ""));
 				break;
 			case "minimum_choices_reached":
 				this.minimum_choice_page = parseInt(actions[i].value);
@@ -168,10 +168,14 @@ PageController.prototype.processBinaryClick = function(e) {
 		
 		var loggableString = "";
 		
-		if(chain.getLastPage().patient) loggableString += chain.getLastPage().patient;
+		if(chain.getLastPage().patient){
+			loggableString += chain.getLastPage().patient+ ": ";	
+		}else{
+			loggableString += "Question: " + $('.page-section').last().text() + " You said: ";
+		}
 		
 		loggableString += value;
-		labnotebook.add(loggableString);
+		labnotebook.add(loggableString.replace("}", ""));
 
 	if(!$.isArray(user_ids)){
 		user_ids = [user_ids];
@@ -214,6 +218,19 @@ PageController.prototype.processButtonClick = function(e) {
 		obj['action_string'] = getActionString(obj['value'], obj['id'], this.page_id);
 
 		choicesMade.push(obj);
+		
+		//	TODO: this is just a quick fix. what if the request fails?
+		var loggableString = "";
+		
+		
+		if(chain.getLastPage().patient && chain.getLastPage().patient !== "undefined"){
+			loggableString += chain.getLastPage().patient+ ": ";	
+		}else{
+			loggableString += "Question: " + input.prev().text() + "You said: ";
+		}
+		
+		loggableString += input.val();
+		labnotebook.add(loggableString.replace("}", ""));
 	};
 
 	// we're going to construct this so that later we can make a parser that generates insightful xls documents based on these. 
