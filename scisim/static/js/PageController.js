@@ -219,6 +219,13 @@ PageController.prototype.processButtonClick = function(e) {
 	for (var i = 0; i < $inputs.length; i++) {
 		var input = $inputs.eq(i);
 		var obj = {};
+		
+		if(input.val().length === 0){
+			// TODO: extract this to a form helper class
+			input.addClass("has-danger");
+			input.attr('placeholder', "This field must be filled.");
+			return;
+		}
 
 		obj['value'] = input.val();;
 		obj['id'] = input.data("choice-id");

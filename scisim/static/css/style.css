@@ -3,6 +3,10 @@ ul{
 	padding:0;
 }
 
+input.has-error{
+	border:1px solid red;
+}
+
 .screen img{
 	max-height:350px;
 }
