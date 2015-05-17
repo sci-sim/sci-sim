@@ -3,6 +3,16 @@ ul{
 	padding:0;
 }
 
+.screen img{
+	max-height:350px;
+	float:left;
+	margin-right:25px;
+}
+
+.screen .page-section{
+	margin: 30px 0px;
+}
+
 .menu-bar{
 	background-color:#eee;
 	padding:0;

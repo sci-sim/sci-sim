@@ -25,11 +25,7 @@ PageController.prototype.composePage = function(pageResponse) {
 
 	 for (var i = 0; i < sections.length; i++) {
 	 	var section_html = tf.fillTemplate({"content": sections[i].content}, "page_section");
-	 	if($(section_html).children().eq(0).prop("tagName") === "IMG"){
-	 		html += "<p> There's supposed to be an image here, but images aren't currently supported. Just move along as normal...</p>";
-	 		continue;
-	 	}
-
+	 
 	 	if($(section_html).children().eq(0).prop("tagName") === "AUDIO"){
 	 		html += "<p> There's supposed to be an audio track here, but it's not currently supported. Just move along as normal...</p>";
 	 		continue;
@@ -40,11 +36,10 @@ PageController.prototype.composePage = function(pageResponse) {
 	 
 	if(this.isPopup){
 		smoke.alert($(html).text() + " (this was added to your lab notebook)", function(e){}, {ok: "Okay, thanks!"});
+		// TODO: the page we want is not always the last page. 
 		var lastpage = chain.getLastPage();
-		console.log(lastpage);
 		lastpage.visits +=1;
 		lastpage.checkVisits();
-		console.log(lastpage, lastpage.visits);
 		return;	
 	}
 	

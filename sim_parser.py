@@ -224,8 +224,8 @@ def add_section(line_number, all_lines, order, content, page, content_type=None)
 	elif content_type == "regular_heading":
 		tags = "<p>content</p>"
 	elif content_type == "media":
-		if content_type[-3:] == "jpg" or content_type[-3:] == "jpeg":
-			tags = "<img src='content'/>"
+		if content[-3:] == "jpg":
+			tags = "<img src='img/content'/>"
 		else:
 			tags = "<audio src='content'/>";
 
