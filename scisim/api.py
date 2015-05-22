@@ -1,15 +1,16 @@
 from scisim import app, db, clean_text
 from flask import request
-from models import *
+from scisim.models import *
 from scisim.helpers import *
 from sqlalchemy import and_
 from datetime import datetime
 from json import dumps
 import datetime
+import sim_parser
 
 @app.route('/api/users/create', methods=["POST"])
 def api_users_create():
-    error = check_for_params(['username'], request)
+    error = check_for_params(['username', 'sim_id'], request)
     if error:
         return error_message(error)
 
@@ -24,24 +25,21 @@ def api_users_create():
     try:
         db.session.commit()
     except Exception:
-        return error_message("This user has alraedy been created. If you previously got the 'simulation does not exist' error using this route, then please use the /api/simulations/add_user endpount.")
+        return error_message("This user has already been created. If you previously got the 'simulation does not exist' error using this route, then please use the /api/simulations/add_user endpount.")
+
+    sim = Simulation.query.filter(Simulation.id == request.form['sim_id']).first()
+    if not sim:
+        return error_message("That simulation does not exist.")
+
+    sim_user_pivot = Sim_User_Pivot(user_id=user.id, sim_id=sim.id)
+    db.session.add(sim_user_pivot)
 
     logged_in = Logged_In(user_id=user.id, timestamp=datetime.datetime.now())
     db.session.add(logged_in)
 
-    # NOTE: it there is an error message here, then the other route must be used
-    #       because it will cause an error with the name being unique.
-    if request.form['sim_id']:
-        sim = Simulation.query.filter(Simulation.id == reqeust.form['sim_id'])
-        if not sim:
-            return error_message("That simulation does not exist.")
-
-        sim_user_pivot = Sim_User_Pivot(user_id=user.id, sim_id=sim.id)
-        db.session.add(sim_user_pivot)
-
     db.session.commit()
-
-    return dumps(unpack_model(user))
+        
+    return respond_json(dumps(unpack_model(user)))
 
 @app.route('/api/users/login', methods=["POST"])
 def api_users_login():
@@ -62,24 +60,14 @@ def api_users_login():
 
 @app.route('/api/users/update_session', methods=["POST"])
 def api_users_update_session():
-    error = check_for_params(["username", "page_id"], request)
+    error = check_for_params(["username", "new_page_id"], request)
     if error:
         return error_message(error)
 
     username = request.form['username']
-    page_id = request.form['page_id']
+    new_page_id = request.form['new_page_id']
 
-    user = User.query.filter(User.name == username).first()
-    if not user:
-        return error_message("User with username " + username + " was not found")
-
-    page = Page.query.filter(Page.id == page_id).first()
-    if not page:
-        return error_message("Page with id " + page_id + " was not found")
-
-    user.last_page = page.id
-
-    db.session.commit()
+    update_user_session(new_page_id, username=username)
 
     return success_message("Last page updated successfully")
 
@@ -104,6 +92,22 @@ def api_users_notes():
         return error_message(error)
 
     return to_json(Note.query.filter(Note.user_id == request.form['user_id']))
+
+@app.route('/api/users/log', methods=["POST"])
+def api_users_continue():
+    #TODO: we need to make it so that the user's actions are recorded in the lab notebook - crate a place where actions are stored AND notes are made
+    error = check_for_params(['user_id', 'page_id', 'action_string'], request)
+    if error:
+        return error_message(error)
+    user_id = request.form['user_id']
+    page_id = request.form['page_id']
+    action_string = request.form['action_string']
+
+    log = Log(timestamp=datetime.datetime.now(), content=action_string, user_id=user_id)
+    # Assume that this page is the last page that the user was on
+    update_user_session(page_id, user_id=user_id)
+
+    return success_message("Logged the user's action")
 
 @app.route('/api/users/logout', methods=["POST"])
 def api_users_logout():
@@ -168,6 +172,21 @@ def api_groups_add_user():
 
     return success_message("User successfully added to the group")
 
+@app.route('/api/simulations/create', methods=['POST'])
+def api_simulations_create():
+    error = check_for_params(['contents'], request)
+    if error:
+        return error_message(error)
+
+    sim = request.form['contents']
+    
+    errors = sim_parser.parse_sim(sim)
+    if errors:
+        return dumps({"errors":errors})
+
+    medias = sim_parser.get_all_media(sim)
+    return dumps({"medias":medias})
+
 @app.route('/api/simulations/all', methods=['GET'])
 def api_simulations_all():
     return to_json(Simulation.query.all())
@@ -229,8 +248,7 @@ def api_page():
     error = check_for_params(['page_id'], request)
     if error:
         return error_message(error)
-    return to_json(Page.query.filter(Page.id == request.form['page_id']))
-
+    return to_json(Page.query.filter(Page.id == request.form['page_id']).all())
 
 @app.route('/api/pages/links', methods=['POST'])
 def api_pages_links():
@@ -286,3 +304,11 @@ def api_notes_destroy():
     db.session.commit()
 
     return success_message('Note destroyed')
+
+@app.route('/api/media/upload', methods=['POST'])
+def api_media_upload():
+    file = request.files['file']
+    # This is going to need to be replaced on the server.
+    file.save('/vagrant/app/scisim/media/' + file.filename)
+
+    return success_message("File uploaded")

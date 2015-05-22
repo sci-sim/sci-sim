@@ -6,10 +6,11 @@ class Simulation(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(100))
     folder_name = db.Column(db.String(50))
-    preview_image_filename = db.Column(db.String(50))
+    preview_image_filename = db.Column(db.String(50), default="none")
     preview_image_credit = db.Column(db.String(200))
     desc = db.Column(db.String(500))
-    first_page_id = db.Column(db.Integer)#, db.ForeignKey("pages.id")) # TODO how do we fix this?
+    first_page_id = db.Column(db.Integer)
+    #, db.ForeignKey("pages.id")) # TODO how do we fix this? -- we could have a convention. sim 1 starts at 100, 101, 102... and sim 2 starts at 200,201,202...
     # TODO should we make a first_page relationship instead of the ID here? This is just fine.
     order = db.Column(db.Integer, default=9999)
 
@@ -48,16 +49,74 @@ class Page(db.Model):
 
     # A one-to-many relationship between a page and its sections
     sections = db.relationship("Section", back_populates="page")
+
+    page_modifiers = db.relationship("Page_Modifier", back_populates="page")
+    choices = db.relationship("Choice", back_populates="page")
+    page_actions = db.relationship("Page_Action", back_populates="page")
     # Manually doing the bidirectional one-to-many / many-to-one linking of relationships
 
     # Two one-to-many relationships between a page and its incoming and outgoing links
     links_outgoing = db.relationship("Link", back_populates="page_src", foreign_keys="Link.page_src_id")
     links_incoming = db.relationship("Link", back_populates="page_dest", foreign_keys="Link.page_dest_id")
-    # Manually doing the bidirectional one-to-many / many-to-one linking of relationships
+    # Manuallynually doing the bidirectional one-to-many / many-to-one linking of relationships
+    #   
 
     def __repr__(self):
         return "<Page %d - \"%s\">" % (int(self.id), self.title)
 
+# this is to tell the client that the page needs to be modified somehow
+# Like if the page needs to have a minimum number of choices chosen, we specify it here.
+class Page_Modifier(db.Model):
+    __tablename__ = "page_modifiers"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+
+    name = db.Column(db.String(200))
+    value = db.Column(db.String(200))
+
+    page_id = db.Column(db.Integer, db.ForeignKey("pages.id"))
+    page = db.relationship("Page")
+
+    def __repr__(self):
+        return "<Page_Modifier %d - \"%s\">" % (int(self.id), self.title)
+
+
+class Choice(db.Model):
+    __tablename__ = "choices"
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+
+    # this could be binary (option that is one or the other) or text
+    type = db.Column(db.String(200))
+
+    # the text to go with the choice.
+    text = db.Column(db.String(200))
+
+    #the page where this choice leads to.
+    destination = db.Column(db.String(200))
+
+    #in order to grab a group
+    tag = db.Column(db.String(200))
+
+    page_id = db.Column(db.Integer, db.ForeignKey("pages.id"))
+    page = db.relationship("Page")
+
+    def __repr__(self):
+        return "<Choice %d - \"%s\">" % (int(self.id), self.title)
+
+# this is to tell the client what needs to be done when the page loads.
+# So if when the page loads we need to add something to the lab notebook, we can tell it to here.
+class Page_Action(db.Model):
+    __tablename__ = "actions"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+
+    name = db.Column(db.String(200))
+    value = db.Column(db.String(200))
+
+    page_id = db.Column(db.Integer, db.ForeignKey("pages.id"))
+    page = db.relationship("Page")
+
+    def __repr__(self):
+        return "<Page_Modifier %d - \"%s\">" % (int(self.id), self.title)
 
 class Section(db.Model):
     __tablename__ = "sections"
@@ -154,7 +213,6 @@ class Prompt(db.Model):
     def __repr__(self):
         return "<Prompt %d \"%s\" -> var \"%s\">" % (int(self.id), self.prompt, self.var_name)
 
-
 class Action(db.Model):
     """ Either a variable, logging, notebooking, or librarying action. """
     __tablename__ = "linkactions"
@@ -219,8 +277,8 @@ class User(db.Model):
     notes = db.relationship("Note", back_populates="user")
     logs = db.relationship("Log", back_populates="user")
     #libs = db.relationship("Log", back_populates="user")
-    # Manually doing the bidirectional one-to-many / many-to-one linking of relationships
-
+    # Manually doing  the bidirectional one-to-many / many-to-one linking of relationships
+    
     def __repr__(self):
         return "<User %r (%d logs, %d notes)>" % (self.name, len(self.logs), len(self.notes))
 
@@ -253,6 +311,9 @@ class Note(db.Model):
     # A one-to-many relationship between a user and his or her notes
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     user = db.relationship("User", back_populates="notes")
+
+    #in order to grab a group
+    tag = db.Column(db.String(200))
     # Manually doing the bidirectional one-to-many / many-to-one linking of relationships
 
     def __repr__(self):

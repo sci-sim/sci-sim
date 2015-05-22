@@ -1,0 +1,133 @@
+# each choice is a link
+
+simulation_name = {template example}
+simulation_password = {pass}
+simulation_description = {this is the description}
+simulation_preview_picture = {Katzville.jpg}
+
+# First page
+page =  [
+	page_name = {Choose Patient} # this does not appear on the page
+	heading_big = {This is the heading that will go on top. Headings indicate bigger, bolder text}
+	text = {This is just text. everything entered will be in the order you make declarations}
+	choice_limit = 1 
+	choice_limit_page = {Patient Evaluation Summary}
+
+	choice = [
+		# this is the text that goes with the choice
+		prompt = {
+			name: Mr. Smith
+			sex: male
+			age: 25
+			chief_complaint: Burning feet and toes
+		}
+		goes_to_page = {Examine Mr. Smith} 
+	]
+
+	choice = [
+		
+		prompt = {
+			Ms. JONES
+			Sex: female
+			Age: 45
+			Chief Complaint: Check up
+		}
+
+		goes_to_page = {Examine Ms. Jones} 
+	]
+]
+
+page =  [
+	page_name = {Examine Mr. Smith}
+
+	heading_big = {Patient Profile #1 Mr. Smith}
+	heading_small = {Dialoge with Mr. Smith}
+
+	text = {
+		Doctor: What brings you here today?
+		Mr. Smith: My feet and toes feel like they're burning!
+	}
+
+	heading_small = {What would you like to do now?}
+	
+	choice_limit = {5}
+	choice_limit_page = {Choose Patient}
+
+	choice = [
+		prompt = {Listen to the patient's heart}
+		goes_to_page = {Listen to Mr. Smith's Heart}
+	]
+
+	choice = [
+		prompt = {Listen to the patient's lungs}
+		goes_to_page = {Listen to Mr. Smith's Lungs}
+	]
+
+	choice = [
+		binary = {Check patient's height, weight, and BMI}
+		goes_to_page = {Check Mr. Smiths Height, Weight, and BMI}
+	]
+
+	choice = [
+		binary = {Examine the patient's feet for sores}
+		goes_to_page = {Examine Mr. Smith's feet for sores}
+	]
+
+	choice = [
+		binary = {Check the patient's blood sugar}
+		goes_to_page = {Check Mr. Smith's Blood Sugar}
+	]
+]
+
+page =  [
+	page_name = {Listen to Mr. Smith's Heart}
+	media = {normal_sounding_clip.mp3} # the value would be the name of the file
+	media = {weird_sounding_clip.mp3}
+
+	choice = [
+		# binary indicates that this will be a prompt that needs a yes/no response
+		binary = {Do you think your patient's heart sounds normal?}
+		goes_to_page = {Examine Mr. Smith}
+	]
+]
+
+page =  [
+	page_name = {Listen to Mr. Smith's Lungs}
+	media = {normal_sounding_clip.mp3} # the value would be the name of the file
+	media = {weird_sounding_clip.mp3}
+
+	choice = [
+		binary = {Do you think your patient's lungs sounds normal?}
+		goes_to_page = {Examine Mr. Smith}
+	]
+]
+
+page =  [
+	page_name = {Check Mr. Smith's Height, Weight, and BMI}
+	add_to_notebook = {Mr. Smith's height is X, weight is Y making their BMI Z. Your patient is normal weight}
+	goes_to_page = {Examine Mr. Smith}
+]
+
+page =  [
+	page_name = {Examine Mr. Smith's feet for sores}
+	media = {healthy_feel.jpg}
+	
+	choice = [
+		binary = {Do you think Mr. Smith's feet are healthy?}
+		goes_to_page = {Examine Mr. Smith}
+	]
+]
+
+page =  [
+	page_name = {Check Mr. Smith's Blood Sugar}
+]
+
+page = [
+	page_name = {Examine Ms. Jones}
+	add_to_notebook = {"We're adding stuff from ms. jones"}
+]
+
+page = [
+	page_name = {Check Mr. Smiths Height, Weight, and BMI}
+	add_to_notebook = {"We're adding stuff from ms. jones"}
+]

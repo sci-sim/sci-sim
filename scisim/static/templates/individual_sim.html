@@ -1,0 +1,26 @@
+<div class="individual-simulation-page panel">
+	<div class="panel-heading">
+		<h3 class="panel-title">{title}</h3> 
+	</div>
+	<div class="panel-body">
+		<div class="section">
+			{content}
+		</div>
+		<div class="choice choice-binary" data-destination="{dest}" data-id="{id}">
+			<div class="well clickable-well">
+				<p>{text}</p>
+			</div>
+		</div>
+
+		<div class="choice choice-prompt" data-destination="{dest}" data-id="{id}">
+			<p>{text}</p>
+			<input class="form-control" type="text" placeholder="Enter your response here">
+		</div>
+<!-- TODO: add modifiers here -->
+		<div class="choice choice-question" data-destination="{dest}" data-id="{id}">
+			<p>{text}</p>
+			<input class="form-control" type="text" placeholder="Enter your response here">
+		</div>
+		
+	</div>
+</div>

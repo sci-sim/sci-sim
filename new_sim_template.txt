@@ -1,0 +1,2536 @@
+simulation_name = {The Katzville Conundrum}
+simulation_password = {goodhealth}
+simulation_description = {Katzville just won an award for the unhealthiest town. Can you figure out what health problems the residents have and find a way to make them healthier?}
+
+page = [
+	page_name = {introduction1}
+	heading_big = {Introduction}
+text = {Katzville is a small town near a big city, not unlike your home. The citizens of Katzville go to school or work everyday and enjoy cheering on their local baseball team. But everything is not well in Katzville. In fact, Katzville just received an award for the unhealthiest town.}
+media = {katzville.jpg}
+goes_to_page = {introduction2}
+	]
+
+page = [
+	page_name = {introduction2}
+	heading_big ={Introduction}
+text = {The mayor of Katzville has reached out to you for help because you are an epidemiologist. An epidemiologist is a scientist who studies what makes people unhealthy. Sometimes epidemiologists are called disease detectives because they figure out why people are unhealthy or sick and how to make them feel better. 
+
+The mayor of Katzville wants you to come in and put your skills to test. You will visit Katzville and meet with the residents. Your goals are to: 
+
+1. Identify the resident’s health problems
+2. Determine why the residents have these health problems
+
+You will examine each person to determine what what health problems they have and why. After you have finished collecting data, you will make a recommendation to the mayor of Katzville.}
+media = {trophy.jpg}
+goes_to_page = {hypothesis1}
+]
+
+
+page = [
+	page_name = {hypothesis1} 
+	heading_big = {What health problems do the residents have?}
+minimum choices = {1}
+	text = {
+
+A hypothesis is a simple answer to a question.
+
+What questions would you like to answer when you examine the patients? What will you look for? What will help you determine why the residents in Katzville don’t feel good? Enter your questions on the left side of the screen under “questions”
+
+What are your hypotheses for why the residents of Katzville are sick? Fill in possible answers to the questions on the ride side of the screen under “hypotheses” 
+
+You can enter as many questions and answers as you like. You may also visit the library to get ideas for questions to ask.}
+
+question = [
+text = {What questions do you have?}
+tag = {hypothesis1}
+]
+question = [
+text = {What is the hypothesis?}
+tag = {hypothesis1}
+]
+question = [
+text = {Why did you choose this question and hypothesis}
+tag = {hypothesis1}
+]
+
+goes_to_page = {choose patient}
+can_add_question_groups = {true}
+minimum_questions_answered = {2}
+]
+
+page = [
+page_name = {choose patient} 
+heading_big = {Which resident of Katzville would you like to examine first?}
+text = {You may choose to examine patients in any order. You can examine anywhere from 3 to 6 patients total.}
+minimum_choices = {3} 
+minimum_choices_reached = {patientsummary}
+choice = [
+		binary = {
+			Mr. Smith
+			Sex: male
+			Age: 25
+		}
+		goes_to_page = {Examine Mr. Smith} 
+]
+
+	choice = [
+		
+		binary = {
+			Ms. Jones
+			Sex: female
+			Age: 45
+		}
+
+		goes_to_page = {Examine Ms. Jones} 
+	]
+
+
+choice = [
+		
+		binary = {
+			Mr. Anderson
+			Sex: male
+			Age: 50
+		}
+
+goes_to_page = {Examine Mr. Anderson}
+
+]
+
+choice = [
+		
+		binary = {
+			Ms. Williams
+			Sex: female
+			Age: 63
+		}
+	
+goes_to_page = {Examine Ms. Williams}
+
+]
+
+choice = [
+		
+		binary = {
+			Mr. Lane
+			Sex: male
+			Age: 42
+		}
+	
+goes_to_page = {Examine Mr. Lane}
+
+]
+
+choice = [
+		
+		binary = {
+			Ms. Watson
+			Sex: female
+			Age: 52
+		}
+
+goes_to_page = {Examine Ms. Watson}
+]
+]
+page = [
+
+page_name = {Examine Mr. Smith } 
+	heading_big = {
+
+What would you like to do first?
+
+If you are not sure why a particular test is important, you can use the library button to get more information
+}
+	media = {mrsmith.jpg}
+	heading_medium = {This is Mr. Smith}
+minimum_choices = {4}
+minimum_choices_reached ={choose patient}
+#text display on button “I’ve collected enough data” 
+
+choice = [
+	binary = {Ask resident how he feels today}
+	goes_to_page = {burningfeet}
+]
+choice = [
+		binary = {Listen to his heart}
+		goes_to_page = {smithheart} 
+		]
+choice = [
+		binary = {Listen to his lungs}
+		goes_to_page = {smithlungs} 
+	]
+
+choice = [
+		binary = {Check his height, weight, and BMI}
+		goes_to_page = {Mr. Smith’s BMI} 
+		]
+choice = [
+		binary = {Check his feet for sensation}
+		goes_to_page = {abnormal_sensation} 
+		]
+choice = [
+		binary = {Check his feet for sores}
+		goes_to_page = {smithfeet} 
+		]
+choice = [
+		binary = {Check his eyes}
+		goes_to_page = {smitheyes}
+		]
+
+choice = [
+		binary = {Check his blood sugar}
+		goes_to_page = {Mr. Smith blood sugar}
+		]
+	
+choice = [
+	binary = {Check his temperature}
+	goes_to_page ={Mr. Smith temperature}
+]
+]
+page = [
+	page_name = {Mr. Smith temperature}
+	heading_medium = {98.6 degrees
+	This resident does not have a fever.}
+	popup_window = {true}
+	add_to_notebook = [
+		text = {98.6 degrees
+			Mr. Smith does not have a fever.}
+			tag = {patient1}
+	]
+]
+
+page = [
+	page_name = {Mr. Smith blood sugar}
+	heading_medium = {Fasting Blood Sugar = 150
+This number is high and means Mr. Smith is a diabetic and not controlling his diabetes with medicine or food.}
+	popup_window = {true}
+	add_to_notebook = [
+		text = {Fasting Blood Sugar = 150
+This number is high and means Mr. Smith is a diabetic and not controlling his diabetes with medicine or food.}
+tag = {patient1}
+	]
+]
+
+page = [
+	page_name = {smithheart}
+heading_medium = {This is what a healthy heart sounds like}
+media = {http://www.easyauscultation.com/cases-listing-details?caseID=32}
+heading_medium = {This is what this resident’s heart sounds like}
+media = {http://www.easyauscultation.com/cases-listing-details?caseID=32}
+text = {Do you think this resident’s heart sounds healthy?}
+choice = [
+	binary = {yes}
+	goes_to_page= {Examine Mr. Smith}
+]
+choice = [
+binary = {no}
+goes_to_page= {Examine Mr. Smith}
+]
+
+]
+
+page = [
+page_name = {smithlungs}
+heading_medium = {This is what healthy lungs sound like when someone breaths}
+media = {http://www.easyauscultation.com/cases-listing-details?caseID=76}
+heading_medium = {This is what this resident’s lungs sounds like}
+media = {http://www.easyauscultation.com/cases-listing-details?caseID=76}
+text = {Do you think this resident’s lungs sound healthy?}
+choice = [
+binary = {yes}
+goes_to_page= {Examine Mr. Smith}
+]
+choice = [
+binary = {no}
+goes_to_page= {Examine Mr. Smith}
+]
+]
+
+page = [
+page_name = {smithfeet}
+heading_medium = {This is what a healthy foot looks like}
+media = {healthyfoot.jpg}
+heading_medium = {This is what this resident’s foot looks like}
+media = {healthyfoot1.jpg}
+text = {Do you think this resident’s foot looks healthy?}
+choice = [
+binary = {yes}
+goes_to_page= {Examine Mr. Smith}
+]
+choice = [
+binary = {no}
+goes_to_page= {Examine Mr. Smith}
+]
+
+]
+
+page = [
+page_name = {smitheyes}
+heading_medium = {This is what a healthy retina looks like}
+media = {healthyretina.jpg}
+heading_medium = {This is what this resident’s retina looks like}
+media = {healthyretina.jpg}
+text = {Do you think this resident’s retina looks healthy?}
+choice = [
+binary = {yes}
+goes_to_page= {Examine Mr. Smith}
+]
+choice = [
+binary = {no}
+goes_to_page= {Examine Mr. Smith}
+]
+]
+
+page = [
+
+	page_name = {Mr. Smith’s BMI}
+heading_medium = {Mr. Smith is 5’8 and weighs 110 lbs. Use the BMI calculator to determine if he is underweight, healthy weight, overweight, or obese}
+add_to_notebook = [
+	text = {Mr. Smith is 5’8 and weighs 110 lbs. Use the BMI calculator to determine if he is underweight, healthy weight, overweight, or obese}
+	tag = {patient1}
+]
+link = [
+text = {BMI Calculator}
+url = {http://www.cdc.gov/healthyweight/assessing/bmi/adult_bmi/english_bmi_calculator/bmi_calculator.html}
+]
+
+heading_medium = {Mr. Smith is: underweight, healthy weight, overweight, or obese}
+
+choice = [
+	binary = {underweight}
+	goes_to_page = {Examine Mr. Smith}
+]
+choice = [
+	binary = {healthy weight}
+	goes_to_page = {Examine Mr. Smith}
+]
+choice = [
+	binary = {overweight}
+	goes_to_page = {Examine Mr. Smith}
+]
+]
+ 
+
+page = [
+
+page_name = {Examine Ms. Jones} 
+	heading_big = {
+
+What would you like to do first?
+
+If you are not sure why a particular test is important, you can use the library button to get more information
+}
+	media = {msjones.jpg}
+	heading_medium = {This is Ms. Jones}
+	minimum_choices = {3} 
+minimum_choices_reached ={choose patient}
+#text display on button “I’ve collected enough data” 
+
+
+choice = [
+	binary = {Ask resident how she feels today}
+	goes_to_page = {Ms. Jones’ Feelings}
+]
+choice = [
+		binary = {Listen to her heart}
+		goes_to_page = {jonesheart} 
+	]
+choice = [
+		binary = {Listen to her lungs}
+		goes_to_page = {joneslungs} 
+]
+choice = [
+	binary = {Check her eyes}
+	goes_to_page = {joneseyes}
+	]
+
+choice = [
+		binary = {Check her height, weight, and BMI}
+		goes_to_page = {Ms. Jones’ BMI} 
+		]
+
+choice = [
+		binary = {Check her feet for sores}
+		goes_to_page = {jonesfeet} 
+		]
+
+choice = [
+		binary = {Check her blood sugar}
+goes_to_page = {Ms. Jones Blood Sugar}
+]
+
+]
+
+page = [
+	page_name = {jonesheart}
+	heading_medium = {This is what a healthy heart sounds like}
+
+media = {http://www.easyauscultation.com/cases-listing-details?caseID=32}
+heading_medium = {This is what this resident’s heart sounds like}
+
+media = {http://www.easyauscultation.com/cases-listing-details?caseID=32}
+text = {Do you think this resident’s heart sounds healthy?}
+choice = [
+	binary = {yes}
+goes_to_page = {Examine Ms. Jones} 
+	]
+	choice = [
+binary = {no}
+goes_to_page = {Examine Ms. Jones} 
+]
+]
+
+page = [
+page_name = {Ms. Jones feeling}
+heading_medium = {Ms. Jones has a normal heart}
+popup_window = {true}
+add_to_notebook = [
+text = {Ms. Jones has a normal heart}
+tag = {patient1}
+]
+]
+
+page = [
+page_name = {joneslungs}
+heading_medium = {This is what healthy lungs sound like when someone breaths}
+media = {http://www.easyauscultation.com/cases-listing-details?caseID=76}
+heading_medium = {This is what this resident’s lungs sounds like}
+media = {http://www.easyauscultation.com/cases-listing-details?caseID=76}
+text = {Do you think this resident’s lungs sound healthy?}
+choice = [
+binary = {yes}
+goes_to_page = {Examine Ms. Jones} 
+]
+choice = [
+binary = {no}
+goes_to_page = {Examine Ms. Jones} 
+]
+]
+
+page = [
+page_name = {joneseyes}
+heading_medium = {This is what a healthy retina looks like}
+media = {healthyretina.jpg}
+heading_medium = {This is what this resident’s retina looks like}
+media = {healthyretina.jpg}
+text = {Do you think this resident’s retina looks healthy?}
+choice = [
+binary = {yes}
+goes_to_page = {Examine Ms. Jones} 
+]
+choice = [
+binary = {no}
+goes_to_page = {Examine Ms. Jones} 
+]
+]
+
+page =[
+	page_name = {Ms. Jones Blood Sugar}
+	popup_window = {true}
+heading_medium = {Fasting Blood Sugar = 103
+This number is higher than normal, and means Ms. Jones is either becoming diabetic, or is reversing Type II diabetes.
+	}
+	add_to_notebook = [
+	text = {Fasting Blood Sugar = 103
+This number is higher than normal, and means Ms. Jones is either becoming diabetic, or is reversing Type II diabetes.}
+tag = {patient1}
+]
+]
+page = [
+page_name = {Ms. Jones’ Feelings}
+heading_medium = {I’m feeling much better since I changed my diet.}
+add_to_notebook = [
+	text = {I’m feeling much better since I changed my diet.}
+	tag = {patient1}
+]
+popup_window = {true}
+]
+
+page = [
+page_name = {jonesfeet}
+heading_medium = {This is what a healthy foot looks like}
+media = {healthyfoot.jpg}
+heading_medium = {This is what your patient’s foot looks like}
+media = {healthyfoot1.jpg}
+text = {Do you think this resident’s foot looks healthy?}
+choice = [
+binary = {yes}
+goes_to_page = {Examine Ms. Jones} 
+]
+choice = [
+binary = {no}
+goes_to_page = {Examine Ms. Jones} 
+]
+
+]
+
+page = [
+
+	page_name = {Ms. Jones’ BMI}
+heading_medium = {Ms. Jones is 5’6 and weighs 170 lbs. Use the BMI calculator to determine if she is underweight, healthy weight, overweight, or obese}
+add_to_notebook = [
+	text = {Ms. Jones is 5’6 and weighs 170 lbs. Use the BMI calculator to determine if she is underweight, healthy weight, overweight, or obese}
+	tag = {patient1}
+]
+link = [
+text = {BMI Calculator}
+url = {http://www.cdc.gov/healthyweight/assessing/bmi/adult_bmi/english_bmi_calculator/bmi_calculator.html}
+]
+heading_medium = {Ms. Jones is: underweight, healthy weight, overweight, or obese}
+
+choice = [
+	binary = {underweight}
+	goes_to_page = {Examine Ms. Jones}
+]
+choice = [
+	binary = {healthy weight}
+	goes_to_page = {Examine Ms. Jones}
+]
+choice = [
+	binary = {overweight}
+	goes_to_page = {Examine Ms. Jones}
+]
+]
+page = [
+
+page_name = {Examine Mr. Anderson} 
+	heading_big = {
+
+What would you like to do first?
+
+If you are not sure why a particular test is important, you can use the library button to get more information
+}
+	media = {mranderson.jpg}
+	heading_medium = {This is Mr. Anderson}
+	minimum_choices = {3} 
+minimum_choices_reached ={choose patient}
+#text display on button “I’ve collected enough data” 
+
+
+choice = [
+	binary = {Ask resident how he feels today}
+
+	goes_to_page = {andersonbathroom}
+]
+
+
+hoice = [
+		binary = {Listen to his heart}
+		goes_to_page = {andersonheart} 
+		]
+choice = [
+		binary = {Listen to his lungs}
+		goes_to_page = {andersonlungs} 
+]
+choice = [
+	binary = {check his eyes}
+	goes_to_page = {andersoneyes}
+]
+
+choice = [
+		binary = {Check his height, weight, and BMI}
+		goes_to_page = {Mr. Anderson’s BMI} 
+		]
+	choice = [
+		binary = {Check his feet for sensation}
+		goes_to_page = {normal_sensation} 
+		]
+choice = [
+		binary = {Check his feet for sores}
+		goes_to_page = {andersonfeet} 
+		]
+choice = [
+		binary = {Check his blood sugar}
+goes_to_page = {Check Mr. Anderson blood sugar}
+
+		]
+choice = [
+	binary = {Check his temperature}
+	goes_to_page = {Check Mr. Anderson temperature}
+]
+
+]
+page = [
+	page_name = {Mr. Anderson heart}
+	heading_medium = {Mr. Anderson
+ has a normal heart}
+	popup_window = {true}
+	add_to_notebook = [
+		text = {Mr. Anderson
+ has a normal heart}
+		tag = {patient1}
+	]
+]
+
+page = [
+	page_name = {andersonheart}
+	heading_medium = {This is what a healthy heart sounds like}
+media = {http://www.easyauscultation.com/cases-listing-details?caseID=32}
+heading_medium = {This is what this resident’s heart sounds like}
+media = {http://www.easyauscultation.com/cases-listing-details?caseID=32}
+text = {Do you think this resident’s heart sounds healthy?}
+choice = [
+	binary = {yes}
+	goes_to_page = {Examine Mr. Anderson} 
+	]
+	choice = [
+	binary = {no}
+	goes_to_page = {Examine Mr. Anderson} 
+	]
+]
+
+
+page = [
+page_name = {Mr. Anderson feeling}
+heading_medium = {Mr. Anderson has a normal heart}
+popup_window = {true}
+add_to_notebook = [
+text = {Mr. Anderson has a normal heart}
+tag = {patient1}
+]
+]
+
+page = [
+page_name = {andersoneyes}
+heading_medium = {This is what a healthy retina looks like}
+media = {healthyretina.jpg}
+heading_medium = {This is what this resident’s retina looks like}
+media = {healthyretina.jpg}
+text = {Do you think this resident’s retina looks healthy?}
+choice = [
+binary = {yes}
+goes_to_page = {Examine Mr. Anderson} 
+]
+choice = [
+	binary = {no}
+	goes_to_page = {Examine Mr. Anderson} 
+	]
+]
+
+
+page = [
+page_name = {andersonfeet}
+heading_medium = {This is what a healthy foot looks like}
+media = {healthyfoot.jpg}
+heading_medium = {This is what this resident’s foot looks like}
+media = {healthyfoot1.jpg}
+text = {Do you think this resident’s foot looks healthy?}
+choice = [
+binary = {yes}
+goes_to_page = {Examine Mr. Anderson} 
+]
+choice = [
+	binary = {no}
+	goes_to_page = {Examine Mr. Anderson} 
+	]
+
+]
+
+page = [
+page_name = {andersonlungs}
+heading_medium = {This is what healthy lungs sound like when someone breaths}
+media = {http://www.easyauscultation.com/cases-listing-details?caseID=763}
+heading_medium = {This is what this resident’s lungs sounds like}
+media = {http://www.easyauscultation.com/cases-listing-details?caseID=763}
+text = {Do you think this resident’s lungs sound healthy?}
+choice = [
+binary = {yes}
+goes_to_page = {Examine Mr. Anderson} 
+]
+choice = [
+	binary = {no}
+	goes_to_page = {Examine Mr. Anderson} 
+	]
+]
+
+
+page = [ 
+
+	page_name = {andersonbathroom}
+	heading_medium =  {Ms. Anderson: “I need to go to the bathroom a lot”}
+	add_to_notebook = [
+	text =  {Ms. Anderson: “I need to go to the bathroom a lot”}
+	tag = {patient1}
+	]
+	popup_window = {true}
+]
+
+page = [ 
+	page_name = {Mr. Anderson’s BMI}
+heading_medium = {Mr. Anderson is 5’0 and weighs 180 lbs. Use the BMI calculator to determine if she is underweight, healthy weight, overweight, or obese}
+link = [
+text = {BMI Calculator}
+url = {http://www.cdc.gov/healthyweight/assessing/bmi/adult_bmi/english_bmi_calculator/bmi_calculator.html}
+]
+
+heading_medium = {Mr. Anderson is: underweight, healthy weight, overweight, or obese}
+
+choice = [
+	binary = {underweight}
+	goes_to_page = {Examine Mr. Anderson}
+]
+choice = [
+	binary = {healthy weight}
+	goes_to_page = {Examine Mr. Anderson}
+]
+choice = [
+	binary = {overweight}
+	goes_to_page = {Examine Mr. Anderson}
+]
+]
+
+page =  [
+page_name = {Check Mr. Anderson temperature}
+heading_medium = {98.6 degrees
+	This resident does not have a fever}
+	popup_window = {true}
+	add_to_notebook = [
+		text={98.6 degrees
+	This resident does not have a fever}
+tag = {patient1}
+	]
+]
+
+page =  [
+page_name = {Check Mr. Anderson blood sugar}
+heading_medium = {Fasting Blood Sugar = 160
+This number is very high and means Mr. Anderson is diabetic and not controlling his diabetes with medicine or food.}
+	popup_window = {true}
+	add_to_notebook = [
+		text={Fasting Blood Sugar = 160
+This number is very high and means Mr. Anderson is diabetic and not controlling his diabetes with medicine or food.}
+tag = {patient1}
+	]
+]
+
+page = [
+
+page_name = {Examine Ms. Williams} 
+	heading_big = {
+
+What would you like to do first?
+
+If you are not sure why a particular test is important, you can use the library button to get more information
+}
+	media = {mswilliams.jpg}
+	heading_medium = {This is Ms. Williams}
+minimum_choices = {3} 
+minimum_choices_reached ={choose patient}
+#text display on button “I’ve collected enough data” 
+
+
+choice = [
+	binary = {Ask resident how she feels today}
+	goes_to_page = {Ms. Williams’ sleep}
+]
+choice = [
+		binary = {Listen to her heart}
+		goes_to_page = {williamsheart} 
+		]
+choice = [
+		binary = {Listen to her lungs}
+		goes_to_page = {wiliamslungs} 
+]
+choice = [
+	binary = {check her eyes}
+	goes_to_page = {williamseyes}
+]
+choice = [
+		binary = {Check her feet for sores}
+		goes_to_page = {williamsfeet} 
+		]
+
+choice = [
+		binary = {Check her height, weight, and BMI}
+		goes_to_page = {Ms. Williams’ BMI} 
+		]
+
+choice = [
+		binary = {Check her feet for sensation}
+		goes_to_page = {abnormal_sensation} 
+		]
+choice = [
+	binary = {Check his blood sugar}
+	goes_to_page = {Check Ms. Williams blood sugar}
+		]
+
+choice = [
+	binary = {Check her temperature}
+	goes_to_page = {Check Ms. Williams temperature}
+]
+
+]
+page = [
+	page_name = {Ms. Williams’ sleep}
+	heading_medium = {Ms. Williams: “I can’t sleep laying down”}
+	choice = [
+		prompt = {Why do you think Ms. Williams can’t sleep laying down?}
+		goes_to_page = {Examine Ms. Williams} 
+	]	
+]
+page = [
+	page_name = {williamsheart}
+	heading_medium = {This is what a healthy heart sounds like}
+media = {http://www.easyauscultation.com/cases-listing-details?caseID=32}
+heading_medium = {This is what this resident’s heart sounds like}
+media = {http://www.easyauscultation.com/cases-listing-details?caseID=7}
+text = {Do you think this resident’s heart sounds healthy?}
+choice = [
+	binary = {yes}
+goes_to_page = {Examine Ms. Williams}
+	]
+	choice = [
+	binary = {no}
+goes_to_page = {Examine Ms. Williams}
+	]
+}
+]
+
+
+page = [
+page_name = {williamslungs}
+heading_medium = {This is what healthy lungs sound like when someone breaths}
+media = {http://www.easyauscultation.com/cases-listing-details?caseID=76}
+heading_medium = {This is what this resident’s lungs sounds like}
+media = {http://www.easyauscultation.com/cases-listing-details?caseID=76}
+text = {Do you think this resident’s lungs sound healthy?}
+choice = [
+binary = {yes}
+goes_to_page = {Examine Ms. Williams}
+]
+choice = [
+	binary = {no}
+goes_to_page = {Examine Ms. Williams}
+	]
+
+]
+
+page = [
+page_name = {williamseyes}
+heading_medium = {This is what a healthy retina looks like}
+media = {healthyretina.jpg}
+heading_medium = {This is what this resident’s retina looks like}
+media = {unhealthyretina.jpg}
+text = {Do you think this resident’s retina looks healthy?}
+choice = [
+binary = {yes}
+goes_to_page = {Examine Ms. Williams}
+]
+choice = [
+	binary = {no}
+goes_to_page = {Examine Ms. Williams}
+	]
+
+]
+
+page = [
+	page_name = {Check Ms. Williams temperature}
+	heading_medium = {
+98.6 degrees
+	This resident does not have a fever
+		}
+popup_window = {true}
+add_to_notebook = [
+	text = {98.6 degrees
+	This resident does not have a fever
+		}
+tag = {patient1}
+]
+]
+
+page = [
+	page_name = {Check Ms. Williams blood sugar}
+	heading_medium = {
+Fasting Blood Sugar = 205
+This number is very high and means Ms. Williams is diabetic and not controlling her diabetes with medicine or food.
+		}
+popup_window = {true}
+add_to_notebook = [
+	text = {Fasting Blood Sugar = 205
+This number is very high and means Ms. Williams is diabetic and not controlling her diabetes with medicine or food.
+		}
+tag = {patient1}
+]
+]
+
+page = [
+
+	page_name = {Ms. Williams’ BMI}
+heading_medium = {Ms. Williams is 5’1 and weighs 205 lbs. Use the BMI calculator to determine if she is underweight, healthy weight, overweight, or obese}
+link = [
+text = {BMI Calculator}
+url = {http://www.cdc.gov/healthyweight/assessing/bmi/adult_bmi/english_bmi_calculator/bmi_calculator.html}
+]
+
+heading_medium = {Ms. Williams is: underweight, healthy weight, overweight, or obese}
+
+choice = [
+	binary = {underweight}
+	goes_to_page = {Examine Ms. Williams}
+]
+choice = [
+	binary = {healthy weight}
+	goes_to_page = {Examine Ms. Williams}
+]
+choice = [
+	binary = {overweight}
+	goes_to_page = {Examine Ms. Williams}
+]
+]
+
+page = [
+
+page_name = {Examine Mr. Lane} 
+	heading_big = {
+
+What would you like to do first?
+
+If you are not sure why a particular test is important, you can use the library button to get more information
+}
+	media = {mrlane.jpg}
+	heading_medium = {This is Mr. Lane}
+minimum_choices = {3} 
+minimum_choices_reached ={choose patient}
+#text display on button “I’ve collected enough data” 
+
+
+choice = [
+	binary = {Ask resident how he feels today}
+	goes_to_page = {can’tbreathe}
+]
+
+choice = [
+		binary = {Listen to his heart}
+		goes_to_page = {laneheart} 
+		]
+choice = [
+		binary = {Listen to his lungs}
+		goes_to_page = {lanelungs} 
+]
+choice = [
+	binary = {check his eyes}
+	goes_to_page = {laneeyes}
+]
+choice = [
+		binary = {Check his height, weight, and BMI}
+		goes_to_page = {Mr. Lane’s BMI}
+]
+
+choice = [
+		binary = {Check his feet for sensation}
+		goes_to_page = {normal_sensation} 
+		]
+choice = [
+		binary = {Check his feet for sores}
+		goes_to_page = {abnormal_feet} 
+		]
+choice = [
+binary = {Check his blood sugar}
+goes_to_page = {Check Mr. Lane’s blood sugar}
+]
+	choice = [
+		binary = {Check his temperature}
+goes_to_page = {Check Mr. Lane’s temperature}
+]
+]
+
+
+page = [
+	page_name = {laneheart}
+	heading_medium = {This is what a healthy heart sounds like}
+media = {http://www.easyauscultation.com/cases-listing-details?caseID=32}
+heading_medium = {This is what this resident’s heart sounds like}
+media = {http://www.easyauscultation.com/cases-listing-details?caseID=32}
+text = {Do you think this resident’s heart sounds healthy?}
+choice = [
+	binary = {yes}
+goes_to_page = {Examine Mr. Lane}
+	]
+	choice = [
+	binary = {no}
+goes_to_page = {Examine Mr. Lane}
+	]
+]
+
+page = [
+page_name = {lanelungs}
+heading_medium = {This is what healthy lungs sound like when someone breaths}
+media = {http://www.easyauscultation.com/cases-listing-details?caseID=76}
+heading_medium = {This is what this resident’s lungs sounds like}
+media = {http://www.easyauscultation.com/cases-listing-details?caseID=76}
+text = {Do you think this resident’s lungs sound healthy?}
+choice = [
+binary = {yes}
+goes_to_page = {Examine Mr. Lane}
+]
+choice = [
+	binary = {no}
+goes_to_page = {Examine Mr. Lane}
+	]
+]
+
+page = [
+	page_name = {Check Mr. Lane’s blood sugar}
+	heading_medium = {
+Fasting Blood Sugar = 240
+This number is very high and means Mr. Lane is diabetic and not controlling his diabetes with medicine or food.	}
+popup_window = {true}
+add_to_notebook = [
+	text = {Fasting Blood Sugar = 240
+This number is very high and means Mr. Lane is diabetic and not controlling his diabetes with medicine or food.
+		}
+tag = {patient1}
+]
+]
+
+page = [
+page_name = {laneeyes}
+heading_medium = {This is what a healthy retina looks like}
+media = {healthyretina.jpg}
+heading_medium = {This is what this resident’s retina looks like}
+media = {healthyretina.jpg}
+text = {Do you think this resident’s retina looks healthy?}
+choice = [
+binary = {yes}
+goes_to_page = {Examine Mr. Lane}
+]
+choice = [
+	binary = {no}
+goes_to_page = {Examine Mr. Lane}
+	]
+
+]
+
+
+
+page = [
+	page_name = {Check Mr. Lane’s temperature}
+	heading_medium = {
+105 Degrees 
+This resident has a fever!
+		}
+popup_window = {true}
+add_to_notebook = [
+	text = {105 Degrees 
+This resident has a fever!
+		}
+tag = {patient1}
+]
+]
+
+page = [
+page_name = {lanefeet}
+heading_medium = {This is what a healthy foot looks like}
+media = {healthyfoot.jpg}
+heading_medium = {This is what this resident’s foot looks like}
+media = {uhealthyfeet.jpg}
+text = {Do you think this resident’s foot looks healthy?}
+choice = [
+binary = {yes}
+goes_to_page = {Examine Mr. Lane}
+]
+choice = [
+	binary = {no}
+goes_to_page = {Examine Mr. Lane}
+	]
+
+]
+
+
+page = [
+	page_name = {can’tbreathe}
+	heading_medium = {Mr. Lane: “I feel like I can’t breathe”}
+popup_window = {true}
+add_to_notebook = [
+	text = {Mr. Lane: “I feel like I can’t breathe”}
+	tag = {patient1}
+]	
+]
+page = [
+	
+	page_name = {Mr. Lane’s BMI}
+heading_medium = {Mr. Lane is 5’3 and weighs 180 lbs. Use the BMI calculator to determine if she is underweight, healthy weight, overweight, or obese}
+link = [
+text = {BMI Calculator}
+url = {http://www.cdc.gov/healthyweight/assessing/bmi/adult_bmi/english_bmi_calculator/bmi_calculator.html}
+]
+
+heading_medium = {Mr. Lane is: underweight, healthy weight, overweight, or obese}
+
+choice = [
+	binary = {underweight}
+	goes_to_page = {Examine Mr. Lane}
+]
+choice = [
+	binary = {healthy weight}
+	goes_to_page = {Examine Mr. Lane}
+]
+choice = [
+	binary = {overweight}
+	goes_to_page = {Examine Mr. Lane}
+]
+
+]
+
+page = [
+
+page_name = {Examine Ms. Watson} 
+	heading_big = {
+
+What would you like to do first?
+
+If you are not sure why a particular test is important, you can use the library button to get more information
+}
+	media = {mswatson.jpg}
+	heading_medium = {This is Ms. Watson}
+	minimum_choices = {3} 
+minimum_choices_reached ={choose patient}
+#text display on button “I’ve collected enough data” 
+
+
+choice = [
+	binary = {Ask resident how she feels today}
+	 goes_to_page = {tired}
+]
+
+choice = [
+		binary = {Listen to her heart}
+		goes_to_page = {watsonheart} 
+		]
+choice = [
+		binary = {Listen to her lungs}
+		goes_to_page = {watsonlungs} 
+]
+choice = [
+	binary = {check her eyes}
+	goes_to_page = {watsoneyes}
+]
+
+choice = [
+		binary = {Check her height, weight, and BMI}
+		goes_to_page = {Ms. Watson’s BMI} 
+		]
+
+choice = [
+		binary = {Check her feet for sores}
+		goes_to_page = {watsonfeet} 
+		]
+
+choice = [
+binary = {Check her blood sugar}
+	goes_to_page = {Check Ms. Watson’s blood sugar}	
+		]
+	choice = [
+	binary = {Check her temperature}
+	goes_to_page = {Check Ms. Watson’s temperature}
+]
+
+page = [
+	page_name = {Check Ms. Watson’s blood sugar}
+	heading_medium = {
+Fasting Blood Sugar = 120
+This number is higher than normal, and means Ms. Watson is either becoming diabetic, or is reversing Type II diabetes.
+		}
+popup_window = {true}
+add_to_notebook = [
+	text = {Fasting Blood Sugar = 120
+This number is higher than normal, and means Ms. Watson is either becoming diabetic, or is reversing Type II diabetes.
+		}
+tag = {patient1}
+]
+]
+
+page = [
+	page_name = {watsonheart}
+	heading_medium = {This is what a healthy heart sounds like}
+media = {http://www.easyauscultation.com/cases-listing-details?caseID=32}
+heading_medium = {This is what this resident’s heart sounds like}
+media = {http://www.easyauscultation.com/cases-listing-details?caseID=32}
+text = {Do you think this resident’s heart sounds healthy?}
+choice = [
+	binary = {yes}
+goes_to_page = {Examine Ms. Watson}
+	]
+	choice = [
+	binary = {no}
+goes_to_page = {Examine Ms. Watson}
+	]
+]
+
+page = [
+page_name = {watsonlungs}
+heading_medium = {This is what healthy lungs sound like when someone breaths}
+media = {http://www.easyauscultation.com/cases-listing-details?caseID=76}
+heading_medium = {This is what this resident’s lungs sounds like}
+media = {http://www.easyauscultation.com/cases-listing-details?caseID=76}
+text = {Do you think this resident’s lungs sound healthy?}
+choice = [
+binary = {yes}
+goes_to_page = {Examine Ms. Watson}
+]
+choice = [
+	binary = {no}
+goes_to_page = {Examine Ms. Watson}
+	]
+
+]
+
+page = [
+page_name = {watsoneyes}
+heading_medium = {This is what a healthy retina looks like}
+media = {healthyretina.jpg}
+heading_medium = {This is what this resident’s retina looks like}
+media = {healthyretina.jpg}
+text = {Do you think this resident’s retina looks healthy?}
+choice = [
+binary = {yes}
+goes_to_page = {Examine Ms. Watson}
+]
+choice = [
+	binary = {no}
+goes_to_page = {Examine Ms. Watson}
+	]
+
+]
+
+page = [
+page_name = {watsonfeet}
+heading_medium = {This is what a healthy foot looks like}
+media = {healthyfoot.jpg}
+heading_medium = {This is what this resident’s foot looks like}
+media = {healthyfoot1.jpg}
+text = {Do you think this resident’s foot looks healthy?}
+choice = [
+binary = {yes}
+goes_to_page = {Examine Ms. Watson}
+]
+choice = [
+	binary = {no}
+goes_to_page = {Examine Ms. Watson}
+	]
+]
+
+
+
+page = [
+	page_name = {Check Ms. Watson’s temperature}
+	heading_medium = {
+	98.6 degrees
+	This resident does not have a fever}
+popup_window = {true}
+add_to_notebook = [
+	text = {98.6 degrees
+	This resident does not have a fever}
+tag = {patient1}
+]
+]
+page = [
+	page_name = {tired}
+	heading_medium = {Ms. Watson: “I feel tired”}
+	popup_window = {true}
+	add_to_notebook = [
+		text = {Ms. Watson: “I feel tired”}
+		tag = {patient1}
+]
+]
+page = [
+
+	page_name = {Ms. Watson’s BMI}
+heading_medium = {Ms. Watson is 5’5 and weighs 175 lbs. Use the BMI calculator to determine if she is underweight, healthy weight, overweight, or obese}
+link = [
+text = {BMI Calculator}
+url = {http://www.cdc.gov/healthyweight/assessing/bmi/adult_bmi/english_bmi_calculator/bmi_calculator.html}
+]
+
+heading_medium = {Ms. Watson is: underweight, healthy weight, overweight, or obese}
+
+choice = [
+	binary = {underweight}
+	goes_to_page = {Examine Ms. Watson}
+]
+choice = [
+	binary = {healthy weight}
+	goes_to_page = {Examine Ms. Watson}
+]
+choice = [
+	binary = {overweight}
+	goes_to_page = {Examine Ms. Watson}
+]
+	#Text on button “I’ve collected enough data”
+]
+
+page = [
+
+page_name = {patientsummary} 
+
+heading_big = {Here are the notes that you’ve taken for this resident:}
+show_student_content = {true} 
+
+text = {Remember, your goal was to determine what health problems this resident has.}
+
+question = [
+	text = {What was the most important piece of evidence that you obtained about this resident?}
+	tag = {patientsumary1}
+]
+
+question = [
+	text = {Why was this the most important?}
+	tag = {patientsumary1}
+]
+
+question = [
+	text = {Why did you choose the tests or questions that you did?}
+	tag = {patientsumary1}
+]
+
+question = [
+	text = {Do you think this resident is unhealthy? Why?}
+	tag ={patientsumary1}
+]
+goes_to_page = {hypothesis2}
+]
+
+
+page = [
+page_name = {conclusions1} 
+	heading_big = {Here are your initial questions and hypotheses}
+show_all_student_content = {true} 
+
+text = {For each hypothesis, mark if you think it was “supported” “refuted” or “neither”
+In the box underneath, explain why you think your hypothesis was supported, refuted, or neither supported nor refuted. Use your lab notebook to include examples of evidence that you collected.}
+
+goes_to_page = {hypothesis2}
+
+]
+
+page = [
+	page_name = {hypothesis2} 
+	heading_big = {Why do the residents have these health problems?}
+minimum choices = {1}
+	text = {
+
+A hypothesis is a simple answer to a question.
+
+What questions would you like to answer when you examine the patients? What will you look for? What will help you determine why the residents in Katzville have health problems? Enter your questions on the left side of the screen under “questions”
+
+What are your hypotheses for why the residents of Katzville have health problems? Fill in possible answers to the questions on the ride side of the screen under “hypotheses” 
+
+Why did you choose these questions? Enter your rationale on the right side of the table.
+
+You can enter as many questions and answers as you like. You may also visit the library to get ideas for questions to ask.
+}
+
+
+question = [
+text = {What question do you have?}
+tag = {hypothesis2}
+]
+question = [
+text = {What is the hypothesis?}
+tag = {hypothesis2}
+]
+question = [
+text = {Why did you choose this question and hypothesis}
+tag = {hypothesis2}
+]
+
+can_add_multiple_question_groups = {true}
+goes_to_page= {choose patient2}
+]
+
+
+page = [
+page_name = {choose patient2} 
+heading_big = {Which resident of Katzville would you like to examine first?}
+text = {You may choose to examine patients in any order. You can examine anywhere from 3 to 6 patients total.}
+minimum_choices = {3} 
+		minimum_choices_reached= {patientsummary2}
+choice = [
+		binary = {
+			name: Mr. Smith
+			sex: male
+			age: 25
+		}
+		goes_to_page = {Examine Mr. Smith2} 
+	]
+
+	choice = [
+		
+		binary= {
+			Ms. Jones
+			Sex: female
+			Age: 45
+		}
+
+		goes_to_page = {Examine Ms. Jones2} 
+	]
+
+
+choice = [
+		
+		binary = {
+			Mr. Anderson
+			Sex: male
+			Age: 50
+		}
+
+goes_to_page = {Examine Mr. Anderson2}
+
+]
+
+choice = [
+		
+		binary= {
+			Ms. Williams
+			Sex: female
+			Age: 63
+		}
+
+goes_to_page = {Examine Ms. Williams2}
+
+]
+
+choice = [
+		
+		binary= {
+			Mr. Lane
+			Sex: male
+			Age: 42
+		}
+
+goes_to_page = {Examine Mr. Lane2}
+
+]
+
+choice = [
+		
+		binary= {
+			Ms. Watson
+			Sex: female
+			Age: 52
+		}
+
+goes_to_page = {Examine Ms. Watson2}
+
+]
+]
+
+page = [
+
+page_name = {Examine Mr. Smith2} 
+	heading_big = {
+
+What would you like to do first?
+
+If you are not sure why a particular test is important, you can use the library button to get more information
+}
+	media = {mrsmith.jpg}
+	heading_medium = {This is Mr. Smith}
+minimum_choices = {3}
+minimum_choices_reached ={choose patient2}
+#text display on button “I’ve collected enough data” 
+choice = [
+	binary = {Ask the resident if he has diabetes}
+	goes_to_page = {smithdiabetes}
+]
+
+choice = [
+	binary = {Ask resident if he smokes}
+	goes_to_page = {smithsmoke}
+]
+
+choice = [
+	binary= {Ask resident what he eats}
+	goes_to_page = {smithdiet}
+]
+
+choice = [
+	binary = {Ask resident how much he exercises}
+	goes_to_page = {smithexcercise}
+]
+choice = [
+	binary = {Ask resident if he has family members with diabetes }
+	goes_to_page = {smithfamilydiabetes}
+]
+
+choice = [
+	binary = {Ask resident if he has family members who are obese}
+	goes_to_page = {smithfamilyobese}
+]
+choice = [
+	binary = {Ask resident if he has family members who have had a stroke}
+	goes_to_page = {smithfamilystroke}
+]
+
+choice = [
+	prompt = {Perform genetic testing}
+	binary = {smithgenetics}
+]
+]
+page = [
+
+page_name = {smithdiet}
+popup_window = {true}
+heading_medium = {Mr. Smith: “I eat fruits and vegetables and  I drink milk and water”}
+
+add_to_notebook = [
+	text = {Mr. Smith: “I eat fruits and vegetables and  I drink milk and water”}
+	tag = {patient2}
+]
+]
+
+page = [
+
+page_name = {smithsmoke}
+popup_window = {true}
+heading_medium = {Mr. Smith: “No, I’ve never smoked”}
+add_to_notebook = [
+	text = {Mr. Smith: “No, I’ve  never smoked”}
+	tag = {patient2}
+]
+page = []
+
+
+page_name = {smithdiabetes}
+popup_window = {true}
+heading_medium = {Mr. Smith: “Yes, I have Type I diabetes”}
+add_to_notebook = [
+	text = {Mr. Smith: “Yes, I have Type I diabetes”}
+	tag = {patient2}
+]
+]
+
+
+page = [
+
+page_name = {smithexcercise}
+popup_window = {true}
+heading_medium = {Mr. Smith: “Yes, I like to run. I go for a jog three times a week.”}
+add_to_notebook = [
+	text = {Mr. Smith: “Yes, I like to run. I go for a jog three times a week.”}
+	tag = {patient2}
+	]
+]
+
+page = [
+
+page_name = {smithfamilydiabetes}
+popup_window = {true}
+heading_medium = {Mr. Smith: “My parents do not have Type 1 diabetes, but both of my sisters have Type 1 diabetes”}
+
+add_to_notebook = [
+	text = {Mr. Smith: “My parents do not have Type 1 diabetes, but both of my sisters have Type 1 
+	tag = {patient2}diabetes”
+	]
+]
+
+
+page = [
+
+page_name = {smithfamilyobese}
+popup_window = {true}
+heading_medium = {Mr. Smith: “No one in my family is obese”}
+add_to_notebook = [
+	text = {Mr. Smith: “No one in my family is obese”}
+	tag = {patient2}
+]
+]
+
+
+page = [
+
+page_name = {smithfamilystroke}
+popup_window = {true}
+heading_medium = {Mr. Smith: “My grandmother had a stroke”}
+add_to_notebook = [
+	text = {Mr. Smith: “My grandmother had a stroke”}
+	tag = {patient2}
+]
+]
+
+page = [
+
+page_name = {smithgenetics}
+
+heading_medium = {Which genes would you like to test for?}
+
+mimimum_choices = {1}
+mimimum_choices_reached = {Examine Mr. Smith 2}
+
+choice = [
+binary = {Genes that increase the chance of getting Type 1 Diabetes}
+goes_to_page = {Smith Type I genes}
+]
+choice = [
+binary ={Genes that increase the chance of getting Type 2 Diabetes}
+goes_to_page = {Smith NO Type II genes}
+]
+
+choice = [
+binary = {Genes that increase the change of being obese}
+goes_to_page = {Smith several obese genes}
+]
+
+]
+page = [
+page_name = {Smith Type I genes}
+popup_window = {true}
+
+heading_medium = {This resident has the IDDM1 gene which increases their risk of having Type I diabetes by 40-50%}
+
+add_to_notebook = [
+	text = {This resident has the IDDM1 gene which increases their risk of having Type I diabetes by 40-50%} 
+	tag = {patient2}
+]
+]
+
+
+page = [
+page_name = {Smith NO Type II genes}
+popup_window = {true}
+heading_medium = {This resident has very few genes that are risk factors for developing Type II diabetes}
+
+add_to_notebook = [
+	text = {This resident has very few genes that are risk factors for developing Type II diabetes}
+	tag = {patient2}
+]
+]
+
+page = [
+
+page_name = {Smith several obese genes}
+popup_window = {true}
+heading_medium = {This resident has very several genes that are risk factors for developing obesity}
+
+add_to_notebook = [
+	text = {This resident has very several genes that are risk factors for developing obesity}
+	tag = {patient2}
+	]
+]
+
+page = [
+
+page_name = {Examine Ms. Jones2} 
+	heading_big = {
+
+What would you like to do first?
+
+If you are not sure why a particular test is important, you can use the library button to get more information
+}
+	media = {msjones.jpg}
+	heading_medium = {This is Ms. Jones}
+minimum_choices = {3}
+minimum_choices_reached ={choose patient2}
+#text display on button “I’ve collected enough data” 
+
+
+choice = [
+	binary = {Ask resident what she eats}
+	goes_to_page = {jonesdiet}
+]
+
+choice = [
+	binary = {Ask resident if she smokes}
+	goes_to_page = {jonessmoke}
+]
+choice = [
+	binary = {Ask the resident if she has diabetes}
+	goes_to_page = {jonesdiabetes}
+	]
+choice = [
+	binary = {Ask resident how much she exercises}
+	goes_to_page = {jonesexcercise}
+]
+choice = [
+	binary = {Ask resident if she has family members with diabetes }
+	goes_to_page = {jonesfamilydiabetes}
+]
+
+choice = [
+	binary = {Ask resident if she has family members who are obese}
+	goes_to_page = {jonesfamilyobese}
+]
+
+choice = [
+	binary = {Ask resident if she has family members who have had a stroke}
+	goes_to_page = {jonesfamilystroke}
+]
+]
+page = [
+
+page_name = {jonesdiet}
+popup_window = {true}
+heading_medium = {Ms. Jones: “I eat fruits and vegetables and  I drink milk and water”}
+
+add_to_notebook = [
+	text = {Ms. Jones: “I eat fruits and vegetables and  I drink milk and water”}
+	tag = {patient2}
+	]
+]
+
+page = [
+
+page_name = {jonessmoke}
+popup_window = {true}
+heading_medium = {Ms. Jones: “No, I’ve never smoked”}
+add_to_notebook = [
+	text = {Ms. Jones: “No, I’ve never smoked”}
+	tag = {patient2}
+]
+]
+
+page = [
+
+page_name = {jonesdiabetes}
+popup_window = {true}
+heading_medium = {Ms. Jones: “I am trying to reverse my Type II diabetes”}
+add_to_notebook = [
+	text = {Ms. Jones: “I am trying to reverse my Type II diabetes”}
+	tag = {patient2}
+	]
+]
+
+page = [
+
+page_name = {jonesexcercise}
+popup_window = {true}
+heading_medium = {Ms. Jones: “Yes, I like to run. I go for a jog three times a week.”}
+add_to_notebook = [
+	text = {Ms. Jones: “Yes, I like to run. I go for a jog three times a week.”}
+	tag = {patient2}
+	]
+]
+
+page = [
+
+page_name = {jonesfamilydiabetes}
+popup_window = {true}
+heading_medium = {Ms. Jones: “Both of my parents and one of my siblings have diabetes”}
+add_to_notebook = [
+	text = {Ms. Jones: “Both of my parents and one of my siblings have diabetes”}
+	tag = {patient2}
+	]
+]
+
+page = [
+
+page_name = {jonesfamilyobese}
+popup_window = {true}
+heading_medium = {Ms. Jones: “Both of my parents are obese”}
+add_to_notebook = [
+	text = {Ms. Jones: “Both of my parents are obese”}
+	tag = {patient2}
+	]
+]
+
+page = [
+
+page_name = {jonesfamilystroke}
+popup_window = {true}
+heading_medium = {Ms. Jones: “No one in my family has had a stroke”}
+add_to_notebook = [
+	text = {Ms. Jones: “No one in my family has had a stroke”}
+	tag = {patient2}
+	]
+]
+
+page = [
+
+page_name = {jonesgenetics}
+mimimum_choices = {1}
+	mimimum_choices_reached = {Examine Ms. Jones2}
+heading_medium = {This is Ms. Jones}
+text = {Which genes would you like to test for?}
+choice = [
+binary = {Genes that increase the chance of getting Type 1 Diabetes}
+goes_to_page = {Jones NO Type I genes}
+]
+choice = [
+binary = {Genes that increase the change of being obese}
+goes_to_page = {Jones lots of obese genes}
+]
+choice = [
+binary ={Genes that increase the chance of getting Type 2 Diabetes}
+goes_to_page = {Jones Several Type II genes}
+]
+
+]
+page = [
+page_name = {Jones NO Type I genes}
+popup_window = {true}
+heading_medium = {This resident has very few genes that are risk factors for developing Type I diabetes}
+}
+add_to_notebook = [
+	text = {This resident has very few genes that are risk factors for developing Type I diabetes}
+	tag = {patient2}
+]
+]
+
+
+page = [
+page_name = {Jones Several Type II genes}
+popup_window = {true}
+heading_medium = {This resident has several genes that are risk factors for developing Type II diabetes}
+add_to_notebook = [
+	text = {This resident has several genes that are risk factors for developing Type II diabetes}
+	tag = {patient2}
+]
+]
+
+
+page = [
+
+page_name = {Jones lots of obese genes}
+popup_window = {true}
+heading_medium = {This resident has lots of genes that are risk factors for obesity}
+add_to_notebook = [
+	text = {This resident has lots of genes that are risk factors for obesity}
+	tag = {patient2}
+	]
+]
+
+page = [
+
+page_name = {Examine Mr. Anderson2} 
+	heading_big = {
+
+What would you like to do first?
+
+If you are not sure why a particular test is important, you can use the library button to get more information
+}
+	media = {mranderson.jpg}
+	heading_medium = {This is Mr. Anderson}
+minimum_choices = {3}
+minimum_choices_reached ={choose patient2}
+#text display on button “I’ve collected enough data” 
+
+
+choice = [
+	binary = {Ask resident what he eats}
+	goes_to_page = {Andersondiet}
+]
+choice = [
+	binary = {Ask resident if he smokes}
+	goes_to_page = {andersonsmoke}
+]
+choice = [
+	binary = {Ask the resident if he has diabetes}
+	goes_to_page = {andersondiabetes}
+]
+choice = [
+	binary = {Ask resident if he has family members with diabetes }
+	goes_to_page = {andersonfamilydiabetes}
+]
+choice = [
+	binary = {Ask resident how much he exercises}
+	goes_to_page = {andersonexcercise}
+]
+choice = [
+	binary = {Perform genetic testing}
+	goes_to_page = {andersongenetics}
+]
+
+choice = [
+	binary = {Ask resident if he has family members who are obese}
+	goes_to_page = {andersonfamilyobese}
+]
+choice = [
+	binary = {Ask resident if he has family members who have had a stroke}
+	goes_to_page = {andersonfamilystroke}
+]
+]
+page = [
+
+page_name = {Andersondiet}
+popup_window = {true}
+heading_medium = {Mr. Anderson: “I eat fried chicken, hamburgers, French fries and I drink coke and Mountain Dew”}
+add_to_notebook = [
+	text = {Mr. Anderson: “I eat fried chicken, hamburgers, French fries and I drink coke and Mountain Dew”} 
+	tag = {patient2}
+	]
+]
+
+page = [
+
+page_name = {andersonsmoke}
+popup_window = {true}
+heading_medium = {Mr. Anderson: “Yes, I am a smoker”}
+add_to_notebook = [
+	text = {Mr. Anderson: “Yes, I am a smoker”}
+	tag = {patient2}
+	]
+]
+
+page = [
+
+page_name = {andersondiabetes}
+popup_window = {true}
+heading_medium = {Mr. Anderson: “I’m not sure”}
+add_to_notebook = [
+	text = {
+	tag = {patient2}
+	]
+]
+
+page = [
+
+page_name = {andersonexcercise}
+popup_window = {true}
+heading_medium = {Mr. Anderson: “No, I’m too busy to exercise”}
+add_to_notebook = [
+	text = {Mr. Anderson: “No, I’m too busy to exercise”}
+	tag = {patient2}
+	]
+]
+
+page = [
+
+page_name = {andersonfamilydiabetes}
+popup_window = {true}
+heading_medium = {Mr. Anderson: “My Mom and my sister both have diabetes”}
+add_to_notebook = [
+	text = {Mr. Anderson: “My Mom and my sister both have diabetes”}
+	tag = {patient2}
+]
+]
+
+page = [
+
+page_name = {andersonfamilyobese}
+popup_window = {true}
+heading_medium = {Mr. Anderson: “My Mom, Dad, and sister are obese”}
+add_to_notebook = [
+	text = {Mr. Anderson: “My Mom, Dad, and sister are obese”}
+	tag = {patient2}
+	]
+]
+
+page = [
+
+page_name = {andersonfamilystroke}
+popup_window = {true}
+heading_medium = {Mr. Anderson: “My Mom had a stroke”}
+add_to_notebook = [
+	text = {Mr. Anderson: “My Mom had a stroke”}
+	tag = {patient2}
+	]
+]
+
+page = [
+
+page_name = {andersongenetics}
+text = {Which genes would you like to test for?}
+
+minimum_choices = {1} 
+minimum_choices_reached = {Examine Mr. Anderson2}
+
+choice = [
+binary ={Genes that increase the chance of getting Type 2 Diabetes}
+goes_to_page = {Anderson many Type II genes}
+]
+choice = [
+binary = {Genes that increase the change of being obese}
+goes_to_page = {Anderson several obese genes}
+]
+
+]
+page = [
+page_name = {Anderson many Type II genes}
+popup_window = {true}
+heading_medium = {This resident has several genes that are risk factors for developing Type II diabetes}
+add_to_notebook = [
+	text = {This resident has several genes that are risk factors for developing Type II diabetes}
+	tag = {patient2}
+]
+]
+
+
+page = [
+
+page_name = {Anderson several obese genes}
+popup_window = {true}
+heading_medium = {This resident has very several genes that are risk factors for developing obesity}
+add_to_notebook = [
+	text = {This resident has very several genes that are risk factors for developing obesity}
+	tag = {patient2}
+	]
+]
+
+page = [
+
+page_name = {Examine Ms. Williams2} 
+	heading_big = {
+
+What would you like to do first?
+
+If you are not sure why a particular test is important, you can use the library button to get more information
+}
+	media = {mswilliams.jpg}
+	heading_medium = {This is Ms. Williams}
+minimum_choices = {3}
+minimum_choices_reached ={choose patient2}
+#text display on button “I’ve collected enough data” 
+
+
+choice = [
+	binary = {Ask resident what she eats}
+	goes_to_page = {williamsdiet}
+]
+choice = [
+	binary = {Ask resident if she smokes}
+	goes_to_page = {williamssmoke}
+]
+
+choice = [
+	binary = {Ask the resident if she has diabetes}
+	goes_to_page = {williamsdiabetes}
+]
+
+choice = [
+	binary = {Ask resident how much she exercises}
+	goes_to_page = {williamsexcercise}
+]
+
+choice = [
+	binary = {Ask resident if she has family members with diabetes }
+	goes_to_page = {williamsfamilydiabetes}
+]
+
+choice = [
+	binary = {Ask resident if she has family members who have had a stroke}
+	goes_to_page = {williamsfamilystroke}
+]
+
+choice = [
+	binary = {Ask resident if she has family members who are obese}
+	goes_to_page = {williamsfamilyobese}
+]
+
+choice = [
+	binary = {Perform genetic testing}
+	goes_to_page = {williamsgenetics}
+]
+]
+page = [
+
+page_name = {williamsdiet}
+popup_window = {true}
+heading_medium = {Ms. Williams: “I eat fried chicken, hamburgers, French fries and I drink coke and Mountain Dew”}
+add_to_notebook = [
+	text = {Ms. Williams: “I eat fried chicken, hamburgers, French fries and I drink coke and 
+	tag = {patient2}Mountain Dew”}
+	]
+]
+
+page = [
+
+page_name = {williamssmoke}
+popup_window = {true}
+heading_medium = {Ms. Williams: “Yes, I am a smoker”}
+add_to_notebook = [
+	text = {Ms. Williams: “Yes, I am a smoker”}
+	tag = {patient2}
+	]
+]
+
+page = [
+
+page_name = {williamsdiabetes}
+popup_window = {true}
+heading_medium = {Ms. Williams: “Yes, I have Type II diabetes”}
+add_to_notebook = [
+	text = {Ms. Williams: “Yes, I have Type II diabetes”}
+	tag = {patient2}
+	]
+]
+
+page = [
+
+page_name = {williamsexcercise}
+popup_window = {true}
+heading_medium = {Ms. Williams: “No, I don’t exercise”}
+add_to_notebook = [
+	text = {Ms. Williams: “No, I don’t exercise”}
+	tag = {patient2}
+	]
+]
+
+page = [
+
+page_name = {andersonfamilydiabetes}
+popup_window = {true}
+heading_medium = {Ms. Williams: “My parents both have diabetes”}
+add_to_notebook = [
+	text = {Ms. Williams: “My parents both have diabetes”}
+	tag = {patient2}
+	]
+]
+
+page = [
+
+page_name = {williamsfamilyobese}
+popup_window = {true}
+heading_medium = {Ms. Williams: “My parents and siblings are all obese”}
+add_to_notebook = [
+	text = {Ms. Williams: “My parents and siblings are all obese”}
+	tag = {patient2}
+	]
+]
+
+page = [
+
+page_name = {williamsfamilystroke}
+popup_window = {true}
+heading_medium = {Ms. Williams: “My Dad had a stroke”}
+add_to_notebook = [
+	text = {Ms. Williams: “My Dad had a stroke”}
+	tag = {patient2}
+	]
+]
+
+page = [
+
+page_name = {williamsgenetics}
+text = {Which genes would you like to test for?}
+
+minimum_choices = {1} 
+minimum_choices_reached = {Examine Ms. Williams2}
+
+choice = [
+binary = {Genes that increase the chance of getting Type 1 Diabetes}
+goes_to_page = {william NO Type I genes}
+]
+
+choice = [
+binary ={Genes that increase the chance of getting Type 2 Diabetes}
+goes_to_page = {william NO Type II genes}
+]
+
+choice = [
+binary = {Genes that increase the change of being obese}
+goes_to_page = {william several obese genes}
+	]
+
+choice = [
+	binary = {Ask resident if he smokes}
+	goes_to_page = {lanesmoke}
+]
+]
+page = [
+
+page_name = {Examine Mr. Lane2} 
+	heading_big = {
+
+What would you like to do first?
+
+If you are not sure why a particular test is important, you can use the library button to get more information
+}
+	media = {mrlane.jpg}
+	heading_medium = {This is Mr. Lane}
+minimum_choices = {3}
+minimum_choices_reached ={choose patient2}
+#text display on button “I’ve collected enough data” 
+
+choice = [
+	binary = {Ask resident what he eats}
+	goes_to_page = {lanediet}
+]
+
+choice = [
+	binary = {Ask the resident if he has diabetes}
+	goes_to_page = {lanediabetes}
+]
+choice =[
+	binary = {Ask resident how much he exercises}
+	goes_to_page = {laneexcercise}
+]
+choice = [
+	binary = {Ask resident if he has family members with diabetes }
+	goes_to_page = {lanefamilydiabetes}
+]
+choice = [
+	binary = {Ask resident if he has family members who are obese}
+	goes_to_page = {lanefamilyobese}
+]
+choice = [
+	binary = {Ask resident if he has family members who have had a stroke}
+	goes_to_page = {lanefamilystroke}
+]
+choice = [
+	binary = {Perform genetic testing}
+	goes_to_page = {lanegenetics}
+]
+]
+page = [
+
+page_name = {lanediet}
+popup_window = {true}
+heading_medium = {Mr. Lane: “I eat salad and hamburgers and I drink coke and milk”}
+add_to_notebook = [
+	text = {Mr. Lane: “I eat salad and hamburgers and I drink coke and milk”}
+	tag = {patient2}
+	
+]]
+
+
+page = [
+
+page_name = {lanesmoke}
+popup_window = {true}
+heading_medium = {Mr. Lane: “Yes, I am a smoker”}
+add_to_notebook = [
+	text = {Mr. Lane: “Yes, I am a smoker”}
+	tag = {patient2}
+	]
+]
+
+page = [
+
+page_name = {lanediabetes}
+popup_window = {true}
+heading_medium = {Mr. Lane: “Yes, I have Type II diabetes”}
+add_to_notebook = [
+	text = {Mr. Lane: “Yes, I have Type II diabetes”}
+	tag = {patient2}
+	]
+]
+
+page = [
+
+page_name = {lanexcercise}
+popup_window = {true}
+heading_medium = {Mr. Lane: “No, I’m too busy to exercise”}
+add_to_notebook = [
+	text = {Mr. Lane: “No, I’m too busy to exercise”}
+	tag = {patient2}
+	]
+]
+
+
+page = [
+
+page_name = {lanefamilydiabetes}
+popup_window = {true}
+heading_medium = {Mr. Lane: “My Mom and my brother both have diabetes”}
+add_to_notebook = [
+	text = {Mr. Lane: “My Mom and my brother both have diabetes”}
+	tag = {patient2}
+	]
+]
+
+page = [
+
+page_name = {lanefamilyobese}
+popup_window = {true}
+heading_medium = {Mr. Lane: “My Mom, Dad, and brother are obese”}
+add_to_notebook = [
+	text = {Mr. Lane: “My Mom, Dad, and brother are obese”}
+	tag = {patient2}
+	]
+]
+
+
+page = [
+
+page_name = {lanefamilystroke}
+popup_window = {true}
+heading_medium = {Mr. Lane: “My Dad had a stroke”}
+add_to_notebook = [
+	text = {Mr. Lane: “My Dad had a stroke”}
+	tag = {patient2}
+	]
+]
+
+
+page = [
+
+page_name = {lanegenetics}
+heading_medium = {Which genes would you like to test for?}
+
+minimum_choices = {1} 
+minimum_choices_reached = {Examine Mr. Lane2}
+
+
+choice = [ 
+binary ={Genes that increase the chance of getting Type 2 Diabetes}
+goes_to_page = {lane many Type II genes}
+]
+choice = [
+binary = {Genes that increase the change of being obese}
+goes_to_page = {lane some obese genes}
+]
+]
+
+page = [
+page_name = {lane many Type II genes}
+popup_window = {true}
+heading_medium = {This resident has several genes that are risk factors for developing Type II diabetes}
+
+add_to_notebook = [
+	text = {Mr. Lane  has several genes that are risk factors for developing Type II diabetes}
+	tag = {patient2}
+]
+]
+
+page = [
+
+page_name = {lane some obese genes}
+popup_window = {true}
+heading_medium = {This resident has a few genes that are risk factors for developing obesity}
+add_to_notebook = [
+	text = {Mr. Lane  has a few genes that are risk factors for developing obesity}
+	tag = {patient2}
+	]
+]
+
+page = [
+
+page_name = {Examine Ms. Watson2} 
+	heading_big = {
+
+What would you like to do first?
+
+If you are not sure why a particular test is important, you can use the library button to get more information
+}
+	media = {mswatson.jpg}
+	heading_medium = {This is Ms. Watson}
+minimum_choices = {3}
+minimum_choices_reached ={choose patient2}
+#text display on button “I’ve collected enough data” 
+
+
+choice = [
+	binary = {Ask resident what she eats}
+	goes_to_page = {watsondiet}
+]
+
+choice = [
+	binary = {Ask resident if she smokes}
+	goes_to_page = {watsonsmoke}
+]
+
+
+choice = [
+	binary = {Ask the resident if she has diabetes}
+	goes_to_page = {watsondiabetes}
+]
+choice = [
+	binary = {Ask resident how much she exercises}
+	goes_to_page = {watsonexcercise}
+]
+choice = [
+	binary = {Ask resident if she has family members with diabetes }
+	goes_to_page = {watsonfamilydiabetes}
+]
+
+choice = [
+	binary = {Ask resident if she has family members who are obese}
+	goes_to_page = {watsonfamilyobese}
+]
+
+choice = [
+	binary = {Ask resident if she has family members who have had a stroke}
+	goes_to_page = {watsonfamilystroke}
+]
+
+choice = [
+	binary = {Perform genetic testing}
+	goes_to_page = {watsongenetics}
+]
+]
+
+page = [
+
+page_name = {watsondiet}
+popup_window = {true}
+heading_medium = {Ms. Watson: “I eat fried chicken, salad and I drink milk and coke”}
+add_to_notebook = [
+	text = {Ms. Watson: “I eat fried chicken, salad and I drink milk and coke”}
+	tag = {patient2}
+	]
+]
+
+
+page = [
+
+page_name = {watsonsmoke}
+popup_window = {true}
+heading_medium = {Mr. Watson: “Yes, I am a smoker”}
+add_to_notebook = [
+	text = {Mr. Watson: “Yes, I am a smoker”}
+	tag = {patient2}
+	]
+]
+
+
+page = [
+
+page_name = {watsondiabetes}
+popup_window = {true}
+heading_medium = {Ms. Watson: “No, I don’t have diabetes”}
+add_to_notebook = [
+	text = {Ms. Watson: “No, I don’t have diabetes”}
+	tag = {patient2}
+	]
+]
+
+
+page = [
+
+page_name = {watsonexcercise}
+popup_window = {true}
+heading_medium = {Ms. Watson: “No, I’m too busy to exercise”}
+add_to_notebook = [
+	text = {Ms. Watson: “No, I’m too busy to exercise”}
+	tag = {patient2}
+	]
+]
+
+
+page = [
+
+page_name = {andersonfamilydiabetes}
+popup_window = {true}
+heading_medium = {Mr. Anderson: “Both of my parents are diabetic, and my sister, and my grandparents”}
+add_to_notebook = [
+	text = {Mr. Anderson: “Both of my parents are diabetic, and my sister, and my grandparents”}
+	tag = {patient2}
+	]
+]
+
+page = [
+
+page_name = {watsonfamilyobese}
+popup_window = {true}
+heading_medium = {Mr. Watson: “My parents and my siblings are all obese”}
+add_to_notebook = [
+	text = {Mr. Watson: “My parents and my siblings are all obese”}
+	tag = {patient2}
+	]
+]
+
+
+page = [
+
+page_name = {watsonfamilystroke}
+popup_window = {true}
+heading_medium = {Ms. Watson: “No, no one in my immediate family has had a stroke”}
+add_to_notebook = [
+	text = {Ms. Watson: “No, no one in my immediate family has had a stroke”}
+	tag = {patient2}
+	]
+]
+
+
+page = [
+
+page_name = {watsongenetics}
+binary = {Which genes would you like to test for?}
+
+minimum_choices = {1} 
+minimum_choices_reached = {Examine Ms. Watson2}
+
+choice = [
+binary ={Genes that increase the chance of getting Type 2 Diabetes}
+goes_to_page = {watson some Type II genes}
+]
+choice = [
+binary = {Genes that increase the change of being obese}
+goes_to_page = {watson many obese genes}
+]
+
+min
+
+]
+page = [
+page_name = {watson some Type II genes}
+popup_window = {true}
+heading_medium = {This resident has some genes that are risk factors for developing Type II diabetes}
+add_to_notebook = [
+	text = {This resident has some genes that are risk factors for developing Type II diabetes}
+	tag = {patient2}
+]
+]
+
+page = [
+
+page_name = {watson many obese genes}
+popup_window = {true}
+heading_medium = {This resident has many genes that are risk factors for developing obesity}
+add_to_notebook = [
+	text = {This resident has many genes that are risk factors for developing obesity}
+	tag = {patient2}
+]
+	]
+
+
+page = [
+page_name = {patientsummary2} 
+mimimum_choices_reached = {conclusions2}
+heading_big = {Here are the notes that you’ve taken for this resident:}
+show_all_student_content = {true} 
+
+text = {Remember, your goal is to determine why the residents of Katzville are unhealthy}
+
+question = [
+	text = {What was the most important piece of evidence that you obtained about this resident? Why was this the most important?}
+	tag = {patientSummary2}
+]
+question = [
+	text = {Why did you choose the tests or questions that you did?}
+	tag = {patientSummary2}
+]
+question = [
+	text = {Do you think this patient is unhealthy? Why?}
+	tag = {patientSummary2}
+]
+
+
+goes_to_page={finalrecommendation}
+]
+
+page = [
+
+page_name = {conclusions2}
+heading_big = {Here are your initial questions and hypotheses}
+show_all_student_content = {true} 
+
+text = {For each hypothesis, mark if you think it was “supported” “refuted” or “neither”
+In the box underneath, explain why you think your hypothesis was supported, refuted, or neither supported nor refuted. Use your lab notebook to include examples of evidence that you collected}
+goes_to_page = {finalrecommendation}
+]
+page = [
+
+page_name = {finalrecommendation}
+heading_big = {Recommendation to the Mayor of Katzville}
+text = {Now that you’ve had a chance to meet residents of Katzville, examine them to determine what makes them unhealthy and why its time to make your final report to the mayor of Katzville. You can use your lab notebook to help you answer these questions. Make sure you give evidence to support all of your answers!}
+
+question = [
+	text = {What health problems do the residents have?}
+	tag = {patientSummary2}
+	]
+question = [
+	text = {Why do they have these health problems?}
+	tag = {patientSummary2}
+	]
+question = [
+	text = {What do you recommend that the residents of Katzville do to become healthier?}
+	tag = {patientSummary2}
+	]
+goes_to_page = {End}
+]
+
+page = [
+
+page_name = {End}
+heading_big = {
+
+Thank you for helping the residents of Katzville! 
+
+You have completed the Medical Mystery Science Classroom Inquiry Simulation.}
+]
+
+ 
+
+
+
