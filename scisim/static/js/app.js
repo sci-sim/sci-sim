@@ -5,20 +5,12 @@ var ps = new PageSwitcher();
 var publisher = new EventPublisher();
 var chain = new PageChain();
 var labnotebook = new LabNotebook($('.labenotebook'));
-var library = new Library($('.library'));
-
 localStorage.clear();
 localStorage.setItem("choices_made", JSON.stringify([]));
 
 window.onbeforeunload = function(){
 	return "If you leave this page, you'll lose all you have so far!";
 }
-
-$("#libraryToggle").click(function(e){
-	if(e.target === this){
-		library.toggle();	
-	}
-});
 
 $("#labNotebookToggle").click(function(e){
 	if(e.target === this){

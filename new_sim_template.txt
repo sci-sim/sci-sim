@@ -1,6 +1,6 @@
-simulation_name = {template example}
-simulation_password = {pass}
-simulation_description = {this is the description}
+simulation_name = {The Katzville Conundrum}
+simulation_password = {goodhealth}
+simulation_description = {Katzville just won an award for the unhealthiest town. Can you figure out what health problems the residents have and find a way to make them healthier?}
 
 page = [
 	page_name = {introduction1}

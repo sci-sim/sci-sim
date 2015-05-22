@@ -3,6 +3,7 @@
 simulation_name = {template example}
 simulation_password = {pass}
 simulation_description = {this is the description}
+simulation_preview_picture = {Katzville.jpg}
 
 # First page
 page =  [

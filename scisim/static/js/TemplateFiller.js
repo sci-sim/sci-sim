@@ -38,7 +38,7 @@ TemplateFiller.prototype.wrapInParent = function(html) {
 TemplateFiller.prototype.getTemplate = function(pageName) {
 	switch(pageName){
 		case "choose_simulation":
-			return '<div class="list-group-item simluation-item clickable"><span class="badge"><i class="glyphicon glyphicon-chevron-right"></i></span> <div class="media"> <div class="media-left"> <a href="#"> <img class="media-object" src="img/page_1_s.jpg"> </a> </div> <div class="media-body"> <h4 class="media-heading list-item-heading">{title}</h4> <p>{desc}</p> <input type="hidden" value="{first_page_id}" name="first_page_id"> <input type="hidden" value="{id}" name="sim_id"> </div> </div> </div>';
+			return '<div class="list-group-item simluation-item clickable"><span class="badge"></span> <div class="media"> <div class="media-left"> <a href="#"> <img class="media-object" src="img/page_1_s.jpg"> </a> </div> <div class="media-body"> <h4 class="media-heading list-item-heading">{title}</h4> <p>{desc}</p> <input type="hidden" value="{first_page_id}" name="first_page_id"> <input type="hidden" value="{id}" name="sim_id"> </div> </div> </div>';
 
 		case "group_chooser":
 			// TODO: get the template from the /js/templates directory...load them in with ajax later
