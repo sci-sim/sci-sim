@@ -15,8 +15,8 @@ virtualenv venv
 source venv/bin/activate
 pip install -r requirements.txt
 ```
-
-Or you can spin up a vagrant box using [this tool](https://github.com/calebdre/Portable-Vagrant.git)  if you don't already have a python environment set up on your system.
+Or you can spin up a vagrant box using [this tool](https://github.com/calebdre/Portable-Vagrant.git)  if you don't already have a python environment set up on your system.  
+Note that the python server does not serve static assesets - a web server should be used to proxy requests to the server and server static files from the static folder.
 
 Load the database with the simulation content:
 
