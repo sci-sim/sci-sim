@@ -29,7 +29,7 @@ def parse_sim(sim_template):
 	description = find_keyword_value("simulation_description", sim_template)
 	preview_picture = find_keyword_value("simulation_preview_picture", sim_template)
 	
-	debug(preview_picture)
+	
 	sim = Simulation(title=simulation_name, desc=description, password=password, preview_image_filename=preview_picture, first_page_id=page_base)
 
 	db.session.add(sim)
