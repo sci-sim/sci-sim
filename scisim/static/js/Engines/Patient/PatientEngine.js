@@ -4,7 +4,8 @@ var PatientEngine = function(){
 };
 
 PatientEngine.prototype.renderPage = function(page_id){
-	pageRenderer.render(page_id).done(function(context){
-		
+	PageRenderer.render(page_id).done(function(context){
+		var patientID = PatientManager.discover;
+		new PatientPageDirectiveApplicator(context.actions, context.modifiers, PatientManager.getPatient(patientID));
 	});
 };
