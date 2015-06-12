@@ -4,10 +4,21 @@ var PageController = function(page_id){
 	}else{
 		localStorage.setItem(page_id, 1);
 	}
+<<<<<<< Updated upstream
 	
+=======
+
+	// quick proof of concept until LocalStorage abstraction is implemented
+	if(!localStorage.getItem(page_id + "_time_spent")){
+		localStorage.setItem(page_id + "_time_spent", 0);
+	}
+
+>>>>>>> Stashed changes
 	this.page_id = parseInt(page_id);
 	this.render();
 	this.visits = parseInt(localStorage.getItem(page_id));
+	this.stopwatch = new StopWatch();
+	this.stopwatch.start();
 };
 
 PageController.prototype.render = function() {
@@ -150,6 +161,7 @@ PageController.prototype.checkVisits = function(){
 			var that = this;
 				console.log(that.minimum_choice_page);
 			button.click(function(){
+				that.logTimeSpentOnPage();
 				publisher.publish('changePage', [PageController, that.minimum_choice_page]);
 			});		
 		}
@@ -159,6 +171,7 @@ PageController.prototype.checkVisits = function(){
 };
 
 PageController.prototype.processContinueClick = function(e){
+		this.logTimeSpentOnPage();
 		publisher.publish('changePage', [PageController, this.goes_to_page]);
 };
 
@@ -204,6 +217,7 @@ PageController.prototype.processBinaryClick = function(e) {
 		api.logUserAction.apply(null, requests[0]).then(function (response) {
 			  if(!response.hasOwnProperty("error")){
 			  		localStorage.setItem('last_page_id', that.page_id);
+			  		that.logTimeSpentOnPage();
 					publisher.publish('changePage', [PageController, destinationId]);
 			  }
 		});
@@ -227,7 +241,7 @@ PageController.prototype.processButtonClick = function(e) {
 			return;
 		}
 
-		obj['value'] = input.val();;
+		obj['value'] = input.val();
 		obj['id'] = input.data("choice-id");
 		
 		destination = this.goes_to_page;
@@ -277,8 +291,14 @@ PageController.prototype.logActions = function(data, destination) {
 		loader.hide();
 		if(destination){
 			localStorage.setItem('last_page_id', that.page_id);
+<<<<<<< Updated upstream
 			
 			publisher.publish('changePage', [PageController, destination]); // assume that that's all we need to do on the page	
+=======
+
+			that.logTimeSpentOnPage();
+			publisher.publish('changePage', [PageController, destination]); // assume that that's all we need to do on the page
+>>>>>>> Stashed changes
 		}
 	});
 };
@@ -299,6 +319,15 @@ PageController.prototype.revive = function(){
 	this.init();
 	this.visits += 1;
 	this.checkVisits();
+};
+
+/**
+ * Simple function which will log time spent on page in local storage
+ */
+PageController.prototype.logTimeSpentOnPage = function() {
+	var timeSpentOnPage = this.stopwatch.stop();
+	var timeSpentOnPageBefore = parseInt(localStorage.getItem(this.page_id + "_time_spent"));
+	localStorage.setItem(this.page_id + "_time_spent", timeSpentOnPage + timeSpentOnPageBefore);
 };
 
 function getActionString(action, choice_id, page_id){
