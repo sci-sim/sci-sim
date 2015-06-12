@@ -16,5 +16,6 @@ StopWatch.prototype.start = function() {
 StopWatch.prototype.stop = function() {
     var stop_time = new Date();
     var time_delta = stop_time - this.start_time;
+    this.start_time = new Date();
     return Math.round(time_delta / 1000) ;
 };

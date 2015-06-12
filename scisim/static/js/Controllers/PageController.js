@@ -178,7 +178,8 @@ PageController.prototype.processBinaryClick = function(e) {
 	var value = $elem.text(),
 		choiceId = $elem.data('choice-id'),
 		destinationId = $elem.data('destination'),
-		action_string = getActionString(value, choiceId, this.page_id),
+		time = this.stopwatch.stop();
+		action_string = getActionString(value, choiceId, this.page_id, time),
 		user_ids = JSON.parse(localStorage.getItem("user_id"));
 
 		var loggableString = "";
@@ -217,6 +218,8 @@ PageController.prototype.processBinaryClick = function(e) {
 			  }
 		});
 	}
+
+	$elem.addClass("disabled");
 };
 
 PageController.prototype.processButtonClick = function(e) {
@@ -242,7 +245,7 @@ PageController.prototype.processButtonClick = function(e) {
 		destination = this.goes_to_page;
 		if(!destination) destination = input.data("destination");
 
-		obj['action_string'] = getActionString(obj['value'], obj['id'], this.page_id);
+		obj['action_string'] = getActionString(obj['value'], obj['id'], this.page_id, this.stopwatch.stop());
 
 		choicesMade.push(obj);
 
@@ -320,6 +323,6 @@ PageController.prototype.logTimeSpentOnPage = function() {
 	localStorage.setItem(this.page_id + "_time_spent", timeSpentOnPage + timeSpentOnPageBefore);
 };
 
-function getActionString(action, choice_id, page_id){
-	return "Choice made: "+ action + " on the choice with id: " + choice_id + " on page: " + page_id;
+function getActionString(action, choice_id, page_id, time){
+	return "Choice made: "+ action + " on the choice with id: " + choice_id + " on page: " + page_id + " with time: " + time;
 }
