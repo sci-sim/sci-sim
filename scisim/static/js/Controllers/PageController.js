@@ -4,10 +4,16 @@ var PageController = function(page_id){
 	}else{
 		localStorage.setItem(page_id, 1);
 	}
-	
+	// quick proof of concept until LocalStorage abstraction is implemented
+	if(!localStorage.getItem(page_id + "_time_spent")){
+		localStorage.setItem(page_id + "_time_spent", 0);
+	}
+
 	this.page_id = parseInt(page_id);
 	this.render();
 	this.visits = parseInt(localStorage.getItem(page_id));
+	this.stopwatch = new StopWatch();
+	this.stopwatch.start();
 };
 
 PageController.prototype.render = function() {
@@ -32,12 +38,12 @@ PageController.prototype.composePage = function(pageResponse) {
 
 	 for (var i = 0; i < sections.length; i++) {
 	 	var section_html = tf.fillTemplate({"content": sections[i].content}, "page_section");
-		 
+
 	 	if(sections[i].content.search("Mr") > 0 || sections[i].content.search("Ms") > 0){
 			 var split = sections[i].content.split(" ");
 			 this.patient = split.splice(split.length - 2).join(" ").replace(/(<([^>]+)>)/ig,"");
 		 }
-		 
+
 	 	if($(section_html).children().eq(0).prop("tagName") === "AUDIO"){
 	 		html += "<p> There's supposed to be an audio track here, but it's not currently supported. Just move along as normal...</p>";
 	 		continue;
@@ -45,18 +51,18 @@ PageController.prototype.composePage = function(pageResponse) {
 
 	 	html += section_html;
 	 };
-	 
+
 	if(this.isPopup){
 		smoke.alert($(html).text() + " (this was added to your lab notebook)", function(e){}, {ok: "Okay, thanks!"});
 		var last_page = chain.getLastPage(),
 			page_id = last_page.page_id;
-			
+
 		localStorage.setItem(page_id, parseInt(localStorage.getItem(page_id)) + 1);
 		last_page.visits += 1;
 		last_page.checkVisits();
-		return;	
+		return;
 	}
-	
+
 	this.hasBinary = false;
 
 	 for (var i = 0; i < choices.length; i++) {
@@ -82,14 +88,14 @@ PageController.prototype.composePage = function(pageResponse) {
 		var choices_made = JSON.parse(localStorage.getItem("choices_made"));
 		if($.inArray(choices[i].id, choices_made) > -1){
 			n = n.replace("choice-binary", "choice-binary disabled");
-		} 
-		
+		}
+
 	 	html += n;
 	 };
 
 	 if(this.hasTextInput) html += tf.fillTemplate({"text": "Submit and continue", "id": "submit-btn"}, "btn");
 	 if(this.goes_to_page && !this.hasTextInput && choices.length === 0) html += tf.fillTemplate({"text": "Continue", "id": "continue-btn"}, "btn");
-	 
+
 	 ps.transitionPage(html);
 	 this.$html = $(html);
 	 chain.add(this);
@@ -99,7 +105,7 @@ PageController.prototype.composePage = function(pageResponse) {
 PageController.prototype.applyDirectives = function(pageResponse) {
 	var actions = pageResponse.page_actions,
 		modifiers = pageResponse.page_modifiers;
-	
+
 	for (var i = 0; i < actions.length; i++) {
 		switch(actions[i].name){
 			case "add_to_notebook":
@@ -119,11 +125,11 @@ PageController.prototype.applyDirectives = function(pageResponse) {
 			case "goes_to_page":
 				this.goes_to_page = parseInt(modifiers[i].value);
 				break;
-			
+
 			case "popup_window":
 				this.isPopup = true;
 				break;
-			
+
 			case "minimum_choices":
 				this.minimum_choices = parseInt(modifiers[i].value.replace("}", "").replace("{", ""));
 		}
@@ -135,7 +141,7 @@ PageController.prototype.init = function() {
 		e.stopImmediatePropagation();
 		chain.goBack();
 	});
-	
+
 	$('#continue-btn').click(this.processContinueClick.bind(this));
 
 	$('#submit-btn').click(this.processButtonClick.bind(this));
@@ -148,10 +154,11 @@ PageController.prototype.checkVisits = function(){
 			var button = $(tf.fillTemplate({"id": "minimum-choice-continue", 'text': "I've collected enough data"}, "btn"));
 			$('.screen').append(button);
 			var that = this;
-				console.log(that.minimum_choice_page);
+			console.log(that.minimum_choice_page);
 			button.click(function(){
+				that.logTimeSpentOnPage();
 				publisher.publish('changePage', [PageController, that.minimum_choice_page]);
-			});		
+			});
 		}
 		return true;
 	}
@@ -159,6 +166,7 @@ PageController.prototype.checkVisits = function(){
 };
 
 PageController.prototype.processContinueClick = function(e){
+		this.logTimeSpentOnPage();
 		publisher.publish('changePage', [PageController, this.goes_to_page]);
 };
 
@@ -166,24 +174,25 @@ PageController.prototype.processBinaryClick = function(e) {
 	e.stopImmediatePropagation();
 	var $elem = $(e.currentTarget);
 	if($elem.parent().hasClass("disabled")) return;
-	
+
 	var value = $elem.text(),
 		choiceId = $elem.data('choice-id'),
 		destinationId = $elem.data('destination'),
-		action_string = getActionString(value, choiceId, this.page_id),
+		time = this.stopwatch.stop();
+		action_string = getActionString(value, choiceId, this.page_id, time),
 		user_ids = JSON.parse(localStorage.getItem("user_id"));
-		
+
 		var loggableString = "";
-		
+
 		if(chain.getLastPage().patient){
-			loggableString += chain.getLastPage().patient+ ": ";	
+			loggableString += chain.getLastPage().patient+ ": ";
 		}else{
 			loggableString += "Question: " + $('.page-section').last().text() + " You said: ";
 		}
-		
+
 		loggableString += value;
 		labnotebook.add(loggableString.replace("}", ""));
-		
+
 		var choices_made = JSON.parse(localStorage.getItem("choices_made"));
 		choices_made.push(choiceId);
 		localStorage.setItem("choices_made", JSON.stringify(choices_made));
@@ -204,10 +213,13 @@ PageController.prototype.processBinaryClick = function(e) {
 		api.logUserAction.apply(null, requests[0]).then(function (response) {
 			  if(!response.hasOwnProperty("error")){
 			  		localStorage.setItem('last_page_id', that.page_id);
+			  		that.logTimeSpentOnPage();
 					publisher.publish('changePage', [PageController, destinationId]);
 			  }
 		});
 	}
+
+	$elem.addClass("disabled");
 };
 
 PageController.prototype.processButtonClick = function(e) {
@@ -219,7 +231,7 @@ PageController.prototype.processButtonClick = function(e) {
 	for (var i = 0; i < $inputs.length; i++) {
 		var input = $inputs.eq(i);
 		var obj = {};
-		
+
 		if(input.val().length === 0){
 			// TODO: extract this to a form helper class
 			input.addClass("has-danger");
@@ -227,31 +239,31 @@ PageController.prototype.processButtonClick = function(e) {
 			return;
 		}
 
-		obj['value'] = input.val();;
+		obj['value'] = input.val();
 		obj['id'] = input.data("choice-id");
-		
+
 		destination = this.goes_to_page;
 		if(!destination) destination = input.data("destination");
 
-		obj['action_string'] = getActionString(obj['value'], obj['id'], this.page_id);
+		obj['action_string'] = getActionString(obj['value'], obj['id'], this.page_id, this.stopwatch.stop());
 
 		choicesMade.push(obj);
-		
+
 		//	TODO: this is just a quick fix. what if the request fails?
 		var loggableString = "";
-		
-		
+
+
 		if(chain.getLastPage().patient && chain.getLastPage().patient !== "undefined"){
-			loggableString += chain.getLastPage().patient+ ": ";	
+			loggableString += chain.getLastPage().patient+ ": ";
 		}else{
 			loggableString += "Question: " + input.prev().text() + "You said: ";
 		}
-		
+
 		loggableString += input.val();
 		labnotebook.add(loggableString.replace("}", ""));
 	};
 
-	// we're going to construct this so that later we can make a parser that generates insightful xls documents based on these. 
+	// we're going to construct this so that later we can make a parser that generates insightful xls documents based on these.
 	var user_ids = JSON.parse(localStorage.getItem("user_id"));
 
 	if(!$.isArray(user_ids)){
@@ -277,8 +289,9 @@ PageController.prototype.logActions = function(data, destination) {
 		loader.hide();
 		if(destination){
 			localStorage.setItem('last_page_id', that.page_id);
-			
-			publisher.publish('changePage', [PageController, destination]); // assume that that's all we need to do on the page	
+
+			that.logTimeSpentOnPage();
+			publisher.publish('changePage', [PageController, destination]); // assume that that's all we need to do on the page
 		}
 	});
 };
@@ -301,6 +314,15 @@ PageController.prototype.revive = function(){
 	this.checkVisits();
 };
 
-function getActionString(action, choice_id, page_id){
-	return "Choice made: "+ action + " on the choice with id: " + choice_id + " on page: " + page_id;
+/**
+ * Simple function which will log time spent on page in local storage
+ */
+PageController.prototype.logTimeSpentOnPage = function() {
+	var timeSpentOnPage = this.stopwatch.stop();
+	var timeSpentOnPageBefore = parseInt(localStorage.getItem(this.page_id + "_time_spent"));
+	localStorage.setItem(this.page_id + "_time_spent", timeSpentOnPage + timeSpentOnPageBefore);
+};
+
+function getActionString(action, choice_id, page_id, time){
+	return "Choice made: "+ action + " on the choice with id: " + choice_id + " on page: " + page_id + " with time: " + time;
 }
