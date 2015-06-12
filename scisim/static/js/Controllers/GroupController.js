@@ -1,6 +1,6 @@
 var GroupController = function(){
-	this.render();	
-}
+	this.render();
+};
 
 GroupController.prototype.render = function() {
 	var template = tf.fillTemplate(null, "group_chooser");
@@ -79,7 +79,7 @@ GroupController.prototype.handleSubmit = function(e) {
 		var username = $section.find('input[name=username]').val();
 		this.unsetApiError($section);
 
-		api.createUsers([username]).done(function(response){	
+		api.createUsers([username]).done(function(response){
 			if(!that.hasApiError(response, $section)){
 				localStorage.setItem("user_id", response.id);
 
@@ -178,7 +178,7 @@ GroupController.prototype.handleSubmit = function(e) {
 
 		api.createGroup(group_name, 0).done(function(response){
 			if(that.hasApiError(response, $section)) return;
-			// TODO: what if users made a mistake, and then resubmit. The group would already be created and they couldn't get passed this point. 
+			// TODO: what if users made a mistake, and then resubmit. The group would already be created and they couldn't get passed this point.
 			// We could make it so that we ignore the error if we know it's going to fail
 			localStorage.setItem("group_name", response.group_name);
 
