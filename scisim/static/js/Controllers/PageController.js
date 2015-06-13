@@ -219,7 +219,7 @@ PageController.prototype.processBinaryClick = function(e) {
 		});
 	}
 
-	$elem.addClass("disabled");
+	$elem.parent().addClass("disabled");
 };
 
 PageController.prototype.processButtonClick = function(e) {
