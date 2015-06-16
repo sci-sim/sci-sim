@@ -83,7 +83,8 @@ GroupController.prototype.handleSubmit = function(e) {
 			if(!that.hasApiError(response, $section)){
 				localStorage.setItem("user_id", response.id);
 
-				publisher.publish("changePage", [PageController, localStorage.getItem("first_page_id")]);
+				// publisher.publish("changePage", [PageController, localStorage.getItem("first_page_id")]);
+				new EngineStarter();
 				loader.hide();
 			}
 		});

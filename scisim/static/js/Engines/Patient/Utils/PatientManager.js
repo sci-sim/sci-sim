@@ -4,6 +4,7 @@ var PatientManager = function(){
 
 PatientManager.prototype.discover = function(){
 	var id = null;
+	var that = this;
 	
 	DOMHelper.iterateContentSections(function(){
 		var text = $(this).text();
@@ -13,7 +14,7 @@ PatientManager.prototype.discover = function(){
 			
 			var patient = new Patient(name); // how do we tell if the patient is already in the list?
 			id = patient.id;
-			this.patients.push(patient);	
+			that.patients.push(patient);	
 		}
 	});
 	

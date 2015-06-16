@@ -1,7 +1,6 @@
 var PageChain = function(){
 	this.currentPointer = -1;
 	this.chain = [];
-    this.activePointer = -1;
 };
 
 PageChain.prototype.add = function (page) {
@@ -9,7 +8,6 @@ PageChain.prototype.add = function (page) {
 		for (var i = 0; i < this.chain.length; i++) {
 			if(_.isEqual(this.chain[i], page)){
 				this.currentPointer = i;
-                this.activePointer = this.currentPointer;
 				return;
 			}
 		}
@@ -17,13 +15,11 @@ PageChain.prototype.add = function (page) {
 	
 	this.chain.push(page);
 	this.currentPointer += 1;
-    this.activePointer = this.currentPointer;
 };
 
 PageChain.prototype.goBack = function(){
 	var current = this.currentPointer;
 	this.currentPointer -= 1;
-    this.activePointer = this.currentPointer;
 	
 	this.revivePage(current, this.currentPointer);
 };
@@ -31,7 +27,6 @@ PageChain.prototype.goBack = function(){
 PageChain.prototype.goForward = function(){
 	var current = this.currentPointer;
 	this.currentPointer += 1;
-    this.activePointer = this.currentPointer;
 	
 	this.revivePage(current, this.currentPointer);
 };
@@ -41,27 +36,12 @@ PageChain.prototype.revivePage = function(current, newPage){
 	this.chain[newPage].revive();
 };
 
-PageChain.prototype.revivePage = function(newPage){
-    this.getLastPage().sleep();
-    this.chain[newPage].revive();
-    this.activePointer = newPage;
-};
-
-
-PageChain.prototype.isThisLastPage = function(currentPage, currentDest) {
-    if (this.currentPointer >= 0 && this.getLastPage().page_id != currentPage.page_id) {
-        return this.chain[this.currentPointer].page_id;
-    } else {
-        return currentDest;
-    }
+PageChain.prototype.getCurrentPage = function(){
+	return this.chain[this.chain.length];
 }
 
 PageChain.prototype.getLastPage = function(){
 	return this.chain[this.chain.length - 1];
-}
-
-PageChain.prototype.getActivePage = function() {
-    return this.chain[this.activePointer];
 }
 
 PageChain.prototype.count = function(){

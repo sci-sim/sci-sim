@@ -1,5 +1,4 @@
-var SimulationController = function($parent){
-	this.$parent = $parent;
+var SimulationController = function(){
 	this.render();
 }
 

@@ -4,6 +4,9 @@ var api = new API();
 var ps = new PageSwitcher();
 var publisher = new EventPublisher();
 var chain = new PageChain();
+var renderer = new PageRenderer();
+var DOMHelper = new DOMHelper();
+
 var labnotebook = new LabNotebook($('.labenotebook'));
 localStorage.clear();
 localStorage.setItem("choices_made", JSON.stringify([]));

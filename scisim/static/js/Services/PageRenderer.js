@@ -1,54 +1,50 @@
-var PageRenderer = function(page_id){
-		this.render(page_id);		
-};
+var PageRenderer = function(){};
 
-PageRenderer.prototype.render = function(page_id){
-	var that = this,
-		context = {},
-		d = $.Deferred();
+// PageRenderer.prototype.render = function(page_id){
+// 	var that = this,
+// 		context = {"page_id": page_id},
+// 		d = $.Deferred();
 	
-	api.getPage(this.page_id).done(function(response){
-		if($.isEmptyObject(response)){
-			throw "this page doesn't exist:";
-		}else{
+// 	api.getPage(page_id).done(function(response){
+// 		if($.isEmptyObject(response)){
+// 			throw "this page doesn't exist:";
+// 		}else{
+// 			context['is_popup'] = false;
+// 			$.map(response.page_modifiers, function(val, i){
+// 				if($.inArray("popup_window", Object.keys(val)) > 0){
+// 					context['is_popup'] = true;
+// 				}
+// 			});
 			
-			var is_popup = ($.inArray("popup_window", Object.keys()) > 0) ? true : false;
-			$.extend(context, that.composePage(is_popup, response.sections, response.choices));
-		}
+// 			$.extend(context, response);
+// 			$.extend(context, that.composePage(context));
+// 		}
 		
-		d.resolve(context);
-	});
+// 		d.resolve(context);
+// 	});
 	
-	return d.promise();
-};
+// 	return d.promise();
+// };
 
-PageRenderer.prototype.composePage = function(is_popup, sections, choices) {
+PageRenderer.prototype.composePage = function(context) {
 	var html = "";
-	var context = {};
-	
 	context['hasBinary'] = false;
 	 
-	for (var i = 0; i < sections.length; i++) {
-		var section_html = tf.fillTemplate({"content": sections[i].content}, "page_section");
-		
-		if($(section_html).children().eq(0).prop("tagName") === "AUDIO"){
-			html += "<p> There's supposed to be an audio track here, but it's not currently supported. Just move along as normal...</p>";
-			continue;
-		}
-		
+	for (var i = 0; i < context.sections.length; i++) {
+		var section_html = tf.fillTemplate({"content": context.sections[i].content}, "page_section");
 		html += section_html;
 	};
 	
-	if (is_popup) {
+	if (context.is_popup) {
 		smoke.alert($(html).text() + " (this was added to your lab notebook)", function(e){}, {ok: "Okay, thanks!"});
 		context['popup_window'] = true;
 		return context;
 	}
 	
-	for (var i = 0; i < choices.length; i++) {
+	for (var i = 0; i < context.choices.length; i++) {
 	 	var templateType = "";
 
-	 	switch(choices[i].type){
+	 	switch(context.choices[i].type){
 	 		case "question":
 	 			templateType = "question_choice";
 				 context['hasTextInput'] = true;
@@ -63,15 +59,23 @@ PageRenderer.prototype.composePage = function(is_popup, sections, choices) {
 	 			break;
 	 	}
 
-		var n = tf.fillTemplate({"text": choices[i].text, "id":choices[i].id, "destination": choices[i].destination}, templateType);
-		var choices_made = JSON.parse(localStorage.getItem("choices_made"));
+		var n = tf.fillTemplate({"text": context.choices[i].text, "id":context.choices[i].id, "destination": context.choices[i].destination}, templateType);
+		var choices_made = JSON.parse(localStorage.getItem("choices_made")); 
 		
-		if($.inArray(choices[i].id, choices_made) > -1){
+		if($.inArray(context.choices[i].id, choices_made) > -1){
 			n = n.replace("choice-binary", "choice-binary disabled");
 		} 
 		
 	 	html += n;
 	};
+	
+	if(context.goes_to_page && !context.hasTextInput && context.choices.length === 0){
+		html += tf.fillTemplate({"text": "Continue", "id": "continue-btn"}, "btn");	
+	} 
+	
+	if(context.hasTextInput) {
+		html += tf.fillTemplate({"text": "Submit and continue", "id": "submit-btn"}, "btn");
+	}
 	
 	ps.transitionPage(html);
 	
