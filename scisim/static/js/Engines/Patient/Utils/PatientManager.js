@@ -6,8 +6,8 @@ PatientManager.prototype.discover = function(){
 	var id = null;
 	var that = this;
 	
-	DOMHelper.iterateContentSections(function(){
-		var text = $(this).text();
+	DOMHelper.iterateContentSections(function(i, el){
+		var text = $(el).text();
 		if(text.search("Mr") > 0 || text.search("Ms") > 0){
 			var split = text.split(" "),
 		 		name = split.splice(split.length - 2).join(" ").replace(/(<([^>]+)>)/ig,"");
