@@ -34,8 +34,12 @@ PatientEngine.prototype.renderPage = function(page_id){
 
 		var directiveContext = new PatientPageDirectiveApplicator(pageContext.page_actions, pageContext.page_modifiers, patient).getContext();
 
+		$.extend(pageContext, {"visits" : 0});
 		$.extend(pageContext, directiveContext);
 		$.extend(pageContext, renderer.composePage(pageContext));
+
+		// hack to allow us to attach changePage to buttons made in renderer
+		$.extend(pageContext, {"change_page_function" : that.changePage.bind(that)});
 
 		if(patient !== null){
 			$.extend(pageContext, {"patient": patient});
@@ -51,8 +55,10 @@ PatientEngine.prototype.restorePage = function(page_id){
 	var context = chain.findById(page_id);
 	var patient = context.patient || false;
 
-	new PatientPageDirectiveApplicator(context.page_actions, context.page_modifiers, patient);
+	var directiveContext = new PatientPageDirectiveApplicator(context.page_actions, context.page_modifiers, patient);
 
+	$.extend(context.visits += 1);
+	$.extend(context, directiveContext);
 	$.extend(context, renderer.composePage(context));
 
 	this.applyListeners();
