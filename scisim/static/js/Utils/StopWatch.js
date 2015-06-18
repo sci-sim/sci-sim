@@ -3,6 +3,7 @@
  */
 var StopWatch = function() {
     // room to increase functionality if needed.
+    this.start();
 };
 
 StopWatch.prototype.start = function() {
