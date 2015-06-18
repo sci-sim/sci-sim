@@ -289,7 +289,3 @@ PageController.prototype.changePage = function(destination) {
 		publisher.publish('changePage', [PageController, destination]);
 	}
 };
-
-function getActionString(action, choice_id, page_id, time){
-	return "Choice made: "+ action + " on the choice with id: " + choice_id + " on page: " + page_id + " with time: " + time;
-}
