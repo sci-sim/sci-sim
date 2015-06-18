@@ -34,7 +34,7 @@ ChoiceLogManager.prototype.flushLog = function() {
     var time = this.stopwatch.stop();
     console.log(time);
 
-    var user_ids = storageHelper.getJSON("user_id");
+    var user_ids = storageHelper.getJson("user_id");
     if(!$.isArray(user_ids)){
         user_ids = [user_ids];
     }
