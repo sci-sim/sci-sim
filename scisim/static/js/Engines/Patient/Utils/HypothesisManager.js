@@ -3,14 +3,14 @@ var HypothesisManager = function(){
 };
 
 HypothesisManager.prototype.discover = function(){
-	var id = null;
+	var hypothesis = null;
 	var that = this;
 	
 	DOMHelper.iterateContentSections(function(i, el){
 		var text = $(el).text();
 		
 		if(text.indexOf("What health problems do the residents have?") > -1){
-			var hypothesis = new Hypothesis();
+			hypothesis = new Hypothesis();
 			var choices = $('.choice');
 			$.each(choices, function(j, elem){
 				hypothesis.questions.append($(elem).find('p').text());
@@ -18,9 +18,8 @@ HypothesisManager.prototype.discover = function(){
 			});
 			
 			that.hypotheses.push(hypothesis);
-			id = hypothesis.id;
 		}
 	});
 	
-	return id;
+	return hypothesis;
 };
