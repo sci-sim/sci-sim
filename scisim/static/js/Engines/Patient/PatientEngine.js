@@ -38,16 +38,16 @@ PatientEngine.prototype.renderPage = function(page_id){
 		$.extend(pageContext, directiveContext);
 		$.extend(pageContext, renderer.composePage(pageContext));
 
-		// hack to allow us to attach changePage to buttons made in renderer
-		$.extend(pageContext, {"change_page_function" : that.changePage.bind(that)});
-
 		if(patient !== null){
 			$.extend(pageContext, {"patient": patient});
 		}
 
-		chain.add(pageContext);
-
-		that.applyListeners();
+		if(!pageContext.popup_window) {
+			chain.add(pageContext);
+			that.applyListeners();
+		} else {
+			that.changePage(chain.getActivePage().id);
+		}
 	});
 };
 
@@ -57,17 +57,21 @@ PatientEngine.prototype.restorePage = function(page_id){
 
 	var directiveContext = new PatientPageDirectiveApplicator(context.page_actions, context.page_modifiers, patient);
 
-	$.extend(context.visits += 1);
+	context.visits += 1;
 	$.extend(context, directiveContext);
 	$.extend(context, renderer.composePage(context));
+
+	chain.add(context);
 
 	this.applyListeners();
 };
 
 PatientEngine.prototype.applyListeners = function () {
+	var context = chain.getActivePage();
 	$('#continue-btn').click(this.onContinueClick.bind(this));
 	$('#submit-btn').click(this.onSubmitButtonClick.bind(this));
 	$('.choice-binary .well').click(this.onBinaryChoiceClick.bind(this));
+	$('#minimum-choice-continue').click(this.changePage.bind(this, context.minimum_choice_page));
 };
 
 PatientEngine.prototype.onContinueClick = function(){
