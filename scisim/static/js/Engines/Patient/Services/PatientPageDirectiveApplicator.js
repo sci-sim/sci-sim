@@ -1,7 +1,7 @@
-var PatientPageDirectiveApplicator = function(actions, modifiers, patient){
+var PatientPageDirectiveApplicator = function(context){
 	this.context = {};
-	this.applyActions(actions, patient);
-	this.applyModifiers(modifiers, patient);
+	this.applyActions(context.page_actions, context.patient);
+	this.applyModifiers(context.page_modifiers, context.patient);
 };
 
 PatientPageDirectiveApplicator.prototype.applyActions = function(actions, patient){
