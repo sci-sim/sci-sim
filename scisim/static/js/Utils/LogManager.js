@@ -1,23 +1,4 @@
 /**
- * Logs messages into the LabNotebook.
- */
-var LabNotebookLogManager = function() {
-    this.log = "";
-};
-
-LabNotebookLogManager.prototype.writeToLog = function(message) {
-    this.log += message;
-};
-
-LabNotebookLogManager.prototype.flushLog = function() {
-    if(this.log.length === 0) return;
-
-    labnotebook.add(this.log.replace("}", ""));
-    this.log = "";
-};
-
-
-/**
  * Specific log manager for logging choices on a page
  */
 var ChoiceLogManager = function() {
@@ -27,6 +8,22 @@ var ChoiceLogManager = function() {
 
 ChoiceLogManager.prototype.logChoice = function(choiceInfo) {
     this.choices.push(choiceInfo);
+
+    var loggableString = "";
+
+    if(choiceInfo.page_context.hasOwnProperty("patient")){
+        loggableString += choiceInfo.page_context.patient.name + ": ";
+    }else{
+        loggableString += "Question: " + choiceInfo.prev.text() + " You said: ";
+    }
+
+    loggableString += choiceInfo.choice;
+
+    labnotebook.add(loggableString.replace("}", ""));
+
+    if (choiceInfo.page_context.hasOwnProperty("patient")) {
+        choiceInfo.page_context.patient.choices.push(loggableString);
+    }
 };
 
 ChoiceLogManager.prototype.flushLog = function() {
@@ -53,5 +50,5 @@ ChoiceLogManager.prototype.flushLog = function() {
 };
 
 function getActionString(choiceInfo, time) {
-    return "Choice made: " + choiceInfo.choice + " on the choice with id: " + choiceInfo.choice_id + " on page: " + choiceInfo.page_id + " after time: " + time;
+    return "Choice made: " + choiceInfo.choice + " on the choice with id: " + choiceInfo.choice_id + " on page: " + choiceInfo.page_context.id + " after time: " + time;
 }

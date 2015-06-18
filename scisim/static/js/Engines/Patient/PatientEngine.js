@@ -40,6 +40,8 @@ PatientEngine.prototype.renderPage = function(page_id){
 
 		if(patient !== null){
 			$.extend(pageContext, {"patient": patient});
+		chain.add(pageContext);
+
 		}
 
 		chain.add(pageContext);
@@ -66,8 +68,7 @@ PatientEngine.prototype.applyListeners = function () {
 };
 
 PatientEngine.prototype.onContinueClick = function(){
-	var currentPage = chain.getActivePage();
-	this.renderPage(currentPage.goes_to_page);
+	this.changePage(chain.getActivePage().goes_to_page);
 };
 
 PatientEngine.prototype.onSubmitButtonClick = function(e){
@@ -92,42 +93,10 @@ PatientEngine.prototype.onSubmitButtonClick = function(e){
 
 		choiceInfo.choice = input.val();
 		choiceInfo.choice_id = input.data("choice-id");
-		choiceInfo.page_id = page_id;
+		choiceInfo.page_context = context;
+		choiceInfo.prev = input.prev();
 
 		this.choiceLogger.logChoice(choiceInfo);
-
-		//	TODO: this is just a quick fix. what if the request fails?
-		var loggableString = "";
-
-		if(context.hasOwnProperty("patient")){
-			loggableString += context.patient.name + ": ";
-		}else{
-			loggableString += "Question: " + input.prev().text() + "You said: ";
-		}
-
-		loggableString += input.val();
-		labnotebook.add(loggableString.replace("}", ""));
-
-		if(context.hasOwnProperty('patient')) context.patient.choices.push(loggableString);
-	};
-
-	chain.updateContext(context);
-	// we're going to construct this so that later we can make a parser that generates insightful xls documents based on these.
-	var user_ids = storageHelper.getJson("user_id");
-
-	if(!$.isArray(user_ids)){
-		//this means there's just 1 user going through the simulation
-		user_ids = [user_ids];
-	}
-
-	var requests = [];
-	for (var i = 0; i < user_ids.length; i++) {
-		for (var j = 0; j < choicesMade.length; j++) {
-			requests.push([context.id, user_ids[i], choicesMade[j].action_string]);
-		}
-	}
-
-	this.logActions(requests, destination);
 	}
 
 	this.changePage(destination);
@@ -146,34 +115,13 @@ PatientEngine.prototype.onBinaryChoiceClick = function(e){
 		choiceInfo = {
 			choice: value,
 			choice_id: choiceId,
-			page_id: context.id
+			page_context:  context,
+			prev: $('.page-section').last()
 		};
 
 	storageHelper.appendJsonArray("choices_made", choiceId);
 
-	var loggableString = "";
-
-	if(context.hasOwnProperty("patient"){
-		loggableString += chain.getLastPage().patient+ ": ";
-	}else{
-		var that = this;
-		api.logUserAction.apply(null, requests[0]).then(function (response) {
-			  if(!response.hasOwnProperty("error")){
-			  		storageHelper.store('last_page_id', context.id);
-					that.renderPage(destinationId);
-			  }
-		});
-		loggableString += "Question: " + $('.page-section').last().text() + " You said: ";
-	}
-
-	loggableString += value;
-	labnotebook.add(loggableString.replace("}", ""));
-
 	this.choiceLogger.logChoice(choiceInfo);
-
-	var choices_made = JSON.parse(localStorage.getItem("choices_made"));
-	choices_made.push(choiceId);
-	localStorage.setItem("choices_made", JSON.stringify(choices_made));
 
 	$elem.parent().addClass("disabled");
 
@@ -195,7 +143,7 @@ PatientEngine.prototype.disableChoices = function() {
 PatientEngine.prototype.changePage = function(destination) {
 	this.choiceLogger.flushLog();
 	if (destination) {
-		localStorage.setItem('last_page_id', chain.getActivePage().id);
+		storageHelper.store("last_page_id", chain.getActivePage().id);
 		this.renderPage(destination);
 	}
 };
