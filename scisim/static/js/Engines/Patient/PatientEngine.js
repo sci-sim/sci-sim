@@ -24,13 +24,13 @@ PatientEngine.prototype.renderPage = function(page_id){
 		var pageContext = response;
 		var patient = that.patientManager.discover();
 
-		// pageContext['is_popup'] = false;
+		pageContext['is_popup'] = false;
 
-		// $.map(response.page_modifiers, function(val, i){
-		// 	if($.inArray("popup_window", Object.values(val)) > 0){
-		// 		pageContext['is_popup'] = true;
-		// 	}
-		// });
+		$.map(response.page_modifiers, function(val, i){
+			if($.inArray("popup_window", Object.values(val)) > 0){
+				pageContext['is_popup'] = true;
+			}
+		});
 
 		var directiveContext = new PatientPageDirectiveApplicator(pageContext.page_actions, pageContext.page_modifiers, patient).getContext();
 
