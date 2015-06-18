@@ -20,6 +20,26 @@ PageChain.prototype.add = function (page) {
     this.activePointer = this.currentPointer;
 };
 
+PageChain.prototype.updateContext = function(context){
+	for (var i = 0; i < this.chain.length; i++) {
+		if(this.chain[i].id === context.id){
+			this.chain[i] = context;
+		}
+	}
+	
+	return false;
+};
+
+PageChain.prototype.findById = function(id){
+	for (var i = 0; i < this.chain.length; i++) {
+		if(this.chain[i].id === id){
+			return this.chain[i];
+		}
+	}
+	
+	return false;
+};
+
 PageChain.prototype.goBack = function(){
 	var current = this.currentPointer;
 	this.currentPointer -= 1;
@@ -49,8 +69,8 @@ PageChain.prototype.revivePage = function(newPage){
 
 
 PageChain.prototype.isThisLastPage = function(currentPage, currentDest) {
-    if (this.currentPointer >= 0 && this.getLastPage().page_id != currentPage.page_id) {
-        return this.chain[this.currentPointer].page_id;
+    if (this.currentPointer >= 0 && this.getLastPage().id != currentPage.id) {
+        return this.chain[this.currentPointer].id;
     } else {
         return currentDest;
     }

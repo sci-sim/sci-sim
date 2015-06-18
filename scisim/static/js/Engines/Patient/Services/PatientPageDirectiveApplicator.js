@@ -1,10 +1,10 @@
-var PatientPageDirectiveApplicator = function(actions, modifiers, currentPatient){
+var PatientPageDirectiveApplicator = function(actions, modifiers, patient){
 	this.context = {};
-	this.applyActions(actions, currentPatient);
-	this.applyModifiers(modifiers, currentPatient);
+	this.applyActions(actions, patient);
+	this.applyModifiers(modifiers, patient);
 };
 
-PatientPageDirectiveApplicator.prototype.applyActions = function(actions, currentPatient){
+PatientPageDirectiveApplicator.prototype.applyActions = function(actions, patient){
 	var context = {};
 	
 	for (var i = 0; i < actions.length; i++) {
@@ -16,8 +16,7 @@ PatientPageDirectiveApplicator.prototype.applyActions = function(actions, curren
 				context['minimum_choice_page'] = parseInt(actions[i].value);
 				break;
 			case "show_all_student_content":
-				// currentPatient can be null...
-				PatientDOMHelper.showPatientChoices(currentPatient);
+				PatientDOMHelper.showPatientChoices(patient);
 				break;
 		}
 	}
@@ -25,7 +24,7 @@ PatientPageDirectiveApplicator.prototype.applyActions = function(actions, curren
 	$.extend(this.context, context);
 };
 
-PatientPageDirectiveApplicator.prototype.applyModifiers = function(modifiers, currentPatient){
+PatientPageDirectiveApplicator.prototype.applyModifiers = function(modifiers, patient){
 	var context = {};
 	
 	for (var i = 0; i < modifiers.length; i++) {

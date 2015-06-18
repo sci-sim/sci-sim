@@ -1,12 +1,20 @@
 // handles the interactions between the user and pages
 var PatientEngine = function(){
-	this.renderPage(localStorage.getItem("first_page_id"));
-	this.context = {};
+	storageHelper.initJsonArray('visited_pages');
 	this.patientManager = new PatientManager();
+	
+	this.renderPage(localStorage.getItem("first_page_id"));
 };
 
 PatientEngine.prototype.renderPage = function(page_id){
 	var that = this;
+	
+	if($.inArray(page_id, storageHelper.getJson('visited_pages')) > -1){
+		this.restorePage(page_id);
+		return;
+	}
+	
+	storageHelper.appendJsonArray('visited_pages', page_id);
 	
 	api.getPage(page_id).done(function(response){
 		if($.isEmptyObject(response)){
@@ -14,7 +22,7 @@ PatientEngine.prototype.renderPage = function(page_id){
 		}
 		
 		var pageContext = response;
-		var patientID = that.patientManager.discover();
+		var patient = that.patientManager.discover();
 		
 		pageContext['is_popup'] = false;
 		
@@ -24,19 +32,30 @@ PatientEngine.prototype.renderPage = function(page_id){
 			}
 		});
 		
-		var directiveContext = new PatientPageDirectiveApplicator(pageContext.page_actions, pageContext.page_modifiers, that.patientManager.getPatient(patientID)).getContext(); 
+		var directiveContext = new PatientPageDirectiveApplicator(pageContext.page_actions, pageContext.page_modifiers, patient).getContext(); 
 		
 		$.extend(pageContext, directiveContext);
 		$.extend(pageContext, renderer.composePage(pageContext));
 		
-		chain.add(pageContext);
-		
-		if(patientID !== null){
-			$.extend(that.context, {"current_patient_id": patientID});	
+		if(patient !== null){
+			$.extend(pageContext, {"patient": patient});	
 		}
+		
+		chain.add(pageContext);
 		
 		that.applyListeners();
 	});
+};
+
+PatientEngine.prototype.restorePage = function(page_id){
+	var context = chain.findById(page_id);
+	var patient = context.patient || false;
+	
+	new PatientPageDirectiveApplicator(context.page_actions, context.page_modifiers, patient);
+	
+	$.extend(context, renderer.composePage(context));	
+	
+	this.applyListeners();
 };
 
 PatientEngine.prototype.applyListeners = function () {
@@ -54,8 +73,8 @@ PatientEngine.prototype.onSubmitButtonClick = function(e){
 	e.stopImmediatePropagation();
 	var $inputs = $('input'),
 		choicesMade = [],
-		destination = "";
-
+		context = chain.getActivePage();
+	
 	for (var i = 0; i < $inputs.length; i++) {
 		var input = $inputs.eq(i);
 		var obj = {};
@@ -67,29 +86,32 @@ PatientEngine.prototype.onSubmitButtonClick = function(e){
 			return;
 		}
 
-		obj['value'] = input.val();;
+		obj['value'] = input.val();
 		obj['id'] = input.data("choice-id");
 		
-		destination = chain.getActivePage().goes_to_page;
+		var destination = context.goes_to_page || false;
 		if(!destination) destination = input.data("destination");
 
-		obj['action_string'] = getActionString(obj['value'], obj['id'], this.page_id);
+		obj['action_string'] = getActionString(obj['value'], obj['id'], context.id);
 
 		choicesMade.push(obj);
 		
 		//	TODO: this is just a quick fix. what if the request fails?
 		var loggableString = "";
 		
-		if(chain.getLastPage().patient && chain.getLastPage().patient !== "undefined"){
-			loggableString += chain.getLastPage().patient+ ": ";	
+		if(context.hasOwnProperty("patient")){
+			loggableString += context.patient.name + ": ";	
 		}else{
 			loggableString += "Question: " + input.prev().text() + "You said: ";
 		}
 		
 		loggableString += input.val();
 		labnotebook.add(loggableString.replace("}", ""));
+		
+		if(context.hasOwnProperty('patient')) context.patient.choices.push(loggableString);
 	};
-
+	
+	chain.updateContext(context);
 	// we're going to construct this so that later we can make a parser that generates insightful xls documents based on these. 
 	var user_ids = JSON.parse(localStorage.getItem("user_id"));
 
@@ -101,7 +123,7 @@ PatientEngine.prototype.onSubmitButtonClick = function(e){
 	var requests = [];
 	for (var i = 0; i < user_ids.length; i++) {
 		for (var j = 0; j < choicesMade.length; j++) {
-			requests.push([chain.getActivePage().page_id, user_ids[i], choicesMade[j].action_string]);
+			requests.push([context.id, user_ids[i], choicesMade[j].action_string]);
 		};
 	};
 
@@ -112,30 +134,33 @@ PatientEngine.prototype.onSubmitButtonClick = function(e){
 PatientEngine.prototype.onBinaryChoiceClick = function(e){
 	e.stopImmediatePropagation();
 	var $elem = $(e.currentTarget);
-	var page = chain.getActivePage();
+	var context = chain.getActivePage();
 	
 	if($elem.parent().hasClass("disabled")) return;
 	
 	var value = $elem.text(),
 		choiceId = $elem.data('choice-id'),
 		destinationId = $elem.data('destination'),
-		action_string = getActionString(value, choiceId, page.id),
+		action_string = getActionString(value, choiceId, context.id),
 		user_ids = JSON.parse(localStorage.getItem("user_id"));
 		
-		var loggableString = "";
-		
-		if(chain.getLastPage().patient){
-			loggableString += chain.getLastPage().patient+ ": ";	
-		}else{
-			loggableString += "Question: " + $('.page-section').last().text() + " You said: ";
-		}
-		
-		loggableString += value;
-		labnotebook.add(loggableString.replace("}", ""));
-		
-		var choices_made = JSON.parse(localStorage.getItem("choices_made"));
-		choices_made.push(choiceId);
-		localStorage.setItem("choices_made", JSON.stringify(choices_made));
+	var loggableString = "";
+	
+	if(context.hasOwnProperty("patient")){
+		loggableString += context.patient.name + ": ";	
+	}else{
+		loggableString += "Question: " + $('.page-section').last().text() + " You said: ";
+	}
+	
+	loggableString += value;
+	labnotebook.add(loggableString.replace("}", ""));
+	
+	var choices_made = JSON.parse(localStorage.getItem("choices_made"));
+	choices_made.push(choiceId);
+	localStorage.setItem("choices_made", JSON.stringify(choices_made));
+	
+	if(context.hasOwnProperty('patient')) context.patient.choices.push(loggableString);
+	chain.updateContext(context);
 
 	if(!$.isArray(user_ids)){
 		user_ids = [user_ids];
@@ -143,7 +168,7 @@ PatientEngine.prototype.onBinaryChoiceClick = function(e){
 
 	var requests = [];
 	for (var i = 0; i < user_ids.length; i++) {
-		requests.push([page.id, user_ids[i], action_string]);
+		requests.push([context.id, user_ids[i], action_string]);
 	};
 
 	if(requests.length > 1){
@@ -152,7 +177,7 @@ PatientEngine.prototype.onBinaryChoiceClick = function(e){
 		var that = this;
 		api.logUserAction.apply(null, requests[0]).then(function (response) {
 			  if(!response.hasOwnProperty("error")){
-			  		localStorage.setItem('last_page_id', that.page_id);
+			  		localStorage.setItem('last_page_id', context.id);
 					that.renderPage(destinationId);
 			  }
 		});
@@ -163,7 +188,7 @@ PatientEngine.prototype.onBinaryChoiceClick = function(e){
 
 PatientEngine.prototype.restoreLast = function(){
 	var context = chain.getLastPage();
-	this.changePage(context.page_id);	
+	this.changePage(context.id);	
 };
 
 PatientEngine.prototype.disableChoices = function() {

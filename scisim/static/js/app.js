@@ -6,6 +6,7 @@ var publisher = new EventPublisher();
 var chain = new PageChain();
 var renderer = new PageRenderer();
 var DOMHelper = new DOMHelper();
+var storageHelper = new LocalStorageHelper();
 
 var labnotebook = new LabNotebook($('.labenotebook'));
 localStorage.clear();
