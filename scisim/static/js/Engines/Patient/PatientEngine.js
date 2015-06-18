@@ -2,7 +2,6 @@
 var PatientEngine = function(){
 	storageHelper.initJsonArray('visited_pages');
 	this.patientManager = new PatientManager();
-
 	this.renderPage(storageHelper.get("first_page_id"));
 	this.choiceLogger = new ChoiceLogManager();
 };
@@ -40,8 +39,6 @@ PatientEngine.prototype.renderPage = function(page_id){
 
 		if(patient !== null){
 			$.extend(pageContext, {"patient": patient});
-		chain.add(pageContext);
-
 		}
 
 		chain.add(pageContext);
@@ -115,13 +112,13 @@ PatientEngine.prototype.onBinaryChoiceClick = function(e){
 		choiceInfo = {
 			choice: value,
 			choice_id: choiceId,
-			page_context:  context,
+			page_context: context,
 			prev: $('.page-section').last()
 		};
 
-	storageHelper.appendJsonArray("choices_made", choiceId);
-
 	this.choiceLogger.logChoice(choiceInfo);
+
+	storageHelper.appendJsonArray("choices_made", choiceId);
 
 	$elem.parent().addClass("disabled");
 
