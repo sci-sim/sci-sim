@@ -1,23 +1,4 @@
 /**
- * Logs messages into the LabNotebook.
- */
-var LabNotebookLogManager = function() {
-    this.log = "";
-};
-
-LabNotebookLogManager.prototype.writeToLog = function(message) {
-    this.log += message;
-};
-
-LabNotebookLogManager.prototype.flushLog = function() {
-    if(this.log.length === 0) return;
-
-    labnotebook.add(this.log.replace("}", ""));
-    this.log = "";
-};
-
-
-/**
  * Specific log manager for logging choices on a page
  */
 var ChoiceLogManager = function() {
@@ -27,6 +8,20 @@ var ChoiceLogManager = function() {
 
 ChoiceLogManager.prototype.logChoice = function(choiceInfo) {
     this.choices.push(choiceInfo);
+
+    var loggableString = "";
+
+    console.log(chain.getActivePage());
+
+    if(chain.getLastPage().current_patient_id && chain.getLastPage().current_patient_id !== "undefined"){
+        loggableString += chain.getLastPage().patient+ ": ";
+    }else{
+        loggableString += "Question: " + choiceInfo.prev.text() + " You said: ";
+    }
+
+
+    loggableString += choiceInfo.choice;
+    labnotebook.add(loggableString.replace("}", ""));
 };
 
 ChoiceLogManager.prototype.flushLog = function() {

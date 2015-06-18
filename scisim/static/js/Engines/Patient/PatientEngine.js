@@ -24,7 +24,7 @@ PatientEngine.prototype.renderPage = function(page_id){
 		chain.add(pageContext);
 
 		if(patientID !== null){
-			$.extend(that.context, {"current_patient_id": patientID});
+			$.extend(pageContext, {"current_patient_id": patientID});
 		}
 
 		that.applyListeners();
@@ -65,20 +65,11 @@ PatientEngine.prototype.onSubmitButtonClick = function(e){
 		choiceInfo.choice = input.val();
 		choiceInfo.choice_id = input.data("choice-id");
 		choiceInfo.page_id = page_id;
+		choiceInfo.prev = input.prev();
+
+		console.log(choiceInfo.choice);
 
 		this.choiceLogger.logChoice(choiceInfo);
-
-		//	TODO: this is just a quick fix. what if the request fails?
-		var loggableString = "";
-
-		if(chain.getLastPage().patient && chain.getLastPage().patient !== "undefined"){
-			loggableString += chain.getLastPage().patient+ ": ";
-		}else{
-			loggableString += "Question: " + input.prev().text() + "You said: ";
-		}
-
-		loggableString += input.val();
-		labnotebook.add(loggableString.replace("}", ""));
 	}
 
 	this.changePage(destination);
@@ -98,21 +89,9 @@ PatientEngine.prototype.onBinaryChoiceClick = function(e){
 		choiceInfo = {
 			choice: value,
 			choice_id: choiceId,
-			page_id: page.id
+			page_id: page.id,
+			prev: $('.page-section').last()
 		};
-
-	 console.log(choiceInfo);
-
-	var loggableString = "";
-
-	if(chain.getLastPage().patient){
-		loggableString += chain.getLastPage().patient+ ": ";
-	}else{
-		loggableString += "Question: " + $('.page-section').last().text() + " You said: ";
-	}
-
-	loggableString += value;
-	labnotebook.add(loggableString.replace("}", ""));
 
 	this.choiceLogger.logChoice(choiceInfo);
 
