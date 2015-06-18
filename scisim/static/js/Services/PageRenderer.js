@@ -83,9 +83,6 @@ PageRenderer.prototype.composePage = function(context) {
 		if($('#minimum-choice-continue').length === 0){ // there's a bug that makes it appear multiple times when it shouldn't..
 			var button = $(tf.fillTemplate({"id": "minimum-choice-continue", 'text': "I've collected enough data"}, "btn"));
 			$('.screen').append(button);
-			button.click(function() {
-				context.change_page_function(context.minimum_choice_page);
-			});
 		}
 	}
 	context['html'] = html;
