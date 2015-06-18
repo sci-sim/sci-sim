@@ -91,7 +91,7 @@ PatientEngine.prototype.onSubmitButtonClick = function(e){
 	};
 
 	// we're going to construct this so that later we can make a parser that generates insightful xls documents based on these. 
-	var user_ids = JSON.parse(localStorage.getItem("user_id"));
+	var user_ids = LocalStorageManager.getPageId();	//JSON.parse(localStorage.getItem("user_id"));
 
 	if(!$.isArray(user_ids)){
 		//this means there's just 1 user going through the simulation
@@ -120,7 +120,7 @@ PatientEngine.prototype.onBinaryChoiceClick = function(e){
 		choiceId = $elem.data('choice-id'),
 		destinationId = $elem.data('destination'),
 		action_string = getActionString(value, choiceId, page.id),
-		user_ids = JSON.parse(localStorage.getItem("user_id"));
+		user_ids = LocalStorageManager.getPageId();	//JSON.parse(localStorage.getItem("user_id"));
 		
 		var loggableString = "";
 		
@@ -133,9 +133,9 @@ PatientEngine.prototype.onBinaryChoiceClick = function(e){
 		loggableString += value;
 		labnotebook.add(loggableString.replace("}", ""));
 		
-		var choices_made = JSON.parse(localStorage.getItem("choices_made"));
+		var choices_made = LocalStorageManager.getUserChoices();	//JSON.parse(localStorage.getItem("choices_made"));
 		choices_made.push(choiceId);
-		localStorage.setItem("choices_made", JSON.stringify(choices_made));
+		LocalStorageManger.setUserChoices(choices_made);	//localStorage.setItem("choices_made", JSON.stringify(choices_made));
 
 	if(!$.isArray(user_ids)){
 		user_ids = [user_ids];
@@ -152,7 +152,7 @@ PatientEngine.prototype.onBinaryChoiceClick = function(e){
 		var that = this;
 		api.logUserAction.apply(null, requests[0]).then(function (response) {
 			  if(!response.hasOwnProperty("error")){
-			  		localStorage.setItem('last_page_id', that.page_id);
+			  		LocalStorageManager.setLastPageId(that.page_id);	//localStorage.setItem('last_page_id', that.page_id);
 					that.renderPage(destinationId);
 			  }
 		});
@@ -184,7 +184,7 @@ PatientEngine.prototype.logActions = function(data, destination) {
 
 		loader.hide();
 		if(destination){
-			localStorage.setItem('last_page_id', that.page_id);
+			LocalStorageManager.setLastPageId(that.page_id);	//localStorage.setItem('last_page_id', that.page_id);
 			
 			that.renderPage(destination); // assume that that's all we need to do on the page	
 		}
