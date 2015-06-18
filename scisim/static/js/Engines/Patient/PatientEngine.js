@@ -2,6 +2,7 @@
 var PatientEngine = function(){
 	storageHelper.initJsonArray('visited_pages');
 	this.patientManager = new PatientManager();
+	this.hypothesisManager = new HypothesisManager();
 	this.renderPage(storageHelper.get("first_page_id"));
 	this.choiceLogger = new ChoiceLogManager();
 };
@@ -23,6 +24,15 @@ PatientEngine.prototype.renderPage = function(page_id){
 
 		var pageContext = response;
 		var patient = that.patientManager.discover();
+		var hypothesis = that.hypothesisManager.discover();
+		
+		if(patient !== null){
+			$.extend(pageContext, {"patient": patient});
+		}
+		
+		if(hypothesis !== null){
+			$.extend(pageContext, {"hypothesis": hypothesis});
+		}
 
 		pageContext['is_popup'] = false;
 
@@ -32,14 +42,10 @@ PatientEngine.prototype.renderPage = function(page_id){
 			}
 		});
 
-		var directiveContext = new PatientPageDirectiveApplicator(pageContext.page_actions, pageContext.page_modifiers, patient).getContext();
+		var directiveContext = new PatientPageDirectiveApplicator(pageContext).getContext();
 
 		$.extend(pageContext, directiveContext);
 		$.extend(pageContext, renderer.composePage(pageContext));
-
-		if(patient !== null){
-			$.extend(pageContext, {"patient": patient});
-		}
 
 		chain.add(pageContext);
 
