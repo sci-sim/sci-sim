@@ -3,7 +3,7 @@ var PatientEngine = function(){
 	storageHelper.initJsonArray('visited_pages');
 	this.patientManager = new PatientManager();
 	
-	this.renderPage(localStorage.getItem("first_page_id"));
+	this.renderPage(storageHelper.get("first_page_id"));
 };
 
 PatientEngine.prototype.renderPage = function(page_id){
@@ -113,7 +113,7 @@ PatientEngine.prototype.onSubmitButtonClick = function(e){
 	
 	chain.updateContext(context);
 	// we're going to construct this so that later we can make a parser that generates insightful xls documents based on these. 
-	var user_ids = JSON.parse(localStorage.getItem("user_id"));
+	var user_ids = storageHelper.getJson("user_id");
 
 	if(!$.isArray(user_ids)){
 		//this means there's just 1 user going through the simulation
@@ -142,7 +142,7 @@ PatientEngine.prototype.onBinaryChoiceClick = function(e){
 		choiceId = $elem.data('choice-id'),
 		destinationId = $elem.data('destination'),
 		action_string = getActionString(value, choiceId, context.id),
-		user_ids = JSON.parse(localStorage.getItem("user_id"));
+		user_ids = storageHelper.getJson("user_id");
 		
 	var loggableString = "";
 	
@@ -155,9 +155,7 @@ PatientEngine.prototype.onBinaryChoiceClick = function(e){
 	loggableString += value;
 	labnotebook.add(loggableString.replace("}", ""));
 	
-	var choices_made = JSON.parse(localStorage.getItem("choices_made"));
-	choices_made.push(choiceId);
-	localStorage.setItem("choices_made", JSON.stringify(choices_made));
+	storageHelper.appendJsonArray("choices_made", choiceId);
 	
 	if(context.hasOwnProperty('patient')) context.patient.choices.push(loggableString);
 	chain.updateContext(context);
@@ -177,7 +175,7 @@ PatientEngine.prototype.onBinaryChoiceClick = function(e){
 		var that = this;
 		api.logUserAction.apply(null, requests[0]).then(function (response) {
 			  if(!response.hasOwnProperty("error")){
-			  		localStorage.setItem('last_page_id', context.id);
+			  		storageHelper.store('last_page_id', context.id);
 					that.renderPage(destinationId);
 			  }
 		});
@@ -209,7 +207,7 @@ PatientEngine.prototype.logActions = function(data, destination) {
 
 		loader.hide();
 		if(destination){
-			localStorage.setItem('last_page_id', that.page_id);
+			storageHelper.store('last_page_id', chain.getActivePage().id);
 			
 			that.renderPage(destination); // assume that that's all we need to do on the page	
 		}

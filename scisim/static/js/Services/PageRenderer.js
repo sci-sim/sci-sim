@@ -60,7 +60,7 @@ PageRenderer.prototype.composePage = function(context) {
 	 	}
 
 		var n = tf.fillTemplate({"text": context.choices[i].text, "id":context.choices[i].id, "destination": context.choices[i].destination}, templateType);
-		var choices_made = JSON.parse(localStorage.getItem("choices_made")); 
+		var choices_made = storageHelper.getJson("choices_made"); 
 		
 		if($.inArray(context.choices[i].id, choices_made) > -1){
 			n = n.replace("choice-binary", "choice-binary disabled");
