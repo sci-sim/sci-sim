@@ -24,6 +24,8 @@ ChoiceLogManager.prototype.logChoice = function(choiceInfo) {
     if (choiceInfo.page_context.hasOwnProperty("patient")) {
         choiceInfo.page_context.patient.choices.push(loggableString);
     }
+
+    chain.updateContext(page_context);
 };
 
 ChoiceLogManager.prototype.flushLog = function() {
@@ -32,7 +34,7 @@ ChoiceLogManager.prototype.flushLog = function() {
     var time = this.stopwatch.stop();
     console.log(time);
 
-    var user_ids = JSON.parse(localStorage.getItem("user_id"));
+    var user_ids = storageHelper.getJSON("user_id");
     if(!$.isArray(user_ids)){
         user_ids = [user_ids];
     }
