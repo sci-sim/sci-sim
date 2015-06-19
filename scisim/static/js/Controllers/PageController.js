@@ -158,8 +158,7 @@ PageController.prototype.checkVisits = function(){
 			var that = this;
 			console.log(that.minimum_choice_page);
 			button.click(function(){
-				that.logTimeSpentOnPage();
-				publisher.publish('changePage', [PageController, that.minimum_choice_page]);
+				that.changePage(that.minimum_choice_page);
 			});
 		}
 		return true;

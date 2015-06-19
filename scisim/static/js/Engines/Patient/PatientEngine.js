@@ -25,11 +25,11 @@ PatientEngine.prototype.renderPage = function(page_id){
 		var pageContext = response;
 		var patient = that.patientManager.discover();
 		var hypothesis = that.hypothesisManager.discover();
-		
+
 		if(patient !== null){
 			$.extend(pageContext, {"patient": patient});
 		}
-		
+
 		if(hypothesis !== null){
 			$.extend(pageContext, {"hypothesis": hypothesis});
 		}
@@ -44,12 +44,16 @@ PatientEngine.prototype.renderPage = function(page_id){
 
 		var directiveContext = new PatientPageDirectiveApplicator(pageContext).getContext();
 
+		$.extend(pageContext, {"visits" : 0});
 		$.extend(pageContext, directiveContext);
 		$.extend(pageContext, renderer.composePage(pageContext));
 
-		chain.add(pageContext);
-
-		that.applyListeners();
+		if(!pageContext.popup_window) {
+			chain.add(pageContext);
+			that.applyListeners();
+		} else {
+			that.changePage(chain.getActivePage().id);
+		}
 	});
 };
 
@@ -57,17 +61,23 @@ PatientEngine.prototype.restorePage = function(page_id){
 	var context = chain.findById(page_id);
 	var patient = context.patient || false;
 
-	new PatientPageDirectiveApplicator(context.page_actions, context.page_modifiers, patient);
+	var directiveContext = new PatientPageDirectiveApplicator(context.page_actions, context.page_modifiers, patient);
 
+	context.visits += 1;
+	$.extend(context, directiveContext);
 	$.extend(context, renderer.composePage(context));
+
+	chain.add(context);
 
 	this.applyListeners();
 };
 
 PatientEngine.prototype.applyListeners = function () {
+	var context = chain.getActivePage();
 	$('#continue-btn').click(this.onContinueClick.bind(this));
 	$('#submit-btn').click(this.onSubmitButtonClick.bind(this));
 	$('.choice-binary .well').click(this.onBinaryChoiceClick.bind(this));
+	$('#minimum-choice-continue').click(this.changePage.bind(this, context.minimum_choice_page));
 };
 
 PatientEngine.prototype.onContinueClick = function(){
