@@ -16,6 +16,13 @@
 					<li class="create-note">Make a new note <i style="float:right;" class="fa fa-plus"></i></li>
 				</ul>
 			</li>
+			<li id="go-back" class="menu-bar-item pull-left hidden"><i class="fa fa-long-arrow-left"></i> &nbsp; Back to Last Page</li>
+			<li class="menu-bar-item" id="SourceToggle">Library <i class="fa fa-caret-down"></i>
+				<ul class="menu-bar-list hidden">
+					<li> <a href="http://www.youtube.com"> Youtube <i style="float:right;"></i></a> </li>
+					<li> <a href="http://www.w3schools.com">W3schools</a> <i style="float:right;"></i></li>
+				</ul>
+			</li>
 		</ul>
 
 		<div class="page-container"></div>
@@ -53,5 +60,10 @@
 		<script type="text/javascript" src="js/Controllers/GroupController.js"></script>
 		<script type="text/javascript" src="js/Controllers/PageController.js"></script>
 		<script type="text/javascript" src="js/app.js"></script>
+		<script>
+ 			$('#SourceToggle').click(function() {
+ 				$('#SourceToggle .menu-bar-list').toggleClass('hidden');
+ 			});
+ 		</script>
 	</body>
 </html>
