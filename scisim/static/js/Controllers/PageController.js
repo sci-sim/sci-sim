@@ -14,6 +14,8 @@ var PageController = function(page_id){
 	this.visits = parseInt(localStorage.getItem(page_id));
 	this.stopwatch = new StopWatch();
 	this.stopwatch.start();
+	this.notebookLogger = new LabNotebookLogManager();
+	this.choiceLogger = new ChoiceLogManager(this.page_id);
 };
 
 PageController.prototype.render = function() {
@@ -156,8 +158,7 @@ PageController.prototype.checkVisits = function(){
 			var that = this;
 			console.log(that.minimum_choice_page);
 			button.click(function(){
-				that.logTimeSpentOnPage();
-				publisher.publish('changePage', [PageController, that.minimum_choice_page]);
+				that.changePage(that.minimum_choice_page);
 			});
 		}
 		return true;
@@ -166,8 +167,7 @@ PageController.prototype.checkVisits = function(){
 };
 
 PageController.prototype.processContinueClick = function(e){
-		this.logTimeSpentOnPage();
-		publisher.publish('changePage', [PageController, this.goes_to_page]);
+	this.changePage(this.goes_to_page);
 };
 
 PageController.prototype.processBinaryClick = function(e) {
@@ -178,46 +178,27 @@ PageController.prototype.processBinaryClick = function(e) {
 	var value = $elem.text(),
 		choiceId = $elem.data('choice-id'),
 		destinationId = $elem.data('destination'),
-		time = this.stopwatch.stop();
-		action_string = getActionString(value, choiceId, this.page_id, time),
-		user_ids = JSON.parse(localStorage.getItem("user_id"));
+		time = this.stopwatch.stop(),
+		action_string = getActionString(value, choiceId, this.page_id, time);
 
-		var loggableString = "";
+	var loggableString = "";
 
-		if(chain.getLastPage().patient){
-			loggableString += chain.getLastPage().patient+ ": ";
-		}else{
-			loggableString += "Question: " + $('.page-section').last().text() + " You said: ";
-		}
-
-		loggableString += value;
-		labnotebook.add(loggableString.replace("}", ""));
-
-		var choices_made = JSON.parse(localStorage.getItem("choices_made"));
-		choices_made.push(choiceId);
-		localStorage.setItem("choices_made", JSON.stringify(choices_made));
-
-	if(!$.isArray(user_ids)){
-		user_ids = [user_ids];
-	}
-
-	var requests = [];
-	for (var i = 0; i < user_ids.length; i++) {
-		requests.push([this.page_id, user_ids[i], action_string]);
-	};
-
-	if(requests.length > 1){
-		this.logActions(requests, destinationId);
+	if(chain.getLastPage().patient){
+		loggableString += chain.getLastPage().patient+ ": ";
 	}else{
-		var that = this;
-		api.logUserAction.apply(null, requests[0]).then(function (response) {
-			  if(!response.hasOwnProperty("error")){
-			  		localStorage.setItem('last_page_id', that.page_id);
-			  		that.logTimeSpentOnPage();
-					publisher.publish('changePage', [PageController, destinationId]);
-			  }
-		});
+		loggableString += "Question: " + $('.page-section').last().text() + " You said: ";
 	}
+
+	loggableString += value;
+	this.notebookLogger.writeToLog(loggableString);
+
+	var choices_made = JSON.parse(localStorage.getItem("choices_made"));
+	choices_made.push(choiceId);
+	localStorage.setItem("choices_made", JSON.stringify(choices_made));
+
+	this.choiceLogger.writeToLog(action_string);
+
+	this.changePage(destinationId);
 
 	$elem.parent().addClass("disabled");
 };
@@ -230,7 +211,10 @@ PageController.prototype.processButtonClick = function(e) {
 
 	for (var i = 0; i < $inputs.length; i++) {
 		var input = $inputs.eq(i);
-		var obj = {};
+		var value = input.val(),
+			id = input.data("choice-id"),
+			time = this.stopwatch.stop();
+			actionString = getActionString(value, id, this.page_id, time);
 
 		if(input.val().length === 0){
 			// TODO: extract this to a form helper class
@@ -239,15 +223,10 @@ PageController.prototype.processButtonClick = function(e) {
 			return;
 		}
 
-		obj['value'] = input.val();
-		obj['id'] = input.data("choice-id");
-
 		destination = this.goes_to_page;
 		if(!destination) destination = input.data("destination");
 
-		obj['action_string'] = getActionString(obj['value'], obj['id'], this.page_id, this.stopwatch.stop());
-
-		choicesMade.push(obj);
+		this.choiceLogger.writeToLog(actionString);
 
 		//	TODO: this is just a quick fix. what if the request fails?
 		var loggableString = "";
@@ -260,40 +239,11 @@ PageController.prototype.processButtonClick = function(e) {
 		}
 
 		loggableString += input.val();
-		labnotebook.add(loggableString.replace("}", ""));
-	};
-
-	// we're going to construct this so that later we can make a parser that generates insightful xls documents based on these.
-	var user_ids = JSON.parse(localStorage.getItem("user_id"));
-
-	if(!$.isArray(user_ids)){
-		//this means there's just 1 user going through the simulation
-		user_ids = [user_ids];
+		this.notebookLogger.writeToLog(loggableString);
+		this.notebookLogger.flushLog();
 	}
 
-	var requests = [];
-	for (var i = 0; i < user_ids.length; i++) {
-		for (var j = 0; j < choicesMade.length; j++) {
-			requests.push([this.page_id, user_ids[i], choicesMade[j].action_string]);
-		};
-	};
-
-	this.logActions(requests, destination);
-};
-
-PageController.prototype.logActions = function(data, destination) {
-	var that = this;
-
-	api.aggregateRequests(api.logUserAction, data).then(function(){
-
-		loader.hide();
-		if(destination){
-			localStorage.setItem('last_page_id', that.page_id);
-
-			that.logTimeSpentOnPage();
-			publisher.publish('changePage', [PageController, destination]); // assume that that's all we need to do on the page
-		}
-	});
+	this.changePage(destination);
 };
 
 PageController.prototype.disableChoices = function() {
@@ -323,6 +273,18 @@ PageController.prototype.logTimeSpentOnPage = function() {
 	localStorage.setItem(this.page_id + "_time_spent", timeSpentOnPage + timeSpentOnPageBefore);
 };
 
-function getActionString(action, choice_id, page_id, time){
-	return "Choice made: "+ action + " on the choice with id: " + choice_id + " on page: " + page_id + " with time: " + time;
-}
+/**
+ * Helper function to change page. Assumes we will only be using PageController
+ * to handle page changes. May need to be changed.
+ * @param  {int} destination [destination id]
+ */
+PageController.prototype.changePage = function(destination) {
+	// TODO: Need to implement try-catches for handling log flushing errors.
+	this.choiceLogger.flushLog();
+	this.notebookLogger.flushLog();
+	if(destination) {
+		localStorage.setItem('last_page_id', this.page_id);
+		this.logTimeSpentOnPage();
+		publisher.publish('changePage', [PageController, destination]);
+	}
+};

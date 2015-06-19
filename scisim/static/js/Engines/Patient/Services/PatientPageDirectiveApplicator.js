@@ -1,10 +1,11 @@
-var PatientPageDirectiveApplicator = function(actions, modifiers, currentPatient){
+var PatientPageDirectiveApplicator = function(context, hypothesisManager){
 	this.context = {};
-	this.applyActions(actions, currentPatient);
-	this.applyModifiers(modifiers, currentPatient);
+	this.hypothesisManager = hypothesisManager;
+	this.applyActions(context.page_actions, context.patient);
+	this.applyModifiers(context.page_modifiers, context.patient);
 };
 
-PatientPageDirectiveApplicator.prototype.applyActions = function(actions, currentPatient){
+PatientPageDirectiveApplicator.prototype.applyActions = function(actions, patient){
 	var context = {};
 	
 	for (var i = 0; i < actions.length; i++) {
@@ -12,12 +13,17 @@ PatientPageDirectiveApplicator.prototype.applyActions = function(actions, curren
 			case "add_to_notebook":
 				labnotebook.add(actions[i].value.replace("}", ""));
 				break;
+				
 			case "minimum_choices_reached":
 				context['minimum_choice_page'] = parseInt(actions[i].value);
 				break;
+				
 			case "show_all_student_content":
-				// currentPatient can be null...
-				PatientDOMHelper.showPatientChoices(currentPatient);
+				DOMHelper.showList(patient.choices);
+				break;
+				
+			case "show_hypotheses":
+				DOMHelper.showList(this.hypothesisManager.getCurrentHypothesis());
 				break;
 		}
 	}
@@ -25,7 +31,7 @@ PatientPageDirectiveApplicator.prototype.applyActions = function(actions, curren
 	$.extend(this.context, context);
 };
 
-PatientPageDirectiveApplicator.prototype.applyModifiers = function(modifiers, currentPatient){
+PatientPageDirectiveApplicator.prototype.applyModifiers = function(modifiers, patient){
 	var context = {};
 	
 	for (var i = 0; i < modifiers.length; i++) {

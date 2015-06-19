@@ -3,7 +3,7 @@ var PatientManager = function(){
 };
 
 PatientManager.prototype.discover = function(){
-	var id = null;
+	var patient = null;
 	var that = this;
 	
 	DOMHelper.iterateContentSections(function(i, el){
@@ -12,13 +12,12 @@ PatientManager.prototype.discover = function(){
 			var split = text.split(" "),
 		 		name = split.splice(split.length - 2).join(" ").replace(/(<([^>]+)>)/ig,"");
 			
-			var patient = new Patient(name); // how do we tell if the patient is already in the list?
-			id = patient.id;
+			patient = new Patient(name); // how do we tell if the patient is already in the list?
 			that.patients.push(patient);	
 		}
 	});
 	
-	return id;
+	return patient;
 };
 
 PatientManager.prototype.getPatient = function(id){
