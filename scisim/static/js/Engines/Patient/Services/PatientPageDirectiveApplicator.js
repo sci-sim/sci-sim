@@ -1,5 +1,6 @@
-var PatientPageDirectiveApplicator = function(context){
+var PatientPageDirectiveApplicator = function(context, hypothesisManager){
 	this.context = {};
+	this.hypothesisManager = hypothesisManager;
 	this.applyActions(context.page_actions, context.patient);
 	this.applyModifiers(context.page_modifiers, context.patient);
 };
@@ -12,11 +13,17 @@ PatientPageDirectiveApplicator.prototype.applyActions = function(actions, patien
 			case "add_to_notebook":
 				labnotebook.add(actions[i].value.replace("}", ""));
 				break;
+				
 			case "minimum_choices_reached":
 				context['minimum_choice_page'] = parseInt(actions[i].value);
 				break;
+				
 			case "show_all_student_content":
-				PatientDOMHelper.showPatientChoices(patient);
+				DOMHelper.showList(patient.choices);
+				break;
+				
+			case "show_hypotheses":
+				DOMHelper.showList(this.hypothesisManager.getCurrentHypothesis());
 				break;
 		}
 	}

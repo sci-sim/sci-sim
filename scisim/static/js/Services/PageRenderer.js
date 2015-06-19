@@ -1,31 +1,5 @@
 var PageRenderer = function(){};
 
-// PageRenderer.prototype.render = function(page_id){
-// 	var that = this,
-// 		context = {"page_id": page_id},
-// 		d = $.Deferred();
-
-// 	api.getPage(page_id).done(function(response){
-// 		if($.isEmptyObject(response)){
-// 			throw "this page doesn't exist:";
-// 		}else{
-// 			context['is_popup'] = false;
-// 			$.map(response.page_modifiers, function(val, i){
-// 				if($.inArray("popup_window", Object.keys(val)) > 0){
-// 					context['is_popup'] = true;
-// 				}
-// 			});
-
-// 			$.extend(context, response);
-// 			$.extend(context, that.composePage(context));
-// 		}
-
-// 		d.resolve(context);
-// 	});
-
-// 	return d.promise();
-// };
-
 PageRenderer.prototype.composePage = function(context) {
 	var html = "";
 	context['hasBinary'] = false;
