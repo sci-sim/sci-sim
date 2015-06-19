@@ -13,12 +13,12 @@ goes_to_page = {introduction2}
 page = [
 	page_name = {introduction2}
 	heading_big ={Introduction}
-text = {The mayor of Katzville has reached out to you for help because you are an epidemiologist. An epidemiologist is a scientist who studies what makes people unhealthy. Sometimes epidemiologists are called disease detectives because they figure out why people are unhealthy or sick and how to make them feel better. 
+text = {The mayor of Katzville has reached out to you for help because you are an epidemiologist. An epidemiologist is a scientist who studies what makes people unhealthy. Sometimes epidemiologists are called disease detectives because they figure out why people are unhealthy or sick and how to make them feel better. <br />
 
-The mayor of Katzville wants you to come in and put your skills to test. You will visit Katzville and meet with the residents. Your goals are to: 
+The mayor of Katzville wants you to come in and put your skills to test. You will visit Katzville and meet with the residents. Your goals are to: <br /><br />
 
-1. Identify the resident’s health problems
-2. Determine why the residents have these health problems
+1. Identify the resident’s health problems<br />
+2. Determine why the residents have these health problems<br />
 
 You will examine each person to determine what what health problems they have and why. After you have finished collecting data, you will make a recommendation to the mayor of Katzville.}
 media = {trophy.jpg}
@@ -32,11 +32,11 @@ page = [
 minimum choices = {1}
 	text = {
 
-A hypothesis is a simple answer to a question.
+A hypothesis is a simple answer to a question.<br /><br />
 
-What questions would you like to answer when you examine the patients? What will you look for? What will help you determine why the residents in Katzville don’t feel good? Enter your questions on the left side of the screen under “questions”
+What questions would you like to answer when you examine the patients? What will you look for? What will help you determine why the residents in Katzville don’t feel good? Enter your questions on the left side of the screen under “questions”.<br /><br />
 
-What are your hypotheses for why the residents of Katzville are sick? Fill in possible answers to the questions on the ride side of the screen under “hypotheses” 
+What are your hypotheses for why the residents of Katzville are sick? Fill in possible answers to the questions on the ride side of the screen under “hypotheses”.<br /><br />
 
 You can enter as many questions and answers as you like. You may also visit the library to get ideas for questions to ask.}
 
@@ -49,7 +49,7 @@ text = {What is the hypothesis?}
 tag = {hypothesis1}
 ]
 question = [
-text = {Why did you choose this question and hypothesis}
+text = {Why did you choose this question and hypothesis?}
 tag = {hypothesis1}
 ]
 
@@ -66,8 +66,8 @@ minimum_choices = {3}
 minimum_choices_reached = {patientsummary}
 choice = [
 		binary = {
-			Mr. Smith
-			Sex: male
+			Mr. Smith<br />
+			Sex: male<br />
 			Age: 25
 		}
 		goes_to_page = {Examine Mr. Smith} 
@@ -76,8 +76,8 @@ choice = [
 	choice = [
 		
 		binary = {
-			Ms. Jones
-			Sex: female
+			Ms. Jones<br />
+			Sex: female<br />
 			Age: 45
 		}
 
@@ -88,8 +88,8 @@ choice = [
 choice = [
 		
 		binary = {
-			Mr. Anderson
-			Sex: male
+			Mr. Anderson<br />
+			Sex: male<br />
 			Age: 50
 		}
 
@@ -100,8 +100,8 @@ goes_to_page = {Examine Mr. Anderson}
 choice = [
 		
 		binary = {
-			Ms. Williams
-			Sex: female
+			Ms. Williams<br />
+			Sex: female<br />
 			Age: 63
 		}
 	
@@ -112,8 +112,8 @@ goes_to_page = {Examine Ms. Williams}
 choice = [
 		
 		binary = {
-			Mr. Lane
-			Sex: male
+			Mr. Lane<br />
+			Sex: male<br />
 			Age: 42
 		}
 	
@@ -124,8 +124,8 @@ goes_to_page = {Examine Mr. Lane}
 choice = [
 		
 		binary = {
-			Ms. Watson
-			Sex: female
+			Ms. Watson<br />
+			Sex: female<br />
 			Age: 52
 		}
 
@@ -750,7 +750,7 @@ choice = [
 		goes_to_page = {abnormal_sensation} 
 		]
 choice = [
-	binary = {Check his blood sugar}
+	binary = {Check her blood sugar}
 	goes_to_page = {Check Ms. Williams blood sugar}
 		]
 
@@ -908,7 +908,7 @@ choice = [
 		goes_to_page = {lanelungs} 
 ]
 choice = [
-	binary = {check his eyes}
+	binary = {Check his eyes}
 	goes_to_page = {laneeyes}
 ]
 choice = [
@@ -1310,13 +1310,13 @@ minimum choices = {1}
 	text = {
 
 A hypothesis is a simple answer to a question.
-
-What questions would you like to answer when you examine the patients? What will you look for? What will help you determine why the residents in Katzville have health problems? Enter your questions on the left side of the screen under “questions”
-
+<br /><br />
+What questions would you like to answer when you examine the patients? What will you look for? What will help you determine why the residents in Katzville have health problems? <br />Enter your questions on the left side of the screen under “questions”
+<br /><br />
 What are your hypotheses for why the residents of Katzville have health problems? Fill in possible answers to the questions on the ride side of the screen under “hypotheses” 
-
+<br /><br />
 Why did you choose these questions? Enter your rationale on the right side of the table.
-
+<br /><br />
 You can enter as many questions and answers as you like. You may also visit the library to get ideas for questions to ask.
 }
 
@@ -1347,9 +1347,9 @@ minimum_choices = {3}
 		minimum_choices_reached= {patientsummary2}
 choice = [
 		binary = {
-			name: Mr. Smith
-			sex: male
-			age: 25
+			Mr. Smith<br />
+			Sex: male<br />
+			Age: 25
 		}
 		goes_to_page = {Examine Mr. Smith2} 
 	]
@@ -1357,8 +1357,8 @@ choice = [
 	choice = [
 		
 		binary= {
-			Ms. Jones
-			Sex: female
+			Ms. Jones<br />
+			Sex: female<br />
 			Age: 45
 		}
 
@@ -1369,8 +1369,8 @@ choice = [
 choice = [
 		
 		binary = {
-			Mr. Anderson
-			Sex: male
+			Mr. Anderson<br />
+			Sex: male<br />
 			Age: 50
 		}
 
@@ -1381,8 +1381,8 @@ goes_to_page = {Examine Mr. Anderson2}
 choice = [
 		
 		binary= {
-			Ms. Williams
-			Sex: female
+			Ms. Williams<br />
+			Sex: female<br />
 			Age: 63
 		}
 
@@ -1393,8 +1393,8 @@ goes_to_page = {Examine Ms. Williams2}
 choice = [
 		
 		binary= {
-			Mr. Lane
-			Sex: male
+			Mr. Lane<br />
+			Sex: male<br />
 			Age: 42
 		}
 
@@ -1405,8 +1405,8 @@ goes_to_page = {Examine Mr. Lane2}
 choice = [
 		
 		binary= {
-			Ms. Watson
-			Sex: female
+			Ms. Watson<br />
+			Sex: female<br />
 			Age: 52
 		}
 
