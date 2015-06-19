@@ -38,7 +38,7 @@ TemplateFiller.prototype.wrapInParent = function(html) {
 TemplateFiller.prototype.getTemplate = function(pageName) {
 	switch(pageName){
 		case "choose_simulation":
-			return '<div class="list-group-item simluation-item clickable"><span class="badge"></span> <div class="media"> <div class="media-left"> <a href="#"> <img class="media-object" src="img/page_1_s.jpg"> </a> </div> <div class="media-body"> <h4 class="media-heading list-item-heading">{title}</h4> <p>{desc}</p> <input type="hidden" value="{first_page_id}" name="first_page_id"> <input type="hidden" value="{id}" name="sim_id"> </div> </div> </div>';
+			return '<div class="list-group-item simluation-item clickable"><span class="badge"></span> <div class="media"> <div class="media-left"> <a href="#"> <img class="media-object" src="img/sim_demo/page_1_s.jpg"> </a> </div> <div class="media-body"> <h4 class="media-heading list-item-heading">{title}</h4> <p>{desc}</p> <input type="hidden" value="{first_page_id}" name="first_page_id"> <input type="hidden" value="{id}" name="sim_id"> </div> </div> </div>';
 
 		case "group_chooser":
 			// TODO: get the template from the /js/templates directory...load them in with ajax later
@@ -46,9 +46,21 @@ TemplateFiller.prototype.getTemplate = function(pageName) {
 
 		case "page_section":
 			return '<div class="page-section"> {content} </div>';
+            
+        case "section_with_img":
+            return '<div class="page-section-with-img"> {content} </div>';
+            
+        case "page_header":
+            return '<div class="page-header"> {content} </div>';
 
 		case "binary_choice":
 			return '<div class="choice choice-binary"> <div class="well clickable-well" data-choice-id="{id}" data-destination="{destination}"> {text} </div> </div>';
+            
+        case "binary_choice_person":
+            return '<div class="choice choice-binary choice-person"> <div class="well clickable-well" data-choice-id="{id}" data-destination="{destination}"><img class="person_header" src="img/{name}_thumb.jpg"></img> {text} </div> </div>';
+            
+        case "binary_yesno_choice":
+            return '<div class="choice choice-binary choice-yesno"> <div class="well clickable-well" data-choice-id="{id}" data-destination="{destination}"> {text} </div> </div>';
 
 		case "prompt_choice":
 			return '<div class="choice choice-prompt"> <p>{text}</p> <input class="form-control" type="text" data-choice-id="{id}" data-destination="{destination}" placeholder="Enter your response here"> </div>';
@@ -57,7 +69,7 @@ TemplateFiller.prototype.getTemplate = function(pageName) {
 			return '<div class="choice choice-question"> <p>{text}</p> <input class="form-control" type="text" data-choice-id="{id}" data-destination="{destination}" placeholder="Enter your response here"> </div>';
 
 		case "btn":
-		return "<button id='{id}' class='btn btn-default'>{text}</button>";
+		return "<button id='{id}' class='btn btn-default'>{text}<span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span></button>";
 
 		case "go_back_btn":
 			return "<button id='go-back' class='btn btn-default'>Go Back</button>"
