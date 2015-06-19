@@ -156,7 +156,7 @@ PatientEngine.prototype.disableChoices = function() {
 
 PatientEngine.prototype.changePage = function(destination) {
 	this.choiceLogger.flushLog();
-	
+
 	if (typeof destination === "object") {
 		destination = destination.data;
 	}
