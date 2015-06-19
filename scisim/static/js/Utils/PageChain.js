@@ -16,7 +16,7 @@ PageChain.prototype.add = function (page) {
 	}
 	
 	this.chain.push(page);
-	this.currentPointer += 1;
+	this.currentPointer = this.chain.length - 1;
     this.activePointer = this.currentPointer;
 };
 
@@ -68,21 +68,30 @@ PageChain.prototype.revivePage = function(newPage){
 };
 
 
-PageChain.prototype.isThisLastPage = function(currentPage, currentDest) {
+PageChain.prototype.isThisLastPage = function (currentPage, currentDest) {
     if (this.currentPointer >= 0 && this.getLastPage().id != currentPage.id) {
         return this.chain[this.currentPointer].id;
     } else {
         return currentDest;
     }
-}
+};
 
-PageChain.prototype.getLastPage = function(){
+PageChain.prototype.getLastPage = function () {
 	return this.chain[this.chain.length - 1];
-}
+};
 
-PageChain.prototype.getActivePage = function() {
+PageChain.prototype.getActivePage = function () {
     return this.chain[this.activePointer];
-}
+};
+
+PageChain.prototype.updateActivePage = function (context) {
+	for (var i = 0; i < this.chain.length; i++) {
+		if (this.chain[i].id === context.id) {
+			this.activePointer = i;
+			return;
+		}
+	}
+};
 
 PageChain.prototype.count = function(){
 	return this.chain.length;

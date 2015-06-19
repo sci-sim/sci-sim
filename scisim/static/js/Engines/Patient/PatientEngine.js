@@ -42,7 +42,7 @@ PatientEngine.prototype.renderPage = function(page_id){
 			}
 		});
 
-		var directiveContext = new PatientPageDirectiveApplicator(pageContext).getContext();
+		var directiveContext = new PatientPageDirectiveApplicator(pageContext, this.hypothesisManager).getContext();
 
 		$.extend(pageContext, {"visits" : 0});
 		$.extend(pageContext, directiveContext);
@@ -61,13 +61,14 @@ PatientEngine.prototype.restorePage = function(page_id){
 	var context = chain.findById(page_id);
 	var patient = context.patient || false;
 
-	var directiveContext = new PatientPageDirectiveApplicator(context.page_actions, context.page_modifiers, patient);
+	var directiveContext = new PatientPageDirectiveApplicator(context);
 
 	context.visits += 1;
 	$.extend(context, directiveContext);
 	$.extend(context, renderer.composePage(context));
 
-	chain.add(context);
+	chain.updateContext(context);
+	chain.updateActivePage(context);
 
 	this.applyListeners();
 };
@@ -77,7 +78,7 @@ PatientEngine.prototype.applyListeners = function () {
 	$('#continue-btn').click(this.onContinueClick.bind(this));
 	$('#submit-btn').click(this.onSubmitButtonClick.bind(this));
 	$('.choice-binary .well').click(this.onBinaryChoiceClick.bind(this));
-	$('#minimum-choice-continue').click(this.changePage.bind(this, context.minimum_choice_page));
+	$('#minimum-choice-continue').click(context.minimum_choice_page, this.changePage.bind(this));
 };
 
 PatientEngine.prototype.onContinueClick = function(){
@@ -155,8 +156,10 @@ PatientEngine.prototype.disableChoices = function() {
 
 PatientEngine.prototype.changePage = function(destination) {
 	this.choiceLogger.flushLog();
-	if (destination) {
-		storageHelper.store("last_page_id", chain.getActivePage().id);
-		this.renderPage(destination);
+	if (typeof destination === "object") {
+		destination = destination.data;
 	}
+	
+	storageHelper.store("last_page_id", chain.getActivePage().id);
+	this.renderPage(destination);
 };
