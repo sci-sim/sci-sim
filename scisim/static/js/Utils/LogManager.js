@@ -11,21 +11,25 @@ ChoiceLogManager.prototype.logChoice = function(choiceInfo) {
 
     var loggableString = "";
 
-    if(choiceInfo.page_context.hasOwnProperty("patient")){
+    if(choiceInfo.page_context.hasOwnProperty("patient"))
         loggableString += choiceInfo.page_context.patient.name + ": ";
-    }else{
-        loggableString += "Question: " + choiceInfo.prev.text() + " You said: ";
-    }
-
+	
+	loggableString += "Question: " + choiceInfo.prev.text() + " You said: ";
+	
     loggableString += choiceInfo.choice;
 
     labnotebook.add(loggableString.replace("}", ""));
 
-    if (choiceInfo.page_context.hasOwnProperty("patient")) {
+    if (choiceInfo.page_context.hasOwnProperty("patient") && choiceInfo.page_context.patient !== null) {
         choiceInfo.page_context.patient.choices.push(loggableString);
-    }
-
-    chain.updateContext(choiceInfo.page_context);
+		chain.updateContext(choiceInfo.page_context);
+    } else if (chain.getLastPage().hasOwnProperty("patient")){
+		// the patient can't be discovered for some choices, so we'll assume that the last page was the one that contains the patient we need.
+		var c = chain.getLastPage();
+		c.patient.choices.push(loggableString);
+		
+		chain.updateContext(c);
+	}
 };
 
 ChoiceLogManager.prototype.flushLog = function() {

@@ -121,8 +121,9 @@ def process_page(page_text, sim, page_id, page_names):
 		elif keyword == "minimum_choices_reached_page" or keyword == "minimum_choices_reached":
 			print("Fond min choice page")
 			page_base = int(str(page.id)[0]) * 1000
-			page_id = page_base + page_names.index(strip_braces(content))
-			add_page_action(page, keyword, page_id)
+			page_id = page_base + page_names.index(strip_braces(content).strip())
+			
+			add_page_modifier(page, keyword, page_id)
 
 		elif keyword == "choice":
 			print("found choice")
@@ -165,7 +166,10 @@ def process_page(page_text, sim, page_id, page_names):
 
 			add_page_modifier(page, keyword, dest_id)
 
-		elif keyword == "show_all_student_content":
+		elif keyword == "show_patient_choices":
+			add_page_action(page, keyword, strip_braces(content))
+		
+		elif keyword == "show_hypotheses":
 			add_page_action(page, keyword, strip_braces(content))
 
 
@@ -248,6 +252,7 @@ def add_page_modifier(page, name, value):
 
 def add_page_action(page, name, value):
 	print("adding a page action")
+		
 	if type(value) is not int and "}" in value and "{" in value:
 		value = strip_braces(value)
 		

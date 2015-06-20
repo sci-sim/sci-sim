@@ -87,7 +87,8 @@ PageChain.prototype.getActivePage = function () {
 PageChain.prototype.updateActivePage = function (context) {
 	for (var i = 0; i < this.chain.length; i++) {
 		if (this.chain[i].id === context.id) {
-			this.activePointer = i;
+			this.chain.remove(i);
+			this.add(context);
 			return;
 		}
 	}

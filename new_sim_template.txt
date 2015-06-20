@@ -63,7 +63,7 @@ page_name = {choose patient}
 heading_big = {Which resident of Katzville would you like to examine first?}
 text = {You may choose to examine patients in any order. You can examine anywhere from 3 to 6 patients total.}
 minimum_choices = {3} 
-minimum_choices_reached = {patientsummary}
+minimum_choices_reached = {conclusions1}
 choice = [
 		binary = {
 			Mr. Smith<br />
@@ -144,8 +144,7 @@ If you are not sure why a particular test is important, you can use the library 
 	media = {mrsmith.jpg}
 	heading_medium = {This is Mr. Smith}
 minimum_choices = {4}
-minimum_choices_reached ={choose patient}
-#text display on button “I’ve collected enough data” 
+minimum_choices_reached ={patientsummary} 
 
 choice = [
 	binary = {Ask resident how he feels today}
@@ -323,7 +322,7 @@ If you are not sure why a particular test is important, you can use the library 
 	media = {msjones.jpg}
 	heading_medium = {This is Ms. Jones}
 	minimum_choices = {3} 
-minimum_choices_reached ={choose patient}
+minimum_choices_reached ={patientsummary}
 #text display on button “I’ve collected enough data” 
 
 
@@ -503,7 +502,7 @@ If you are not sure why a particular test is important, you can use the library 
 	media = {mranderson.jpg}
 	heading_medium = {This is Mr. Anderson}
 	minimum_choices = {3} 
-minimum_choices_reached ={choose patient}
+minimum_choices_reached ={patientsummary}
 #text display on button “I’ve collected enough data” 
 
 
@@ -715,7 +714,7 @@ If you are not sure why a particular test is important, you can use the library 
 	media = {mswilliams.jpg}
 	heading_medium = {This is Ms. Williams}
 minimum_choices = {3} 
-minimum_choices_reached ={choose patient}
+minimum_choices_reached ={patientsummary}
 #text display on button “I’ve collected enough data” 
 
 
@@ -890,7 +889,7 @@ If you are not sure why a particular test is important, you can use the library 
 	media = {mrlane.jpg}
 	heading_medium = {This is Mr. Lane}
 minimum_choices = {3} 
-minimum_choices_reached ={choose patient}
+minimum_choices_reached ={patientsummary}
 #text display on button “I’ve collected enough data” 
 
 
@@ -1084,7 +1083,7 @@ If you are not sure why a particular test is important, you can use the library 
 	media = {mswatson.jpg}
 	heading_medium = {This is Ms. Watson}
 	minimum_choices = {3} 
-minimum_choices_reached ={choose patient}
+minimum_choices_reached ={patientsummary}
 #text display on button “I’ve collected enough data” 
 
 
@@ -1264,7 +1263,7 @@ page = [
 page_name = {patientsummary} 
 
 heading_big = {Here are the notes that you’ve taken for this resident:}
-show_student_content = {true} 
+show_patient_choices = {true} 
 
 text = {Remember, your goal was to determine what health problems this resident has.}
 
@@ -1287,14 +1286,14 @@ question = [
 	text = {Do you think this resident is unhealthy? Why?}
 	tag ={patientsumary1}
 ]
-goes_to_page = {hypothesis2}
+goes_to_page = {choose patient}
 ]
 
 
 page = [
 page_name = {conclusions1} 
 	heading_big = {Here are your initial questions and hypotheses}
-show_all_student_content = {true} 
+show_hypotheses = {true} 
 
 text = {For each hypothesis, mark if you think it was “supported” “refuted” or “neither”
 In the box underneath, explain why you think your hypothesis was supported, refuted, or neither supported nor refuted. Use your lab notebook to include examples of evidence that you collected.}
@@ -1344,7 +1343,7 @@ page_name = {choose patient2}
 heading_big = {Which resident of Katzville would you like to examine first?}
 text = {You may choose to examine patients in any order. You can examine anywhere from 3 to 6 patients total.}
 minimum_choices = {3} 
-		minimum_choices_reached= {patientsummary2}
+		minimum_choices_reached= {conclusions2}
 choice = [
 		binary = {
 			Mr. Smith<br />
@@ -1427,7 +1426,7 @@ If you are not sure why a particular test is important, you can use the library 
 	media = {mrsmith.jpg}
 	heading_medium = {This is Mr. Smith}
 minimum_choices = {3}
-minimum_choices_reached ={choose patient2}
+minimum_choices_reached ={patientsummary2}
 #text display on button “I’ve collected enough data” 
 choice = [
 	binary = {Ask the resident if he has diabetes}
@@ -1620,7 +1619,7 @@ If you are not sure why a particular test is important, you can use the library 
 	media = {msjones.jpg}
 	heading_medium = {This is Ms. Jones}
 minimum_choices = {3}
-minimum_choices_reached ={choose patient2}
+minimum_choices_reached ={patientsummary2}
 #text display on button “I’ve collected enough data” 
 
 
@@ -1801,7 +1800,7 @@ If you are not sure why a particular test is important, you can use the library 
 	media = {mranderson.jpg}
 	heading_medium = {This is Mr. Anderson}
 minimum_choices = {3}
-minimum_choices_reached ={choose patient2}
+minimum_choices_reached ={patientsummary2}
 #text display on button “I’ve collected enough data” 
 
 
@@ -1968,7 +1967,7 @@ If you are not sure why a particular test is important, you can use the library 
 	media = {mswilliams.jpg}
 	heading_medium = {This is Ms. Williams}
 minimum_choices = {3}
-minimum_choices_reached ={choose patient2}
+minimum_choices_reached ={patientsummary2}
 #text display on button “I’ve collected enough data” 
 
 
@@ -2128,7 +2127,7 @@ If you are not sure why a particular test is important, you can use the library 
 	media = {mrlane.jpg}
 	heading_medium = {This is Mr. Lane}
 minimum_choices = {3}
-minimum_choices_reached ={choose patient2}
+minimum_choices_reached ={patientsummary2}
 #text display on button “I’ve collected enough data” 
 
 choice = [
@@ -2295,7 +2294,7 @@ If you are not sure why a particular test is important, you can use the library 
 	media = {mswatson.jpg}
 	heading_medium = {This is Ms. Watson}
 minimum_choices = {3}
-minimum_choices_reached ={choose patient2}
+minimum_choices_reached ={patientsummary2}
 #text display on button “I’ve collected enough data” 
 
 
@@ -2438,9 +2437,6 @@ choice = [
 binary = {Genes that increase the change of being obese}
 goes_to_page = {watson many obese genes}
 ]
-
-min
-
 ]
 page = [
 page_name = {watson some Type II genes}
@@ -2466,9 +2462,8 @@ add_to_notebook = [
 
 page = [
 page_name = {patientsummary2} 
-mimimum_choices_reached = {conclusions2}
 heading_big = {Here are the notes that you’ve taken for this resident:}
-show_all_student_content = {true} 
+show_patient_choices = {true} 
 
 text = {Remember, your goal is to determine why the residents of Katzville are unhealthy}
 
@@ -2486,14 +2481,14 @@ question = [
 ]
 
 
-goes_to_page={finalrecommendation}
+goes_to_page={choose patient2}
 ]
 
 page = [
 
 page_name = {conclusions2}
 heading_big = {Here are your initial questions and hypotheses}
-show_all_student_content = {true} 
+show_hypotheses = {true} 
 
 text = {For each hypothesis, mark if you think it was “supported” “refuted” or “neither”
 In the box underneath, explain why you think your hypothesis was supported, refuted, or neither supported nor refuted. Use your lab notebook to include examples of evidence that you collected}

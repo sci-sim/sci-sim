@@ -1,11 +1,11 @@
 var PatientPageDirectiveApplicator = function(context, hypothesisManager){
 	this.context = {};
+	this.pageContext = context;
 	this.hypothesisManager = hypothesisManager;
-	this.applyActions(context.page_actions, context.patient);
-	this.applyModifiers(context.page_modifiers, context.patient);
 };
 
-PatientPageDirectiveApplicator.prototype.applyActions = function(actions, patient){
+PatientPageDirectiveApplicator.prototype.applyActions = function () {
+	var actions = this.pageContext.page_actions;
 	var context = {};
 	
 	for (var i = 0; i < actions.length; i++) {
@@ -14,12 +14,9 @@ PatientPageDirectiveApplicator.prototype.applyActions = function(actions, patien
 				labnotebook.add(actions[i].value.replace("}", ""));
 				break;
 				
-			case "minimum_choices_reached":
-				context['minimum_choice_page'] = parseInt(actions[i].value);
-				break;
-				
-			case "show_all_student_content":
-				DOMHelper.showList(patient.choices);
+			case "show_patient_choices":
+				var f = chain.getLastPage();
+				DOMHelper.showList(f.patient.choices);
 				break;
 				
 			case "show_hypotheses":
@@ -29,9 +26,11 @@ PatientPageDirectiveApplicator.prototype.applyActions = function(actions, patien
 	}
 	
 	$.extend(this.context, context);
+	return context;
 };
 
-PatientPageDirectiveApplicator.prototype.applyModifiers = function(modifiers, patient){
+PatientPageDirectiveApplicator.prototype.applyModifiers = function (modifiers) {
+	var modifiers = this.pageContext.page_modifiers; 
 	var context = {};
 	
 	for (var i = 0; i < modifiers.length; i++) {
@@ -42,10 +41,16 @@ PatientPageDirectiveApplicator.prototype.applyModifiers = function(modifiers, pa
 			
 			case "minimum_choices":
 				context['minimum_choices'] = parseInt(modifiers[i].value.replace("}", "").replace("{", ""));
+				break;
+				
+			case "minimum_choices_reached":
+				context['minimum_choice_page'] = parseInt(modifiers[i].value);
+				break;
 		}
 	};
 	
 	$.extend(this.context, context);
+	return context;
 };
 
 PatientPageDirectiveApplicator.prototype.getContext = function(){

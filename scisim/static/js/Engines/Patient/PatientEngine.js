@@ -23,7 +23,7 @@ PatientEngine.prototype.renderPage = function(page_id){
 		}
 
 		var pageContext = response;
-		var patient = that.patientManager.discover();
+		var patient = that.patientManager.discoverFromResponse(response.sections);
 		var hypothesis = that.hypothesisManager.discover();
 
 		if(patient !== null){
@@ -42,12 +42,14 @@ PatientEngine.prototype.renderPage = function(page_id){
 			}
 		});
 
-		var directiveContext = new PatientPageDirectiveApplicator(pageContext, this.hypothesisManager).getContext();
+		$.extend(pageContext, { "visits": 0 });
+		
+		var directiveApplicator = new PatientPageDirectiveApplicator(pageContext, this.hypothesisManaer);
 
-		$.extend(pageContext, {"visits" : 0});
-		$.extend(pageContext, directiveContext);
-		$.extend(pageContext, renderer.composePage(pageContext));
-
+		$.extend(pageContext, directiveApplicator.applyModifiers());
+		$.extend(pageContext, renderer.composePage(pageContext));		 
+		$.extend(pageContext, directiveApplicator.applyActions());
+		
 		if(!pageContext.popup_window) {
 			chain.add(pageContext);
 			that.applyListeners();
@@ -59,13 +61,21 @@ PatientEngine.prototype.renderPage = function(page_id){
 
 PatientEngine.prototype.restorePage = function(page_id){
 	var context = chain.findById(page_id);
-	var patient = context.patient || false;
-
-	var directiveContext = new PatientPageDirectiveApplicator(context);
-
+	var activePage = chain.getActivePage();
+	
+	if (context.hasOwnProperty('patient') && context.patient !== false) {
+		// we create a new patient for each page, including choice pages, so the new choice isn't saved on the page patient.
+		// so get copy over the patient from the choice page and put it on the patient choices page. 
+		context.patient = $.extend(true, context.patient, activePage.patient);		
+	}
+	
+	var directiveApplicator = new PatientPageDirectiveApplicator(context, this.hypothesisManaer);
+	
 	context.visits += 1;
-	$.extend(context, directiveContext);
-	$.extend(context, renderer.composePage(context));
+	
+	$.extend(context, directiveApplicator.applyModifiers());
+	$.extend(context, renderer.composePage(context));		 
+	$.extend(context, directiveApplicator.applyActions());
 
 	chain.updateContext(context);
 	chain.updateActivePage(context);
