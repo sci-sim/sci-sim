@@ -19,20 +19,6 @@ DOMHelper.prototype.showList = function(list){
 };
 
 DOMHelper.prototype.attachUnderHeader = function (html) {
-	var $sections = $('.page-section');
-	var $target = null;
-	
-	for (var i = 0; i < $sections.length; i++) {
-		var $element = $sections.eq(i);
-		if ($element.next().hasClass('page-section')) {
-			$target = $element;
-			break;
-		}
-	}
-	
-	if ($target) {
-		$target.append(html);
-	} else {
-		$sections.eq(0).append(html);
-	}
+	var html = "<div class='page-section'> " + html + "</div>";
+	$('.page-header').after(html);
 };

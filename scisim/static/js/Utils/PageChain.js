@@ -77,7 +77,7 @@ PageChain.prototype.isThisLastPage = function (currentPage, currentDest) {
 };
 
 PageChain.prototype.getLastPage = function () {
-	return this.chain[this.chain.length - 1];
+	return this.chain[this.activePointer - 1];
 };
 
 PageChain.prototype.getActivePage = function () {

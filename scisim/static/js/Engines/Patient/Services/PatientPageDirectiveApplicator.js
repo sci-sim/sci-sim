@@ -15,7 +15,7 @@ PatientPageDirectiveApplicator.prototype.applyActions = function () {
 				break;
 				
 			case "show_patient_choices":
-				var f = chain.getLastPage();
+				var f = chain.getActivePage();
 				DOMHelper.showList(f.patient.choices);
 				break;
 				

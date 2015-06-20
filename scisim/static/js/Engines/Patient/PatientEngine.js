@@ -118,9 +118,10 @@ PatientEngine.prototype.onSubmitButtonClick = function(e){
 		choiceInfo.choice = input.val();
 		choiceInfo.choice_id = input.data("choice-id");
 		choiceInfo.page_context = context;
-		choiceInfo.prev = input.prev();
+		choiceInfo.question = input.prev().text();
 
 		this.choiceLogger.logChoice(choiceInfo);
+		
 	}
 
 	this.changePage(destination);
@@ -140,7 +141,7 @@ PatientEngine.prototype.onBinaryChoiceClick = function(e){
 			choice: value,
 			choice_id: choiceId,
 			page_context: context,
-			prev: $('.page-section').last()
+			question: $('.page-section').last().text()
 		};
 
 	this.choiceLogger.logChoice(choiceInfo);
