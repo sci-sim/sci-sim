@@ -55,7 +55,7 @@ PageRenderer.prototype.composePage = function(context) {
         if(context.choices[i].text =="yes" || context.choices[i].text =="no") {
             var n = tf.fillTemplate({"text": context.choices[i].text, "id":context.choices[i].id, "destination": context.choices[i].destination}, "binary_yesno_choice");
         } else if (context.choices[i].text.indexOf("Age:") != -1) {
-            var n = tf.fillTemplate({"text": context.choices[i].text, "id":context.choices[i].id, "destination": context.choices[i].destination, "name":context.choices[i].text.split(". ")[1].split("<")[0]}, "binary_choice_person");
+            var n = tf.fillTemplate({"text": context.choices[i].text, "id":context.choices[i].id, "destination": context.choices[i].destination, "name":context.choices[i].text.split(". ")[1].split("<")[0].toLowerCase()}, "binary_choice_person");
         } else {
             var n = tf.fillTemplate({"text": context.choices[i].text, "id":context.choices[i].id, "destination": context.choices[i].destination}, templateType);
         }
