@@ -120,8 +120,7 @@ PatientEngine.prototype.onSubmitButtonClick = function(e){
 		choiceInfo.page_context = context;
 		choiceInfo.question = input.prev().text();
 
-		this.choiceLogger.logChoice(choiceInfo);
-		
+		this.choiceLogger.logChoice(choiceInfo);	
 	}
 
 	this.changePage(destination);
@@ -151,18 +150,6 @@ PatientEngine.prototype.onBinaryChoiceClick = function(e){
 	$elem.parent().addClass("disabled");
 
 	this.changePage(destinationId);
-};
-
-PatientEngine.prototype.restoreLast = function(){
-	var context = chain.getLastPage();
-	this.changePage(context.id);
-};
-
-PatientEngine.prototype.disableChoices = function() {
-	var choices = $('.choice');
-	for (var i = 0; i < choices.length; i++) {
-		choices.eq(i).addClass("disabled");
-	}
 };
 
 PatientEngine.prototype.changePage = function(destination) {
