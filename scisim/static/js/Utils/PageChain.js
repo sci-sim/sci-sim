@@ -56,18 +56,6 @@ PageChain.prototype.goForward = function(){
 	this.revivePage(current, this.currentPointer);
 };
 
-PageChain.prototype.revivePage = function(current, newPage){
-	this.chain[current].sleep();
-	this.chain[newPage].revive();
-};
-
-PageChain.prototype.revivePage = function(newPage){
-    this.getLastPage().sleep();
-    this.chain[newPage].revive();
-    this.activePointer = newPage;
-};
-
-
 PageChain.prototype.isThisLastPage = function (currentPage, currentDest) {
     if (this.currentPointer >= 0 && this.getLastPage().id != currentPage.id) {
         return this.chain[this.currentPointer].id;
