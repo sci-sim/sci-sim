@@ -89,6 +89,8 @@ PatientEngine.prototype.applyListeners = function () {
 	$('#submit-btn').click(this.onSubmitButtonClick.bind(this));
 	$('.choice-binary .well').click(this.onBinaryChoiceClick.bind(this));
 	$('#minimum-choice-continue').click(context.minimum_choice_page, this.changePage.bind(this));
+
+	playerFactory.addListeners();
 };
 
 PatientEngine.prototype.onContinueClick = function(){
@@ -158,7 +160,7 @@ PatientEngine.prototype.changePage = function(destination) {
 	if (typeof destination === "object") {
 		destination = destination.data;
 	}
-	
+
 	storageHelper.store("last_page_id", chain.getActivePage().id);
 	this.renderPage(destination);
 };
