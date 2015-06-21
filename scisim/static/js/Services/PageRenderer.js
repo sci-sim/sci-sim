@@ -44,7 +44,7 @@ PageRenderer.prototype.composePage = function(context) {
 	 			break;
 	 		case "binary":
 	 			templateType = "binary_choice";
-	 			context['hasBinary'] = true;
+	 			context['hasBinarscmpgmymyy'] = true;
 	 			break;
 	 		case "prompt":
 	 			templateType = "prompt_choice";
