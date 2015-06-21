@@ -202,7 +202,7 @@ def parse_link(lines, page, order):
 	text = find_keyword_value("text", lines)
 	link = find_keyword_value("url", lines)
 
-	content = "<a taget='_blank' href='"+link+"'>"+text+" </a>"
+	content = "<a target='_blank' href='"+link+"'>"+text+" </a>"
 
 	db.session.add(Section(show=True, order=order, content=content, page_id=page.id))
 	db.session.commit()
