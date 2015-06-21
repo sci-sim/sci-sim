@@ -7,6 +7,7 @@ var chain = new PageChain();
 var renderer = new PageRenderer();
 var DOMHelper = new DOMHelper();
 var storageHelper = new LocalStorageHelper();
+var playerFactory = new AudioPlayerFactory();
 
 var labnotebook = new LabNotebook($('.labenotebook'));
 localStorage.clear();
@@ -18,7 +19,7 @@ window.onbeforeunload = function(){
 
 $("#labNotebookToggle").click(function(e){
 	if(e.target === this){
-		labnotebook.toggle();	
+		labnotebook.toggle();
 	}
 });
 

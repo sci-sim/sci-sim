@@ -20,7 +20,7 @@ def parse_sim(sim_template):
 	# if errors:
 	# 	debug(errors)
 	# 	return errors
-		
+
 	pages = get_all_pages(sim_template)
 	page_base = (db.engine.execute("select count() from simulations").fetchone()[0]) * 1000
 
@@ -28,8 +28,8 @@ def parse_sim(sim_template):
 	password = find_keyword_value("simulation_password", sim_template)
 	description = find_keyword_value("simulation_description", sim_template)
 	preview_picture = find_keyword_value("simulation_preview_picture", sim_template)
-	
-	
+
+
 	sim = Simulation(title=simulation_name, desc=description, password=password, preview_image_filename=preview_picture, first_page_id=page_base)
 
 	db.session.add(sim)
@@ -79,7 +79,7 @@ def process_page(page_text, sim, page_id, page_names):
 		except Exception, e:
 			# this line doesn't have content we want, so go to the next one
 			continue
-		
+
 		if keyword == "page_name":
 			print("Adding page")
 			page = Page(sim=sim, title=strip_braces(content), id=page_id)
@@ -228,7 +228,7 @@ def add_section(line_number, all_lines, order, content, page, content_type=None)
 		if content[-3:] == "jpg":
 			tags = "<img src='img/content'/>"
 		else:
-			tags = "<a target='_blank' href='content'>Listen here</a>";
+			tags = "audio:content";
 
 	if content_type: # we do this check to make sure that there's no media here. If there's media, then size won't be passed in
 		content = tags.replace("content", content)
@@ -237,7 +237,7 @@ def add_section(line_number, all_lines, order, content, page, content_type=None)
 		db.session.add(Section(show=True, order=order, content=strip_braces(content), page_id = page.id))
 	except Exception, e:
 		debug(all_lines[line_number:line_number+10], e)
-	
+
 	db.session.commit()
 
 def add_page_modifier(page, name, value):
@@ -250,14 +250,14 @@ def add_page_action(page, name, value):
 	print("adding a page action")
 	if type(value) is not int and "}" in value and "{" in value:
 		value = strip_braces(value)
-		
+
 	db.session.add(Page_Action(name=name, value=value, page_id=page.id))
 	db.session.commit()
 
 def check_for_errors(sim):
 	sim = clean_comments(sim)
 	errors = {}
-	
+
 	essential_keyword_errors = check_for_essential_keywords(sim)
 	# check to make sure that all keywords have closing tags
 	tag_errors = check_all_tags_close(sim)
@@ -322,7 +322,7 @@ def check_all_tags_close(sim):
 
 					number_of_choices = selection.count("choice")
 					number_of_closing_tags = selection.count("]")
-					
+
 					if number_of_choices == number_of_closing_tags:
 						error_lines.append("Missing closing tag ( ] ) on middle line: " + (lines[i - 1] + "\n" + line + "\n" + lines[i + 1]))
 
@@ -344,7 +344,7 @@ def check_all_pages_exist(sim):
 def check_pages_have_continuity(pages):
 	non_continuous_pages = []
 	continuous_indicators = ["popup_window", "pop_up_window", "choice", "goes_to_page"]
-	
+
 	for page in pages:
 		found = None
 		mismatched = []
@@ -360,7 +360,7 @@ def check_pages_have_continuity(pages):
 		page_names = []
 		for page in non_continuous_pages:
 			page_names.append(find_keyword_value("page_name", page))
-	
+
 		return page_names
 
 	return None
@@ -387,7 +387,7 @@ def get_text(line_number, line, lines):
 		return strip_braces(select_until(line_number, lines, "}"))
 	else:
 		return strip_braces(re.findall("{.+}", lines[line_number])[0])
-		
+
 
 def find_keyword_value(keyword, sim):
 	results = []
@@ -417,7 +417,7 @@ def select_until(line_number, lines, item, count = 1):
 
 	for i, line in enumerate(lines[line_number+1:]):
 		if item not in line:
-			full += line + "\n" 
+			full += line + "\n"
 		else:
 			full += line + "\n"
 			counter += 1
@@ -441,10 +441,10 @@ def clean_comments(sim):
 			else:
 				sim = sim.replace(line, "")
 	return sim
-	
+
 if __name__ == '__main__':
 	the_file = argv[1]
-	
+
 	if not the_file:
 		print("Please pass in a file path.")
 		exit()
@@ -452,7 +452,7 @@ if __name__ == '__main__':
 	with codecs.open(the_file, "r", 'utf-8') as f:
 		sim = f.read()
 		# errors = check_for_errors(sim)
-		# if errors: 
+		# if errors:
 		# 	for key in errors:
 		# 		print(key + ":")
 		# 		if isinstance(errors[key], list):

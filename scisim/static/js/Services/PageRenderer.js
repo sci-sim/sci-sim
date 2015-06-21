@@ -15,11 +15,16 @@ PageRenderer.prototype.composePage = function(context) {
             if(context.title.indexOf("heart") != -1 || context.title.indexOf("feet") != -1 || context.title.indexOf("eyes") != -1){
                 section_html += "<div class='content-spacer'></div>";
             }
+        } else if(context.sections[i].content.indexOf("audio:") != -1) {
+        	var audioFile = context.sections[i].content.slice(6);
+        	var audioPlayer = playerFactory.createAudioPlayer(audioFile);
+        	console.log(audioPlayer.getPlayerAsHTML());
+        	section_html += tf.fillTemplate({"content": audioPlayer.getPlayerAsHTML()}, "page_section");
         } else {
             section_html = tf.fillTemplate({"content": context.sections[i].content}, "page_section");
         }
 		html += section_html;
-	};
+	}
 
 	if (context.is_popup) {
 		smoke.alert($(html).text() + " (this was added to your lab notebook)", function(e){}, {ok: "Okay, thanks!"});
@@ -39,7 +44,7 @@ PageRenderer.prototype.composePage = function(context) {
 	 			break;
 	 		case "binary":
 	 			templateType = "binary_choice";
-	 			context['hasBinary'] = true;
+	 			context['hasBinarscmpgmymyy'] = true;
 	 			break;
 	 		case "prompt":
 	 			templateType = "prompt_choice";
