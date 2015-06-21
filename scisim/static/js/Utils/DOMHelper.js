@@ -1,7 +1,10 @@
 var DOMHelper = function(){};
 
-DOMHelper.prototype.iterateContentSections = function(func){
-	$.each($('.page-section'), func);
+DOMHelper.prototype.iterateContentSections = function (func) {
+	var $sections = $('.page-section');
+	for (var i = 0; i < $sections.length; i++) {
+		func($sections.eq(i));	
+	}
 };
 
 DOMHelper.prototype.showList = function(list){

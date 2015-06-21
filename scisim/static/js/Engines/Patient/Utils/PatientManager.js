@@ -5,7 +5,7 @@ var PatientManager = function(){
 PatientManager.prototype.discoverFromDOM = function(){
 	var that = this;
 	
-	DOMHelper.iterateContentSections(function(i, el){
+	DOMHelper.iterateContentSections(function(el){
 		var text = $(el).text();
 		var patient = that.discover(text);
 		if (patient) {
