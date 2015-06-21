@@ -20,7 +20,7 @@ PatientPageDirectiveApplicator.prototype.applyActions = function () {
 				break;
 				
 			case "show_hypotheses":
-				DOMHelper.showList(this.hypothesisManager.getCurrentHypothesis().hypotheses);
+				DOMHelper.showListWithInputs(this.hypothesisManager.getCurrentHypothesis().hypotheses);
 				break;
 		}
 	}

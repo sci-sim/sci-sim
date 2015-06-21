@@ -1290,11 +1290,8 @@ goes_to_page = {choose patient}
 
 page = [
 page_name = {conclusions1}
-	heading_big = {Here are your initial questions and hypotheses}
+	heading_big = {Here are your initial questions and hypotheses. Mark if you think it was “supported” “refuted” or “neither” for each hypothesis and explain why}
 show_hypotheses = {true}
-
-text = {For each hypothesis, mark if you think it was “supported” “refuted” or “neither”
-In the box underneath, explain why you think your hypothesis was supported, refuted, or neither supported nor refuted. Use your lab notebook to include examples of evidence that you collected.}
 
 goes_to_page = {hypothesis2}
 

@@ -24,16 +24,11 @@ PatientEngine.prototype.renderPage = function(page_id){
 
 		var pageContext = response;
 		var patient = that.patientManager.discoverFromResponse(response.sections);
-		var hypothesis = that.hypothesisManager.discover();
 
 		if(patient !== null){
 			$.extend(pageContext, {"patient": patient});
 		}
-
-		if(hypothesis !== null){
-			$.extend(pageContext, {"hypothesis": hypothesis});
-		}
-
+		
 		pageContext['is_popup'] = false;
 
 		$.map(response.page_modifiers, function(val, i){
@@ -111,14 +106,16 @@ PatientEngine.prototype.onSubmitButtonClick = function(e){
 	var $inputs = $('input'),
 		context = chain.getActivePage(),
 		destination = "";
-
+	
+	this.hypothesisManager.discover();
+	
 	for (var i = 0; i < $inputs.length; i++) {
 		var input = $inputs.eq(i);
 		var choiceInfo = {};
 
 		if(input.val().length === 0){
 			// TODO: extract this to a form helper class
-			input.addClass("has-danger");
+			input.addClass("has-error");
 			input.attr('placeholder', "This field must be filled.");
 			return;
 		}

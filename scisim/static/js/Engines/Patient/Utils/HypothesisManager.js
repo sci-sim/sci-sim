@@ -12,7 +12,12 @@ HypothesisManager.prototype.discover = function(){
 		collection = new HypothesisCollection();
 		var choices = $('.choice');
 		$.each(choices, function (j, elem) {
-			collection.hypotheses.push("You said: " + $(elem).find('input').val());
+			var collectionData = {
+				'answer': "You said: " + $(elem).find('input').val(),
+				'question': $(elem).find('p').text(),
+				'choice_id': $(elem).find('input').data("choice-id")
+			};
+			collection.hypotheses.push(collectionData);
 		});
 		
 		that.hypotheses.push(collection);

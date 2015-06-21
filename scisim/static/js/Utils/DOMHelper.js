@@ -21,6 +21,22 @@ DOMHelper.prototype.showList = function(list){
 	this.attachUnderHeader(html);
 };
 
+DOMHelper.prototype.showListWithInputs = function (list) {
+	var html = "<ul class='list'>";
+	
+	for (var i = 0; i < list.length; i++) {
+		var element = list[i];
+		html += tf.fillTemplate(
+			{"text": "Question: " + element.question + "<br/>" + element.answer,
+			 "id":element.choice_id,
+			 "destination": null}, "list_question_choice");
+	}
+		
+	html += "</ul>";
+	
+	this.attachUnderHeader(html);
+};
+
 DOMHelper.prototype.attachUnderHeader = function (html) {
 	var html = "<div class='page-section'> " + html + "</div>";
 	$('.page-header').after(html);

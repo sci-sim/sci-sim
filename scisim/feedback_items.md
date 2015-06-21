@@ -4,7 +4,7 @@
 
 3. Some of the residents have 7 tests that you can perform in the first half--Ms. Watson has all 8 and I think she is the only one with all 8. I also noticed that for Mr. Smith you have to do 4 tests and for the rest, you have to do 3 to move on. Everything in the second half looks more consistent. 
 
-4.~~ Under the hypothesis testing page, the text reads " enter hypothesis on left side of the screen" there is no left side of the screen, so these directions don't make sense.~~ 
+4. ~~ Under the hypothesis testing page, the text reads " enter hypothesis on left side of the screen" there is no left side of the screen, so these directions don't make sense.~~ 
 
 ~~How about we update both hypothesis pages to have the following format and text (green color means different text goes here during the second half) If it isn't obvious what should be inserted, I can make the edits.~~ 
 

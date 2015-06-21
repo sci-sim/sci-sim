@@ -69,7 +69,10 @@ TemplateFiller.prototype.getTemplate = function(pageName) {
 			return '<div class="choice choice-question"> <p>{text}</p> <input class="form-control" type="text" data-choice-id="{id}" data-destination="{destination}" placeholder="Enter your response here"> </div>';
 
 		case "btn":
-		return "<button id='{id}' class='btn btn-default'>{text}<span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span></button>";
+			return "<button id='{id}' class='btn btn-default'>{text}<span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span></button>";
+		
+		case "list_question_choice":
+			return '<li class="choice choice-question"> <p>{text}</p> <input class="form-control" type="text" data-choice-id="{id}" data-destination="{destination}" placeholder="Enter your response here"> </li>';
 
 		case "go_back_btn":
 			return "<button id='go-back' class='btn btn-default'>Go Back</button>"
