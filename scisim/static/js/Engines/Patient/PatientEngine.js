@@ -44,7 +44,7 @@ PatientEngine.prototype.renderPage = function(page_id){
 
 		$.extend(pageContext, { "visits": 0 });
 		
-		var directiveApplicator = new PatientPageDirectiveApplicator(pageContext, that.hypothesisManaer);
+		var directiveApplicator = new PatientPageDirectiveApplicator(pageContext, that.hypothesisManager);
 
 		$.extend(pageContext, directiveApplicator.applyModifiers());
 		$.extend(pageContext, renderer.composePage(pageContext));		 
