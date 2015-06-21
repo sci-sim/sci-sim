@@ -29,6 +29,7 @@ PageRenderer.prototype.composePage = function(context) {
 	if (context.is_popup) {
 		smoke.alert($(html).text() + " (this was added to your lab notebook)", function(e){}, {ok: "Okay, thanks!"});
 		context['popup_window'] = true;
+		context['popup_text'] = $(html).text();
 		return context;
 	}
     if (!context['containsImage']) {

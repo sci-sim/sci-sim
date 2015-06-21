@@ -21,6 +21,11 @@ ChoiceLogManager.prototype.logChoice = function(choiceInfo) {
 	}
 };
 
+ChoiceLogManager.prototype.logToPatient = function (question, choice, context) {
+	context.patient.choices.push(this.getLoggableString(question, choice, context.patient));
+	chain.updateContext(context);
+};
+
 ChoiceLogManager.prototype.flushLog = function() {
     if(this.choices.length === 0) return;
 

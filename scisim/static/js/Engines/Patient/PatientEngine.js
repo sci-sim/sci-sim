@@ -53,7 +53,16 @@ PatientEngine.prototype.renderPage = function(page_id){
 		if(!pageContext.popup_window) {
 			chain.add(pageContext);
 			that.applyListeners();
+			
 		} else {
+			var choiceInfo = {
+				choice: pageContext.popup_text,
+				choice_id: chain.getActivePage().last_choice_made_id,
+				page_context: chain.getActivePage(),
+				question: chain.getActivePage().last_choice_text
+			};
+	
+			that.choiceLogger.logToPatient(choiceInfo.question, choiceInfo.choice, chain.getActivePage());
 			that.changePage(chain.getActivePage().id);
 		}
 	});
@@ -146,6 +155,10 @@ PatientEngine.prototype.onBinaryChoiceClick = function(e){
 		};
 
 	this.choiceLogger.logChoice(choiceInfo);
+	
+	context['last_choice_made_id'] = choiceId;
+	context['last_choice_text'] = value;
+	chain.updateContext(context);
 
 	storageHelper.appendJsonArray("choices_made", choiceId);
 
