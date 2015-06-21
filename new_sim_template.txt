@@ -31,25 +31,23 @@ page = [
 	heading_big = {What health problems do the residents have?}
 minimum choices = {1}
 	text = {
-
-A hypothesis is a simple answer to a question.<br /><br />
-
-What questions would you like to answer when you examine the patients? What will you look for? What will help you determine why the residents in Katzville don’t feel good? Enter your questions on the left side of the screen under “questions”.<br /><br />
-
-What are your hypotheses for why the residents of Katzville are sick? Fill in possible answers to the questions on the ride side of the screen under “hypotheses”.<br /><br />
-
-You can enter as many questions and answers as you like. You may also visit the library to get ideas for questions to ask.}
-
+Your first job is to figure out what health problems the residents have. You will do this by asking questions and proposing hypotheses.
+}
 question = [
-text = {What questions do you have?}
+text = {What questions would you like to answer when you examine the patients? <br/> What will you look for? <br/> What will help you determine why the residents in Katzville are unhealthy? <br/>Enter your questions in the text box below:}
 tag = {hypothesis1}
 ]
 question = [
-text = {What is the hypothesis?}
+text = {A hypothesis is a proposed but simple answer to a question. What are your hypotheses for why the residents of Katzville are unhelathy? <br/> Fill in possible hypotheses below:}
 tag = {hypothesis1}
 ]
 question = [
-text = {Why did you choose this question and hypothesis?}
+text = {Why did you choose this questions and hypotheses?}
+tag = {hypothesis1}
+]
+
+question = [
+text = {When you examine the residents on the next page, what will you look for to see if your questions and hypotheses are supported?}
 tag = {hypothesis1}
 ]
 
@@ -1226,7 +1224,7 @@ tag = {patient1}
 page = [
 	page_name = {tired}
 	heading_medium = {Ms. Watson: “I feel tired”}
-	popup_window = {true}
+s	popup_window = {true}
 	add_to_notebook = [
 		text = {Ms. Watson: “I feel tired”}
 		tag = {patient1}
@@ -1306,32 +1304,33 @@ page = [
 	page_name = {hypothesis2}
 	heading_big = {Why do the residents have these health problems?}
 minimum choices = {1}
+
+heading_big = {What health problems do the residents have?}
+minimum choices = {1}
 	text = {
-
-A hypothesis is a simple answer to a question.
-<br /><br />
-What questions would you like to answer when you examine the patients? What will you look for? What will help you determine why the residents in Katzville have health problems? <br />Enter your questions on the left side of the screen under “questions”
-<br /><br />
-What are your hypotheses for why the residents of Katzville have health problems? Fill in possible answers to the questions on the ride side of the screen under “hypotheses”
-<br /><br />
-Why did you choose these questions? Enter your rationale on the right side of the table.
-<br /><br />
-You can enter as many questions and answers as you like. You may also visit the library to get ideas for questions to ask.
+Your first job is to figure out what health problems the residents have. You will do this by asking questions and proposing hypotheses.
 }
+question = [
+text = {What questions would you like to answer when you examine the patients? <br/> What will you look for? <br/> What will help you determine why the residents in Katzville are unhealthy? <br/>Enter your questions in the text box below:}
+tag = {hypothesis2}
+]
+question = [
+text = {A hypothesis is a proposed but simple answer to a question. What are your hypotheses for why the residents of Katzville are unhelathy? <br/> Fill in possible hypotheses below:}
+tag = {hypothesis2}
+]
+question = [
+text = {Why did you choose this questions and hypotheses?}
+tag = {hypothesis2}
+]
 
+question = [
+text = {When you examine the residents on the next page, what will you look for to see if your questions and hypotheses are supported?}
+tag = {hypothesis2}
+]
 
-question = [
-text = {What question do you have?}
-tag = {hypothesis2}
-]
-question = [
-text = {What is the hypothesis?}
-tag = {hypothesis2}
-]
-question = [
-text = {Why did you choose this question and hypothesis}
-tag = {hypothesis2}
-]
+goes_to_page = {choose patient}
+can_add_question_groups = {true}
+minimum_questions_answered = {2}
 
 can_add_multiple_question_groups = {true}
 goes_to_page= {choose patient2}
@@ -2485,6 +2484,7 @@ goes_to_page={choose patient2}
 ]
 
 page = [
+
 
 page_name = {conclusions2}
 heading_big = {Here are your initial questions and hypotheses}
