@@ -27,7 +27,7 @@ goes_to_page = {hypothesis1}
 
 
 page = [
-	page_name = {hypothesis1} 
+	page_name = {hypothesis1}
 	heading_big = {What health problems do the residents have?}
 minimum choices = {1}
 	text = {
@@ -59,10 +59,10 @@ minimum_questions_answered = {2}
 ]
 
 page = [
-page_name = {choose patient} 
+page_name = {choose patient}
 heading_big = {Which resident of Katzville would you like to examine first?}
 text = {You may choose to examine patients in any order. You can examine anywhere from 3 to 6 patients total.}
-minimum_choices = {3} 
+minimum_choices = {3}
 minimum_choices_reached = {conclusions1}
 choice = [
 		binary = {
@@ -70,23 +70,23 @@ choice = [
 			Sex: male<br />
 			Age: 25
 		}
-		goes_to_page = {Examine Mr. Smith} 
+		goes_to_page = {Examine Mr. Smith}
 ]
 
 	choice = [
-		
+
 		binary = {
 			Ms. Jones<br />
 			Sex: female<br />
 			Age: 45
 		}
 
-		goes_to_page = {Examine Ms. Jones} 
+		goes_to_page = {Examine Ms. Jones}
 	]
 
 
 choice = [
-		
+
 		binary = {
 			Mr. Anderson<br />
 			Sex: male<br />
@@ -98,31 +98,31 @@ goes_to_page = {Examine Mr. Anderson}
 ]
 
 choice = [
-		
+
 		binary = {
 			Ms. Williams<br />
 			Sex: female<br />
 			Age: 63
 		}
-	
+
 goes_to_page = {Examine Ms. Williams}
 
 ]
 
 choice = [
-		
+
 		binary = {
 			Mr. Lane<br />
 			Sex: male<br />
 			Age: 42
 		}
-	
+
 goes_to_page = {Examine Mr. Lane}
 
 ]
 
 choice = [
-		
+
 		binary = {
 			Ms. Watson<br />
 			Sex: female<br />
@@ -134,7 +134,7 @@ goes_to_page = {Examine Ms. Watson}
 ]
 page = [
 
-page_name = {Examine Mr. Smith } 
+page_name = {Examine Mr. Smith }
 	heading_big = {
 
 What would you like to do first?
@@ -144,7 +144,7 @@ If you are not sure why a particular test is important, you can use the library 
 	media = {mrsmith.jpg}
 	heading_medium = {This is Mr. Smith}
 minimum_choices = {4}
-minimum_choices_reached ={patientsummary} 
+minimum_choices_reached ={patientsummary}
 
 choice = [
 	binary = {Ask resident how he feels today}
@@ -152,24 +152,24 @@ choice = [
 ]
 choice = [
 		binary = {Listen to his heart}
-		goes_to_page = {smithheart} 
+		goes_to_page = {smithheart}
 		]
 choice = [
 		binary = {Listen to his lungs}
-		goes_to_page = {smithlungs} 
+		goes_to_page = {smithlungs}
 	]
 
 choice = [
 		binary = {Check his height, weight, and BMI}
-		goes_to_page = {Mr. Smith’s BMI} 
+		goes_to_page = {Mr. Smith’s BMI}
 		]
 choice = [
 		binary = {Check his feet for sensation}
-		goes_to_page = {abnormal_sensation} 
+		goes_to_page = {abnormal_sensation}
 		]
 choice = [
 		binary = {Check his feet for sores}
-		goes_to_page = {smithfeet} 
+		goes_to_page = {smithfeet}
 		]
 choice = [
 		binary = {Check his eyes}
@@ -180,7 +180,7 @@ choice = [
 		binary = {Check his blood sugar}
 		goes_to_page = {Mr. Smith blood sugar}
 		]
-	
+
 choice = [
 	binary = {Check his temperature}
 	goes_to_page ={Mr. Smith temperature}
@@ -213,9 +213,9 @@ tag = {patient1}
 page = [
 	page_name = {smithheart}
 heading_medium = {This is what a healthy heart sounds like}
-media = {http://www.easyauscultation.com/cases-listing-details?caseID=32}
+media = {heart_healthy_5001.mp3}
 heading_medium = {This is what this resident’s heart sounds like}
-media = {http://www.easyauscultation.com/cases-listing-details?caseID=32}
+media = {heart_healthy_5001.mp3}
 text = {Do you think this resident’s heart sounds healthy?}
 choice = [
 	binary = {yes}
@@ -231,9 +231,9 @@ goes_to_page= {Examine Mr. Smith}
 page = [
 page_name = {smithlungs}
 heading_medium = {This is what healthy lungs sound like when someone breaths}
-media = {http://www.easyauscultation.com/cases-listing-details?caseID=76}
+media = {lungs_healthy_6106.mp3}
 heading_medium = {This is what this resident’s lungs sounds like}
-media = {http://www.easyauscultation.com/cases-listing-details?caseID=76}
+media = {lungs_healthy_6106.mp3}
 text = {Do you think this resident’s lungs sound healthy?}
 choice = [
 binary = {yes}
@@ -308,11 +308,11 @@ choice = [
 	goes_to_page = {Examine Mr. Smith}
 ]
 ]
- 
+
 
 page = [
 
-page_name = {Examine Ms. Jones} 
+page_name = {Examine Ms. Jones}
 	heading_big = {
 
 What would you like to do first?
@@ -321,9 +321,9 @@ If you are not sure why a particular test is important, you can use the library 
 }
 	media = {msjones.jpg}
 	heading_medium = {This is Ms. Jones}
-	minimum_choices = {3} 
+	minimum_choices = {3}
 minimum_choices_reached ={patientsummary}
-#text display on button “I’ve collected enough data” 
+#text display on button “I’ve collected enough data”
 
 
 choice = [
@@ -332,11 +332,11 @@ choice = [
 ]
 choice = [
 		binary = {Listen to her heart}
-		goes_to_page = {jonesheart} 
+		goes_to_page = {jonesheart}
 	]
 choice = [
 		binary = {Listen to her lungs}
-		goes_to_page = {joneslungs} 
+		goes_to_page = {joneslungs}
 ]
 choice = [
 	binary = {Check her eyes}
@@ -345,12 +345,12 @@ choice = [
 
 choice = [
 		binary = {Check her height, weight, and BMI}
-		goes_to_page = {Ms. Jones’ BMI} 
+		goes_to_page = {Ms. Jones’ BMI}
 		]
 
 choice = [
 		binary = {Check her feet for sores}
-		goes_to_page = {jonesfeet} 
+		goes_to_page = {jonesfeet}
 		]
 
 choice = [
@@ -364,18 +364,18 @@ page = [
 	page_name = {jonesheart}
 	heading_medium = {This is what a healthy heart sounds like}
 
-media = {http://www.easyauscultation.com/cases-listing-details?caseID=32}
+media = {heart_healthy_5001.mp3}
 heading_medium = {This is what this resident’s heart sounds like}
 
-media = {http://www.easyauscultation.com/cases-listing-details?caseID=32}
+media = {heart_healthy_5001.mp3}
 text = {Do you think this resident’s heart sounds healthy?}
 choice = [
 	binary = {yes}
-goes_to_page = {Examine Ms. Jones} 
+goes_to_page = {Examine Ms. Jones}
 	]
 	choice = [
 binary = {no}
-goes_to_page = {Examine Ms. Jones} 
+goes_to_page = {Examine Ms. Jones}
 ]
 ]
 
@@ -392,17 +392,17 @@ tag = {patient1}
 page = [
 page_name = {joneslungs}
 heading_medium = {This is what healthy lungs sound like when someone breaths}
-media = {http://www.easyauscultation.com/cases-listing-details?caseID=76}
+media = {lungs_healthy_6106.mp3}
 heading_medium = {This is what this resident’s lungs sounds like}
-media = {http://www.easyauscultation.com/cases-listing-details?caseID=76}
+media = {lungs_healthy_6106.mp3}
 text = {Do you think this resident’s lungs sound healthy?}
 choice = [
 binary = {yes}
-goes_to_page = {Examine Ms. Jones} 
+goes_to_page = {Examine Ms. Jones}
 ]
 choice = [
 binary = {no}
-goes_to_page = {Examine Ms. Jones} 
+goes_to_page = {Examine Ms. Jones}
 ]
 ]
 
@@ -415,11 +415,11 @@ media = {healthyretina.jpg}
 text = {Do you think this resident’s retina looks healthy?}
 choice = [
 binary = {yes}
-goes_to_page = {Examine Ms. Jones} 
+goes_to_page = {Examine Ms. Jones}
 ]
 choice = [
 binary = {no}
-goes_to_page = {Examine Ms. Jones} 
+goes_to_page = {Examine Ms. Jones}
 ]
 ]
 
@@ -454,11 +454,11 @@ media = {healthyfoot1.jpg}
 text = {Do you think this resident’s foot looks healthy?}
 choice = [
 binary = {yes}
-goes_to_page = {Examine Ms. Jones} 
+goes_to_page = {Examine Ms. Jones}
 ]
 choice = [
 binary = {no}
-goes_to_page = {Examine Ms. Jones} 
+goes_to_page = {Examine Ms. Jones}
 ]
 
 ]
@@ -492,7 +492,7 @@ choice = [
 ]
 page = [
 
-page_name = {Examine Mr. Anderson} 
+page_name = {Examine Mr. Anderson}
 	heading_big = {
 
 What would you like to do first?
@@ -501,9 +501,9 @@ If you are not sure why a particular test is important, you can use the library 
 }
 	media = {mranderson.jpg}
 	heading_medium = {This is Mr. Anderson}
-	minimum_choices = {3} 
+	minimum_choices = {3}
 minimum_choices_reached ={patientsummary}
-#text display on button “I’ve collected enough data” 
+#text display on button “I’ve collected enough data”
 
 
 choice = [
@@ -515,11 +515,11 @@ choice = [
 
 hoice = [
 		binary = {Listen to his heart}
-		goes_to_page = {andersonheart} 
+		goes_to_page = {andersonheart}
 		]
 choice = [
 		binary = {Listen to his lungs}
-		goes_to_page = {andersonlungs} 
+		goes_to_page = {andersonlungs}
 ]
 choice = [
 	binary = {check his eyes}
@@ -528,15 +528,15 @@ choice = [
 
 choice = [
 		binary = {Check his height, weight, and BMI}
-		goes_to_page = {Mr. Anderson’s BMI} 
+		goes_to_page = {Mr. Anderson’s BMI}
 		]
 	choice = [
 		binary = {Check his feet for sensation}
-		goes_to_page = {normal_sensation} 
+		goes_to_page = {normal_sensation}
 		]
 choice = [
 		binary = {Check his feet for sores}
-		goes_to_page = {andersonfeet} 
+		goes_to_page = {andersonfeet}
 		]
 choice = [
 		binary = {Check his blood sugar}
@@ -564,17 +564,17 @@ page = [
 page = [
 	page_name = {andersonheart}
 	heading_medium = {This is what a healthy heart sounds like}
-media = {http://www.easyauscultation.com/cases-listing-details?caseID=32}
+media = {heart_healthy_5001.mp3}
 heading_medium = {This is what this resident’s heart sounds like}
-media = {http://www.easyauscultation.com/cases-listing-details?caseID=32}
+media = {heart_healthy_5001.mp3}
 text = {Do you think this resident’s heart sounds healthy?}
 choice = [
 	binary = {yes}
-	goes_to_page = {Examine Mr. Anderson} 
+	goes_to_page = {Examine Mr. Anderson}
 	]
 	choice = [
 	binary = {no}
-	goes_to_page = {Examine Mr. Anderson} 
+	goes_to_page = {Examine Mr. Anderson}
 	]
 ]
 
@@ -598,11 +598,11 @@ media = {healthyretina.jpg}
 text = {Do you think this resident’s retina looks healthy?}
 choice = [
 binary = {yes}
-goes_to_page = {Examine Mr. Anderson} 
+goes_to_page = {Examine Mr. Anderson}
 ]
 choice = [
 	binary = {no}
-	goes_to_page = {Examine Mr. Anderson} 
+	goes_to_page = {Examine Mr. Anderson}
 	]
 ]
 
@@ -616,11 +616,11 @@ media = {healthyfoot1.jpg}
 text = {Do you think this resident’s foot looks healthy?}
 choice = [
 binary = {yes}
-goes_to_page = {Examine Mr. Anderson} 
+goes_to_page = {Examine Mr. Anderson}
 ]
 choice = [
 	binary = {no}
-	goes_to_page = {Examine Mr. Anderson} 
+	goes_to_page = {Examine Mr. Anderson}
 	]
 
 ]
@@ -628,22 +628,22 @@ choice = [
 page = [
 page_name = {andersonlungs}
 heading_medium = {This is what healthy lungs sound like when someone breaths}
-media = {http://www.easyauscultation.com/cases-listing-details?caseID=763}
+media = {lungs_healthy_6106.mp3}
 heading_medium = {This is what this resident’s lungs sounds like}
-media = {http://www.easyauscultation.com/cases-listing-details?caseID=763}
+media = {lungs_unhealthy_6103.mp3}
 text = {Do you think this resident’s lungs sound healthy?}
 choice = [
 binary = {yes}
-goes_to_page = {Examine Mr. Anderson} 
+goes_to_page = {Examine Mr. Anderson}
 ]
 choice = [
 	binary = {no}
-	goes_to_page = {Examine Mr. Anderson} 
+	goes_to_page = {Examine Mr. Anderson}
 	]
 ]
 
 
-page = [ 
+page = [
 
 	page_name = {andersonbathroom}
 	heading_medium =  {Ms. Anderson: “I need to go to the bathroom a lot”}
@@ -654,7 +654,7 @@ page = [
 	popup_window = {true}
 ]
 
-page = [ 
+page = [
 	page_name = {Mr. Anderson’s BMI}
 heading_medium = {Mr. Anderson is 5’0 and weighs 180 lbs. Use the BMI calculator to determine if she is underweight, healthy weight, overweight, or obese}
 link = [
@@ -704,7 +704,7 @@ tag = {patient1}
 
 page = [
 
-page_name = {Examine Ms. Williams} 
+page_name = {Examine Ms. Williams}
 	heading_big = {
 
 What would you like to do first?
@@ -713,9 +713,9 @@ If you are not sure why a particular test is important, you can use the library 
 }
 	media = {mswilliams.jpg}
 	heading_medium = {This is Ms. Williams}
-minimum_choices = {3} 
+minimum_choices = {3}
 minimum_choices_reached ={patientsummary}
-#text display on button “I’ve collected enough data” 
+#text display on button “I’ve collected enough data”
 
 
 choice = [
@@ -724,11 +724,11 @@ choice = [
 ]
 choice = [
 		binary = {Listen to her heart}
-		goes_to_page = {williamsheart} 
+		goes_to_page = {williamsheart}
 		]
 choice = [
 		binary = {Listen to her lungs}
-		goes_to_page = {wiliamslungs} 
+		goes_to_page = {wiliamslungs}
 ]
 choice = [
 	binary = {check her eyes}
@@ -736,17 +736,17 @@ choice = [
 ]
 choice = [
 		binary = {Check her feet for sores}
-		goes_to_page = {williamsfeet} 
+		goes_to_page = {williamsfeet}
 		]
 
 choice = [
 		binary = {Check her height, weight, and BMI}
-		goes_to_page = {Ms. Williams’ BMI} 
+		goes_to_page = {Ms. Williams’ BMI}
 		]
 
 choice = [
 		binary = {Check her feet for sensation}
-		goes_to_page = {abnormal_sensation} 
+		goes_to_page = {abnormal_sensation}
 		]
 choice = [
 	binary = {Check her blood sugar}
@@ -764,15 +764,15 @@ page = [
 	heading_medium = {Ms. Williams: “I can’t sleep laying down”}
 	choice = [
 		prompt = {Why do you think Ms. Williams can’t sleep laying down?}
-		goes_to_page = {Examine Ms. Williams} 
-	]	
+		goes_to_page = {Examine Ms. Williams}
+	]
 ]
 page = [
 	page_name = {williamsheart}
 	heading_medium = {This is what a healthy heart sounds like}
-media = {http://www.easyauscultation.com/cases-listing-details?caseID=32}
+media = {heart_healthy_5001.mp3}
 heading_medium = {This is what this resident’s heart sounds like}
-media = {http://www.easyauscultation.com/cases-listing-details?caseID=7}
+media = {heart_unhealthy_5104.mp3}
 text = {Do you think this resident’s heart sounds healthy?}
 choice = [
 	binary = {yes}
@@ -789,9 +789,9 @@ goes_to_page = {Examine Ms. Williams}
 page = [
 page_name = {williamslungs}
 heading_medium = {This is what healthy lungs sound like when someone breaths}
-media = {http://www.easyauscultation.com/cases-listing-details?caseID=76}
+media = {lungs_healthy_6106.mp3}
 heading_medium = {This is what this resident’s lungs sounds like}
-media = {http://www.easyauscultation.com/cases-listing-details?caseID=76}
+media = {lungs_healthy_6106.mp3}
 text = {Do you think this resident’s lungs sound healthy?}
 choice = [
 binary = {yes}
@@ -879,7 +879,7 @@ choice = [
 
 page = [
 
-page_name = {Examine Mr. Lane} 
+page_name = {Examine Mr. Lane}
 	heading_big = {
 
 What would you like to do first?
@@ -888,9 +888,9 @@ If you are not sure why a particular test is important, you can use the library 
 }
 	media = {mrlane.jpg}
 	heading_medium = {This is Mr. Lane}
-minimum_choices = {3} 
+minimum_choices = {3}
 minimum_choices_reached ={patientsummary}
-#text display on button “I’ve collected enough data” 
+#text display on button “I’ve collected enough data”
 
 
 choice = [
@@ -900,11 +900,11 @@ choice = [
 
 choice = [
 		binary = {Listen to his heart}
-		goes_to_page = {laneheart} 
+		goes_to_page = {laneheart}
 		]
 choice = [
 		binary = {Listen to his lungs}
-		goes_to_page = {lanelungs} 
+		goes_to_page = {lanelungs}
 ]
 choice = [
 	binary = {Check his eyes}
@@ -917,11 +917,11 @@ choice = [
 
 choice = [
 		binary = {Check his feet for sensation}
-		goes_to_page = {normal_sensation} 
+		goes_to_page = {normal_sensation}
 		]
 choice = [
 		binary = {Check his feet for sores}
-		goes_to_page = {abnormal_feet} 
+		goes_to_page = {abnormal_feet}
 		]
 choice = [
 binary = {Check his blood sugar}
@@ -937,9 +937,9 @@ goes_to_page = {Check Mr. Lane’s temperature}
 page = [
 	page_name = {laneheart}
 	heading_medium = {This is what a healthy heart sounds like}
-media = {http://www.easyauscultation.com/cases-listing-details?caseID=32}
+media = {heart_healthy_5001.mp3}
 heading_medium = {This is what this resident’s heart sounds like}
-media = {http://www.easyauscultation.com/cases-listing-details?caseID=32}
+media = {heart_healthy_5001.mp3}
 text = {Do you think this resident’s heart sounds healthy?}
 choice = [
 	binary = {yes}
@@ -954,9 +954,9 @@ goes_to_page = {Examine Mr. Lane}
 page = [
 page_name = {lanelungs}
 heading_medium = {This is what healthy lungs sound like when someone breaths}
-media = {http://www.easyauscultation.com/cases-listing-details?caseID=76}
+media = {lungs_healthy_6106.mp3}
 heading_medium = {This is what this resident’s lungs sounds like}
-media = {http://www.easyauscultation.com/cases-listing-details?caseID=76}
+media = {lungs_healthy_6106.mp3}
 text = {Do you think this resident’s lungs sound healthy?}
 choice = [
 binary = {yes}
@@ -1005,12 +1005,12 @@ goes_to_page = {Examine Mr. Lane}
 page = [
 	page_name = {Check Mr. Lane’s temperature}
 	heading_medium = {
-105 Degrees 
+105 Degrees
 This resident has a fever!
 		}
 popup_window = {true}
 add_to_notebook = [
-	text = {105 Degrees 
+	text = {105 Degrees
 This resident has a fever!
 		}
 tag = {patient1}
@@ -1043,10 +1043,10 @@ popup_window = {true}
 add_to_notebook = [
 	text = {Mr. Lane: “I feel like I can’t breathe”}
 	tag = {patient1}
-]	
+]
 ]
 page = [
-	
+
 	page_name = {Mr. Lane’s BMI}
 heading_medium = {Mr. Lane is 5’3 and weighs 180 lbs. Use the BMI calculator to determine if she is underweight, healthy weight, overweight, or obese}
 link = [
@@ -1073,7 +1073,7 @@ choice = [
 
 page = [
 
-page_name = {Examine Ms. Watson} 
+page_name = {Examine Ms. Watson}
 	heading_big = {
 
 What would you like to do first?
@@ -1082,9 +1082,9 @@ If you are not sure why a particular test is important, you can use the library 
 }
 	media = {mswatson.jpg}
 	heading_medium = {This is Ms. Watson}
-	minimum_choices = {3} 
+	minimum_choices = {3}
 minimum_choices_reached ={patientsummary}
-#text display on button “I’ve collected enough data” 
+#text display on button “I’ve collected enough data”
 
 
 choice = [
@@ -1094,11 +1094,11 @@ choice = [
 
 choice = [
 		binary = {Listen to her heart}
-		goes_to_page = {watsonheart} 
+		goes_to_page = {watsonheart}
 		]
 choice = [
 		binary = {Listen to her lungs}
-		goes_to_page = {watsonlungs} 
+		goes_to_page = {watsonlungs}
 ]
 choice = [
 	binary = {check her eyes}
@@ -1107,17 +1107,17 @@ choice = [
 
 choice = [
 		binary = {Check her height, weight, and BMI}
-		goes_to_page = {Ms. Watson’s BMI} 
+		goes_to_page = {Ms. Watson’s BMI}
 		]
 
 choice = [
 		binary = {Check her feet for sores}
-		goes_to_page = {watsonfeet} 
+		goes_to_page = {watsonfeet}
 		]
 
 choice = [
 binary = {Check her blood sugar}
-	goes_to_page = {Check Ms. Watson’s blood sugar}	
+	goes_to_page = {Check Ms. Watson’s blood sugar}
 		]
 	choice = [
 	binary = {Check her temperature}
@@ -1142,9 +1142,9 @@ tag = {patient1}
 page = [
 	page_name = {watsonheart}
 	heading_medium = {This is what a healthy heart sounds like}
-media = {http://www.easyauscultation.com/cases-listing-details?caseID=32}
+media = {heart_healthy_5001.mp3}
 heading_medium = {This is what this resident’s heart sounds like}
-media = {http://www.easyauscultation.com/cases-listing-details?caseID=32}
+media = {heart_healthy_5001.mp3}
 text = {Do you think this resident’s heart sounds healthy?}
 choice = [
 	binary = {yes}
@@ -1159,9 +1159,9 @@ goes_to_page = {Examine Ms. Watson}
 page = [
 page_name = {watsonlungs}
 heading_medium = {This is what healthy lungs sound like when someone breaths}
-media = {http://www.easyauscultation.com/cases-listing-details?caseID=76}
+media = {lungs_healthy_6106.mp3}
 heading_medium = {This is what this resident’s lungs sounds like}
-media = {http://www.easyauscultation.com/cases-listing-details?caseID=76}
+media = {lungs_healthy_6106.mp3}
 text = {Do you think this resident’s lungs sound healthy?}
 choice = [
 binary = {yes}
@@ -1260,10 +1260,10 @@ choice = [
 
 page = [
 
-page_name = {patientsummary} 
+page_name = {patientsummary}
 
 heading_big = {Here are the notes that you’ve taken for this resident:}
-show_patient_choices = {true} 
+show_patient_choices = {true}
 
 text = {Remember, your goal was to determine what health problems this resident has.}
 
@@ -1291,9 +1291,9 @@ goes_to_page = {choose patient}
 
 
 page = [
-page_name = {conclusions1} 
+page_name = {conclusions1}
 	heading_big = {Here are your initial questions and hypotheses}
-show_hypotheses = {true} 
+show_hypotheses = {true}
 
 text = {For each hypothesis, mark if you think it was “supported” “refuted” or “neither”
 In the box underneath, explain why you think your hypothesis was supported, refuted, or neither supported nor refuted. Use your lab notebook to include examples of evidence that you collected.}
@@ -1303,7 +1303,7 @@ goes_to_page = {hypothesis2}
 ]
 
 page = [
-	page_name = {hypothesis2} 
+	page_name = {hypothesis2}
 	heading_big = {Why do the residents have these health problems?}
 minimum choices = {1}
 	text = {
@@ -1312,7 +1312,7 @@ A hypothesis is a simple answer to a question.
 <br /><br />
 What questions would you like to answer when you examine the patients? What will you look for? What will help you determine why the residents in Katzville have health problems? <br />Enter your questions on the left side of the screen under “questions”
 <br /><br />
-What are your hypotheses for why the residents of Katzville have health problems? Fill in possible answers to the questions on the ride side of the screen under “hypotheses” 
+What are your hypotheses for why the residents of Katzville have health problems? Fill in possible answers to the questions on the ride side of the screen under “hypotheses”
 <br /><br />
 Why did you choose these questions? Enter your rationale on the right side of the table.
 <br /><br />
@@ -1339,10 +1339,10 @@ goes_to_page= {choose patient2}
 
 
 page = [
-page_name = {choose patient2} 
+page_name = {choose patient2}
 heading_big = {Which resident of Katzville would you like to examine first?}
 text = {You may choose to examine patients in any order. You can examine anywhere from 3 to 6 patients total.}
-minimum_choices = {3} 
+minimum_choices = {3}
 		minimum_choices_reached= {conclusions2}
 choice = [
 		binary = {
@@ -1350,23 +1350,23 @@ choice = [
 			Sex: male<br />
 			Age: 25
 		}
-		goes_to_page = {Examine Mr. Smith2} 
+		goes_to_page = {Examine Mr. Smith2}
 	]
 
 	choice = [
-		
+
 		binary= {
 			Ms. Jones<br />
 			Sex: female<br />
 			Age: 45
 		}
 
-		goes_to_page = {Examine Ms. Jones2} 
+		goes_to_page = {Examine Ms. Jones2}
 	]
 
 
 choice = [
-		
+
 		binary = {
 			Mr. Anderson<br />
 			Sex: male<br />
@@ -1378,7 +1378,7 @@ goes_to_page = {Examine Mr. Anderson2}
 ]
 
 choice = [
-		
+
 		binary= {
 			Ms. Williams<br />
 			Sex: female<br />
@@ -1390,7 +1390,7 @@ goes_to_page = {Examine Ms. Williams2}
 ]
 
 choice = [
-		
+
 		binary= {
 			Mr. Lane<br />
 			Sex: male<br />
@@ -1402,7 +1402,7 @@ goes_to_page = {Examine Mr. Lane2}
 ]
 
 choice = [
-		
+
 		binary= {
 			Ms. Watson<br />
 			Sex: female<br />
@@ -1416,7 +1416,7 @@ goes_to_page = {Examine Ms. Watson2}
 
 page = [
 
-page_name = {Examine Mr. Smith2} 
+page_name = {Examine Mr. Smith2}
 	heading_big = {
 
 What would you like to do first?
@@ -1427,7 +1427,7 @@ If you are not sure why a particular test is important, you can use the library 
 	heading_medium = {This is Mr. Smith}
 minimum_choices = {3}
 minimum_choices_reached ={patientsummary2}
-#text display on button “I’ve collected enough data” 
+#text display on button “I’ve collected enough data”
 choice = [
 	binary = {Ask the resident if he has diabetes}
 	goes_to_page = {smithdiabetes}
@@ -1518,7 +1518,7 @@ popup_window = {true}
 heading_medium = {Mr. Smith: “My parents do not have Type 1 diabetes, but both of my sisters have Type 1 diabetes”}
 
 add_to_notebook = [
-	text = {Mr. Smith: “My parents do not have Type 1 diabetes, but both of my sisters have Type 1 
+	text = {Mr. Smith: “My parents do not have Type 1 diabetes, but both of my sisters have Type 1
 	tag = {patient2}diabetes”
 	]
 ]
@@ -1578,7 +1578,7 @@ popup_window = {true}
 heading_medium = {This resident has the IDDM1 gene which increases their risk of having Type I diabetes by 40-50%}
 
 add_to_notebook = [
-	text = {This resident has the IDDM1 gene which increases their risk of having Type I diabetes by 40-50%} 
+	text = {This resident has the IDDM1 gene which increases their risk of having Type I diabetes by 40-50%}
 	tag = {patient2}
 ]
 ]
@@ -1609,7 +1609,7 @@ add_to_notebook = [
 
 page = [
 
-page_name = {Examine Ms. Jones2} 
+page_name = {Examine Ms. Jones2}
 	heading_big = {
 
 What would you like to do first?
@@ -1620,7 +1620,7 @@ If you are not sure why a particular test is important, you can use the library 
 	heading_medium = {This is Ms. Jones}
 minimum_choices = {3}
 minimum_choices_reached ={patientsummary2}
-#text display on button “I’ve collected enough data” 
+#text display on button “I’ve collected enough data”
 
 
 choice = [
@@ -1790,7 +1790,7 @@ add_to_notebook = [
 
 page = [
 
-page_name = {Examine Mr. Anderson2} 
+page_name = {Examine Mr. Anderson2}
 	heading_big = {
 
 What would you like to do first?
@@ -1801,7 +1801,7 @@ If you are not sure why a particular test is important, you can use the library 
 	heading_medium = {This is Mr. Anderson}
 minimum_choices = {3}
 minimum_choices_reached ={patientsummary2}
-#text display on button “I’ve collected enough data” 
+#text display on button “I’ve collected enough data”
 
 
 choice = [
@@ -1844,7 +1844,7 @@ page_name = {Andersondiet}
 popup_window = {true}
 heading_medium = {Mr. Anderson: “I eat fried chicken, hamburgers, French fries and I drink coke and Mountain Dew”}
 add_to_notebook = [
-	text = {Mr. Anderson: “I eat fried chicken, hamburgers, French fries and I drink coke and Mountain Dew”} 
+	text = {Mr. Anderson: “I eat fried chicken, hamburgers, French fries and I drink coke and Mountain Dew”}
 	tag = {patient2}
 	]
 ]
@@ -1920,7 +1920,7 @@ page = [
 page_name = {andersongenetics}
 text = {Which genes would you like to test for?}
 
-minimum_choices = {1} 
+minimum_choices = {1}
 minimum_choices_reached = {Examine Mr. Anderson2}
 
 choice = [
@@ -1957,7 +1957,7 @@ add_to_notebook = [
 
 page = [
 
-page_name = {Examine Ms. Williams2} 
+page_name = {Examine Ms. Williams2}
 	heading_big = {
 
 What would you like to do first?
@@ -1968,7 +1968,7 @@ If you are not sure why a particular test is important, you can use the library 
 	heading_medium = {This is Ms. Williams}
 minimum_choices = {3}
 minimum_choices_reached ={patientsummary2}
-#text display on button “I’ve collected enough data” 
+#text display on button “I’ve collected enough data”
 
 
 choice = [
@@ -2016,7 +2016,7 @@ page_name = {williamsdiet}
 popup_window = {true}
 heading_medium = {Ms. Williams: “I eat fried chicken, hamburgers, French fries and I drink coke and Mountain Dew”}
 add_to_notebook = [
-	text = {Ms. Williams: “I eat fried chicken, hamburgers, French fries and I drink coke and 
+	text = {Ms. Williams: “I eat fried chicken, hamburgers, French fries and I drink coke and
 	tag = {patient2}Mountain Dew”}
 	]
 ]
@@ -2092,7 +2092,7 @@ page = [
 page_name = {williamsgenetics}
 text = {Which genes would you like to test for?}
 
-minimum_choices = {1} 
+minimum_choices = {1}
 minimum_choices_reached = {Examine Ms. Williams2}
 
 choice = [
@@ -2117,7 +2117,7 @@ choice = [
 ]
 page = [
 
-page_name = {Examine Mr. Lane2} 
+page_name = {Examine Mr. Lane2}
 	heading_big = {
 
 What would you like to do first?
@@ -2128,7 +2128,7 @@ If you are not sure why a particular test is important, you can use the library 
 	heading_medium = {This is Mr. Lane}
 minimum_choices = {3}
 minimum_choices_reached ={patientsummary2}
-#text display on button “I’ve collected enough data” 
+#text display on button “I’ve collected enough data”
 
 choice = [
 	binary = {Ask resident what he eats}
@@ -2168,7 +2168,7 @@ heading_medium = {Mr. Lane: “I eat salad and hamburgers and I drink coke and m
 add_to_notebook = [
 	text = {Mr. Lane: “I eat salad and hamburgers and I drink coke and milk”}
 	tag = {patient2}
-	
+
 ]]
 
 
@@ -2246,11 +2246,11 @@ page = [
 page_name = {lanegenetics}
 heading_medium = {Which genes would you like to test for?}
 
-minimum_choices = {1} 
+minimum_choices = {1}
 minimum_choices_reached = {Examine Mr. Lane2}
 
 
-choice = [ 
+choice = [
 binary ={Genes that increase the chance of getting Type 2 Diabetes}
 goes_to_page = {lane many Type II genes}
 ]
@@ -2284,7 +2284,7 @@ add_to_notebook = [
 
 page = [
 
-page_name = {Examine Ms. Watson2} 
+page_name = {Examine Ms. Watson2}
 	heading_big = {
 
 What would you like to do first?
@@ -2295,7 +2295,7 @@ If you are not sure why a particular test is important, you can use the library 
 	heading_medium = {This is Ms. Watson}
 minimum_choices = {3}
 minimum_choices_reached ={patientsummary2}
-#text display on button “I’ve collected enough data” 
+#text display on button “I’ve collected enough data”
 
 
 choice = [
@@ -2426,7 +2426,7 @@ page = [
 page_name = {watsongenetics}
 binary = {Which genes would you like to test for?}
 
-minimum_choices = {1} 
+minimum_choices = {1}
 minimum_choices_reached = {Examine Ms. Watson2}
 
 choice = [
@@ -2461,9 +2461,9 @@ add_to_notebook = [
 
 
 page = [
-page_name = {patientsummary2} 
+page_name = {patientsummary2}
 heading_big = {Here are the notes that you’ve taken for this resident:}
-show_patient_choices = {true} 
+show_patient_choices = {true}
 
 text = {Remember, your goal is to determine why the residents of Katzville are unhealthy}
 
@@ -2488,7 +2488,7 @@ page = [
 
 page_name = {conclusions2}
 heading_big = {Here are your initial questions and hypotheses}
-show_hypotheses = {true} 
+show_hypotheses = {true}
 
 text = {For each hypothesis, mark if you think it was “supported” “refuted” or “neither”
 In the box underneath, explain why you think your hypothesis was supported, refuted, or neither supported nor refuted. Use your lab notebook to include examples of evidence that you collected}
@@ -2520,12 +2520,12 @@ page = [
 page_name = {End}
 heading_big = {
 
-Thank you for helping the residents of Katzville! 
+Thank you for helping the residents of Katzville!
 
 You have completed the Medical Mystery Science Classroom Inquiry Simulation.}
 ]
 
- 
+
 
 
 
