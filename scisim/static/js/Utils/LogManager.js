@@ -11,9 +11,26 @@ ChoiceLogManager.prototype.logChoice = function(choiceInfo) {
 
 	var loggableString = this.getLoggableString(choiceInfo.question, choiceInfo.choice, choiceInfo.page_context.patient);
     labnotebook.add(loggableString);
-
-	if (!choiceInfo.page_context.hasOwnProperty("patient") && chain.getLastPage().hasOwnProperty("patient")) {
-
+    if (chain.currentPointer != chain.activePointer) {
+        for (i=chain.findChainLinkById(chain.getActivePage().id); i < chain.chain.length; i ++) {
+             
+             if (chain.chain[i].hasOwnProperty("patient")) {
+             
+                 var c = chain.chain[i];
+                 for (i=0; i < c.patient.choices.length; i++) {
+                     if (c.patient.choices[i].split(':')[1] == loggableString.split(':')[1]) {
+                         c.patient.choices.splice(i,1);
+                         break;
+                     }
+                 }
+             c.patient.choices.push(loggableString);
+             chain.updateContext(c);
+             i=chain.chain.length;
+             }
+             
+        }
+    } else if (!choiceInfo.page_context.hasOwnProperty("patient") && chain.getLastPage().hasOwnProperty("patient")) {
+		
 		// the patient can't be discovered for some choices, so we'll assume that the last page was the one that contains the patient we need.
 		var c = chain.getLastPage();
 		c.patient.choices.push(loggableString);
