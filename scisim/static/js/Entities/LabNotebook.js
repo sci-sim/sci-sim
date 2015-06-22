@@ -34,3 +34,7 @@ LabNotebook.prototype.addNoteField = function(e){
 LabNotebook.prototype.removeInput = function(){
 	this.$list.find('input').parent().remove();
 };
+
+LabNotebook.prototype.addButtonToLast = function(chainNum) {
+       this.$list.children().last().append("<button id='"+chainNum+"' class='btn btn-default btn-return' >Change my choice</button>");
+}
