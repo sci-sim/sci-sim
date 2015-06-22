@@ -41,6 +41,10 @@ PatientEngine.prototype.renderPage = function(page_id){
 			}
 		});
 
+		if(pageContext.random_choices) {
+			pageContext.choices = shuffle(pageContext.choices);
+		}
+
 		$.extend(pageContext, { "visits": 0 });
 
 		var directiveApplicator = new PatientPageDirectiveApplicator(pageContext, that.hypothesisManager);
