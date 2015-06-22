@@ -22,33 +22,41 @@ PatientEngine.prototype.renderPage = function(page_id){
 			throw "this page doesn't exist:";
 		}
 
+		console.log(response);
 		var pageContext = response;
 		var patient = that.patientManager.discoverFromResponse(response.sections);
 
 		if(patient !== null){
 			$.extend(pageContext, {"patient": patient});
 		}
-		
+
 		pageContext['is_popup'] = false;
 
 		$.map(response.page_modifiers, function(val, i){
 			if($.inArray("popup_window", Object.values(val)) > 0){
 				pageContext['is_popup'] = true;
 			}
+			if(val.name === "random_choices") {
+				pageContext['random_choices'] = true;
+			}
 		});
 
+		if(pageContext.random_choices) {
+			pageContext.choices = shuffle(pageContext.choices);
+		}
+
 		$.extend(pageContext, { "visits": 0 });
-		
+
 		var directiveApplicator = new PatientPageDirectiveApplicator(pageContext, that.hypothesisManager);
 
 		$.extend(pageContext, directiveApplicator.applyModifiers());
-		$.extend(pageContext, renderer.composePage(pageContext));		 
+		$.extend(pageContext, renderer.composePage(pageContext));
 		$.extend(pageContext, directiveApplicator.applyActions());
-		
+
 		if(!pageContext.popup_window) {
 			chain.add(pageContext);
 			that.applyListeners();
-			
+
 		} else {
 			var choiceInfo = {
 				choice: pageContext.popup_text,
@@ -56,7 +64,7 @@ PatientEngine.prototype.renderPage = function(page_id){
 				page_context: chain.getActivePage(),
 				question: chain.getActivePage().last_choice_text
 			};
-	
+
 			that.choiceLogger.logToPatient(choiceInfo.question, choiceInfo.choice, chain.getActivePage());
 			that.changePage(chain.getActivePage().id);
 		}
@@ -66,19 +74,19 @@ PatientEngine.prototype.renderPage = function(page_id){
 PatientEngine.prototype.restorePage = function(page_id){
 	var context = chain.findById(page_id);
 	var activePage = chain.getActivePage();
-	
+
 	if (context.hasOwnProperty('patient') && context.patient !== false) {
 		// we create a new patient for each page, including choice pages, so the new choice isn't saved on the page patient.
-		// so get copy over the patient from the choice page and put it on the patient choices page. 
-		context.patient = $.extend(true, context.patient, activePage.patient);		
+		// so get copy over the patient from the choice page and put it on the patient choices page.
+		context.patient = $.extend(true, context.patient, activePage.patient);
 	}
-	
+
 	var directiveApplicator = new PatientPageDirectiveApplicator(context, this.hypothesisManaer);
-	
+
 	context.visits += 1;
-	
+
 	$.extend(context, directiveApplicator.applyModifiers());
-	$.extend(context, renderer.composePage(context));		 
+	$.extend(context, renderer.composePage(context));
 	$.extend(context, directiveApplicator.applyActions());
 
 	chain.updateContext(context);
@@ -106,9 +114,9 @@ PatientEngine.prototype.onSubmitButtonClick = function(e){
 	var $inputs = $('input'),
 		context = chain.getActivePage(),
 		destination = "";
-	
+
 	this.hypothesisManager.discover();
-	
+
 	for (var i = 0; i < $inputs.length; i++) {
 		var input = $inputs.eq(i);
 		var choiceInfo = {};
@@ -128,7 +136,7 @@ PatientEngine.prototype.onSubmitButtonClick = function(e){
 		choiceInfo.page_context = context;
 		choiceInfo.question = input.prev().text();
 
-		this.choiceLogger.logChoice(choiceInfo);	
+		this.choiceLogger.logChoice(choiceInfo);
 	}
 
 	this.changePage(destination);
@@ -152,7 +160,7 @@ PatientEngine.prototype.onBinaryChoiceClick = function(e){
 		};
 
 	this.choiceLogger.logChoice(choiceInfo);
-	
+
 	context['last_choice_made_id'] = choiceId;
 	context['last_choice_text'] = value;
 	chain.updateContext(context);
