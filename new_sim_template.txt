@@ -1372,10 +1372,6 @@ page = [
     	binary = {Ask resident if he has family members who have had a stroke}
     	goes_to_page = {smithfamilystroke}
     ]
-    choice = [
-    	prompt = {Perform genetic testing}
-    	binary = {smithgenetics}
-    ]
 ]
 
 page = [
@@ -1446,28 +1442,6 @@ page = [
     add_to_notebook = [
     	text = {Mr. Smith: “My grandmother had a stroke”}
     	tag = {patient2}
-    ]
-]
-
-page = [
-    page_name = {smithgenetics}
-
-    heading_medium = {Which genes would you like to test for?}
-
-    mimimum_choices = {1}
-    mimimum_choices_reached = {Examine Mr. Smith 2}
-
-    choice = [
-        binary = {Genes that increase the chance of getting Type 1 Diabetes}
-        goes_to_page = {Smith Type I genes}
-    ]
-    choice = [
-        binary ={Genes that increase the chance of getting Type 2 Diabetes}
-        goes_to_page = {Smith NO Type II genes}
-    ]
-    choice = [
-        binary = {Genes that increase the change of being obese}
-        goes_to_page = {Smith several obese genes}
     ]
 ]
 
@@ -1623,26 +1597,6 @@ page = [
 ]
 
 page = [
-    page_name = {jonesgenetics}
-    mimimum_choices = {1}
-	mimimum_choices_reached = {Examine Ms. Jones2}
-    heading_medium = {This is Ms. Jones}
-    text = {Which genes would you like to test for?}
-    choice = [
-        binary = {Genes that increase the chance of getting Type 1 Diabetes}
-        goes_to_page = {Jones NO Type I genes}
-    ]
-    choice = [
-        binary = {Genes that increase the change of being obese}
-        goes_to_page = {Jones lots of obese genes}
-    ]
-    choice = [
-        binary ={Genes that increase the chance of getting Type 2 Diabetes}
-        goes_to_page = {Jones Several Type II genes}
-    ]
-]
-
-page = [
     page_name = {Jones NO Type I genes}
     popup_window = {true}
     heading_medium = {This resident has very few genes that are risk factors for developing Type I diabetes}
@@ -1707,10 +1661,6 @@ page = [
     choice = [
     	binary = {Ask resident how much he exercises}
     	goes_to_page = {andersonexcercise}
-    ]
-    choice = [
-    	binary = {Perform genetic testing}
-    	goes_to_page = {andersongenetics}
     ]
 
     choice = [
@@ -1794,22 +1744,6 @@ page = [
 ]
 
 page = [
-    page_name = {andersongenetics}
-    text = {Which genes would you like to test for?}
-    minimum_choices = {1}
-    minimum_choices_reached = {Examine Mr. Anderson2}
-
-    choice = [
-        binary ={Genes that increase the chance of getting Type 2 Diabetes}
-        goes_to_page = {Anderson many Type II genes}
-    ]
-    choice = [
-        binary = {Genes that increase the change of being obese}
-        goes_to_page = {Anderson several obese genes}
-    ]
-]
-
-page = [
     page_name = {Anderson many Type II genes}
     popup_window = {true}
     heading_medium = {This resident has several genes that are risk factors for developing Type II diabetes}
@@ -1875,11 +1809,6 @@ page = [
     choice = [
     	binary = {Ask resident if she has family members who are obese}
     	goes_to_page = {williamsfamilyobese}
-    ]
-
-    choice = [
-    	binary = {Perform genetic testing}
-    	goes_to_page = {williamsgenetics}
     ]
 ]
 page = [
@@ -1953,34 +1882,6 @@ page = [
 ]
 
 page = [
-    page_name = {williamsgenetics}
-    text = {Which genes would you like to test for?}
-
-    minimum_choices = {1}
-    minimum_choices_reached = {Examine Ms. Williams2}
-
-    choice = [
-        binary = {Genes that increase the chance of getting Type 1 Diabetes}
-        goes_to_page = {william NO Type I genes}
-    ]
-
-    choice = [
-        binary ={Genes that increase the chance of getting Type 2 Diabetes}
-        goes_to_page = {william NO Type II genes}
-    ]
-
-    choice = [
-        binary = {Genes that increase the change of being obese}
-        goes_to_page = {william several obese genes}
-	]
-
-    choice = [
-    	binary = {Ask resident if he smokes}
-    	goes_to_page = {lanesmoke}
-    ]
-]
-
-page = [
     page_name = {Examine Mr. Lane2}
 	heading_big = {
 
@@ -2020,10 +1921,7 @@ page = [
     	binary = {Ask resident if he has family members who have had a stroke}
     	goes_to_page = {lanefamilystroke}
     ]
-    choice = [
-    	binary = {Perform genetic testing}
-    	goes_to_page = {lanegenetics}
-    ]
+   
 ]
 
 page = [
@@ -2097,23 +1995,6 @@ page = [
 ]
 
 page = [
-    page_name = {lanegenetics}
-    heading_medium = {Which genes would you like to test for?}
-
-    minimum_choices = {1}
-    minimum_choices_reached = {Examine Mr. Lane2}
-
-    choice = [
-    binary ={Genes that increase the chance of getting Type 2 Diabetes}
-    goes_to_page = {lane many Type II genes}
-    ]
-    choice = [
-    binary = {Genes that increase the change of being obese}
-    goes_to_page = {lane some obese genes}
-    ]
-]
-
-page = [
     page_name = {lane many Type II genes}
     popup_window = {true}
     heading_medium = {This resident has several genes that are risk factors for developing Type II diabetes}
@@ -2182,10 +2063,6 @@ page = [
     	goes_to_page = {watsonfamilystroke}
     ]
 
-    choice = [
-    	binary = {Perform genetic testing}
-    	goes_to_page = {watsongenetics}
-    ]
 ]
 
 page = [
@@ -2256,23 +2133,6 @@ page = [
     	text = {Ms. Watson: “No, no one in my immediate family has had a stroke”}
     	tag = {patient2}
 	]
-]
-
-page = [
-    page_name = {watsongenetics}
-    binary = {Which genes would you like to test for?}
-
-    minimum_choices = {1}
-    minimum_choices_reached = {Examine Ms. Watson2}
-
-    choice = [
-        binary ={Genes that increase the chance of getting Type 2 Diabetes}
-        goes_to_page = {watson some Type II genes}
-    ]
-    choice = [
-        binary = {Genes that increase the change of being obese}
-        goes_to_page = {watson many obese genes}
-    ]
 ]
 
 page = [
@@ -2352,4 +2212,9 @@ page = [
     Thank you for helping the residents of Katzville!
 
     You have completed the Medical Mystery Science Classroom Inquiry Simulation.}
+	
+	link = [
+		text = {Please click here to take the post survey.}
+		url = {https://gsu.qualtrics.com/jfe/form/SV_79ZbfoAf30NXcnr}
+	]
 ]

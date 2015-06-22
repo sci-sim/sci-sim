@@ -57,7 +57,7 @@ PageRenderer.prototype.composePage = function(context) {
         } else if (context.choices[i].text.indexOf("Age:") != -1) {
             var n = tf.fillTemplate({"text": context.choices[i].text, "id":context.choices[i].id, "destination": context.choices[i].destination, "name":context.choices[i].text.split(". ")[1].split("<")[0].toLowerCase()}, "binary_choice_person");
         } else {
-            var n = tf.fillTemplate({"text": context.choices[i].text, "id":context.choices[i].id, "destination": context.choices[i].destination}, templateType);
+            var n = tf.fillTemplate({"text": context.choices[i].text.replace("}", ""), "id":context.choices[i].id, "destination": context.choices[i].destination}, templateType);
         }
 		var choices_made = storageHelper.getJson("choices_made");
 
