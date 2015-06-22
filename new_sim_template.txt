@@ -183,7 +183,42 @@ choice = [
 	binary = {Check his temperature}
 	goes_to_page ={Mr. Smith temperature}
 ]
+
+choice = [
+		binary = {Check his BMI}
+		goes_to_page = {smithBMI
+		}
+	]
 ]
+page = [
+
+	page_name = {smithBMI}
+	heading_medium = {Mr. Smith is 5’8 and weighs 110 lbs. Use the BMI calculator to determine if he is underweight, healthy weight, overweight, or obese}
+	add_to_notebook = [
+		text = {Mr. Smith is 5’8 and weighs 110 lbs. Use the BMI calculator to determine if he is underweight, healthy weight, overweight, or obese}
+		tag = {patient1}
+	]
+	link = [
+		text = {BMI Calculator}
+		url = {http://www.cdc.gov/healthyweight/assessing/bmi/adult_bmi/english_bmi_calculator/bmi_calculator.html}
+	]
+
+	heading_medium = {Do you think Mr. Smith is underweight, healthy weight, or obese? Choose one option below.}
+
+	choice = [
+		binary = {underweight}
+		goes_to_page = {Examine Mr. Smith}
+	]
+	choice = [
+		binary = {healthy weight}
+		goes_to_page = {Examine Mr. Smith}
+	]
+	choice = [
+		binary = {overweight}
+		goes_to_page = {Examine Mr. Smith}
+	]
+]
+
 page = [
 	page_name = {Mr. Smith temperature}
 	heading_medium = {98.6 degrees
@@ -356,6 +391,20 @@ choice = [
 goes_to_page = {Ms. Jones Blood Sugar}
 ]
 
+choice = [
+	binary = {Check her temperature}
+	goes_to_page = {jonestemperature}
+]
+
+]
+
+page = [
+	page_name={jonestemperature}
+	heading_medium = popup_window = {98.6 degrees. Ms. Jones does not have a fever.}
+	add_to_notebook = [
+		text = {popup_window = {98.6 degrees. This resident does not have a fever.}
+		tag = {patient1}
+	]
 ]
 
 page = [
