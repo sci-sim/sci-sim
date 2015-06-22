@@ -338,6 +338,7 @@ page = [
 	]
     choice = [
 		binary = {Check her blood sugar}
+        goes_to_page = {jonesbloodsugar}
     ]
     choice = [
     	binary = {Check her temperature}
@@ -1249,7 +1250,6 @@ page = [
 	page_name = {hypothesis2}
 	heading_big = {Why do the residents have these health problems?}
     minimum choices = {1}
-
     question = [
         text = {What questions would you like to answer when you examine the patients? <br/> What will you look for? <br/> What will help you determine why the residents in Katzville are unhealthy? <br/>Enter your questions in the text box below:}
         tag = {hypothesis2}
@@ -1267,11 +1267,8 @@ page = [
         text = {When you examine the residents on the next page, what will you look for to see if your questions and hypotheses are supported?}
         tag = {hypothesis2}
     ]
-
-    goes_to_page = {choose patient}
     can_add_question_groups = {true}
     minimum_questions_answered = {2}
-
     can_add_multiple_question_groups = {true}
     goes_to_page= {choose patient2}
 ]
@@ -2151,7 +2148,6 @@ page = [
     minimum_choices_reached ={patientsummary2}
     #text display on button “I’ve collected enough data”
     random_choices = {true}
-
 
     choice = [
     	binary = {Ask resident what she eats}
