@@ -2212,4 +2212,9 @@ page = [
     Thank you for helping the residents of Katzville!
 
     You have completed the Medical Mystery Science Classroom Inquiry Simulation.}
+	
+	link = [
+		text = {Please click here to take the post survey.}
+		url = {https://gsu.qualtrics.com/jfe/form/SV_79ZbfoAf30NXcnr}
+	]
 ]
