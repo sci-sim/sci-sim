@@ -82,15 +82,45 @@ GroupController.prototype.handleSubmit = function(e) {
 		api.createUsers([username]).done(function(response){	
 			if(!that.hasApiError(response, $section)){
 				localStorage.setItem("user_id", response.id);
-
-				// publisher.publish("changePage", [PageController, localStorage.getItem("first_page_id")]);
-				new EngineStarter();
-				loader.hide();
 			}
 		});
-		return;
-	}
+	} else if(!this.sharingComputer && this.groupAlreadyCreated){
+		var username = $section.find('input[name=username]').val();
+		var group_name = $section.find('input[name=group_name]').val();
 
+		api.createUsers([username]).done(function(response){
+			if(that.hasApiError(response, $section)) return;
+
+			localStorage.setItem("user_id", response.id);
+
+			api.addUsersToGroup(group_name, [username]).done(function(response){
+				if(that.hasApiError(response, $section)) return;
+
+				localStorage.setItem("group_name", response.group_name);
+			});
+		});
+	}else if(!this.sharingComputer && !this.groupAlreadyCreated){
+		var username = $section.find('input[name=username]').val();
+		var group_name = $section.find('input[name=group_name]').val();
+
+		api.createGroup(group_name, 0).done(function(response){
+			if(that.hasApiError(response, $section)) return;
+			// TODO: what if users made a mistake, and then resubmit. The group would already be created and they couldn't get passed this point. 
+			// We could make it so that we ignore the error if we know it's going to fail
+			localStorage.setItem("group_name", response.group_name);
+
+			api.createUsers([username]).done(function(response){
+				if(that.hasApiError(response, $section)) return;
+
+				localStorage.setItem("user_id", response.id);
+
+				api.addUsersToGroup(group_name, [username]).done(function (response) {
+					if(that.hasApiError(response, $section)) return;
+				});
+			});
+		});
+	}
+	
 	if(this.sharingComputer){
 		var group_name = $section.find('input[name=group_name]').val();
 		var usernames = [];
@@ -109,14 +139,15 @@ GroupController.prototype.handleSubmit = function(e) {
 			localStorage.setItem("group_name", group_name);
 
 			api.createUsers(usernames).done(function(){
-				var responses = Array.prototype.slice.call(arguments, 0, arguments.length - 2);
+				var responses = arguments;
 				var errors = false;
 				var user_ids = [];
 
 				for (var i = 0; i < responses.length; i++) {
-					user_ids.push(responses[i].id);
+					var r = responses[i][0];
+					user_ids.push(r.id);
 
-					if(!that.hasApiError(responses[i], $section)){
+					if(!that.hasApiError(r, $section)){
 						for (var j = 1; j < inputs.length; j++) {
 							if(inputs.eq(i).val() === responses[j]){
 								inputs.eq(i).fadeOut().remove();
@@ -133,71 +164,21 @@ GroupController.prototype.handleSubmit = function(e) {
 
 				localStorage.setItem("user_id", JSON.stringify(user_ids));
 
-				api.addUsersToGroup(group_name, usernames).done(function(){
+				api.addUsersToGroup(group_name, usernames).done(function () {
 					var error = false;
 					var responses = Array.prototype.slice.call(arguments, 0, arguments.length - 2);
 					for (var i = 0; i < responses.length; i++) {
-						if(!that.hasApiError(response[i], $section)){
+						if (!that.hasApiError(response[i], $section)) {
 							error = true
 						}
 					};
-
-					if(!error){
-						loader.hide();
-						publisher.publish("changePage", [PageController, localStorage.getItem("first_page_id")]);
-					}
-				})
-			});
-		});
-		return;
-	}
-
-	if(!this.sharingComputer && this.groupAlreadyCreated){
-		var username = $section.find('input[name=username]').val();
-		var group_name = $section.find('input[name=group_name]').val();
-
-		api.createUsers([username]).done(function(response){
-			if(that.hasApiError(response, $section)) return;
-
-			localStorage.setItem("user_id", response.id);
-
-			api.addUsersToGroup(group_name, [username]).done(function(response){
-				if(that.hasApiError(response, $section)) return;
-
-				localStorage.setItem("group_name", response.group_name);
-
-				loader.hide();
-				publisher.publish("changePage", [PageController, localStorage.getItem("first_page_id")]);
-			});
-		});
-		return;
-	}
-
-	if(!this.sharingComputer && !this.groupAlreadyCreated){
-		var username = $section.find('input[name=username]').val();
-		var group_name = $section.find('input[name=group_name]').val();
-
-		api.createGroup(group_name, 0).done(function(response){
-			if(that.hasApiError(response, $section)) return;
-			// TODO: what if users made a mistake, and then resubmit. The group would already be created and they couldn't get passed this point. 
-			// We could make it so that we ignore the error if we know it's going to fail
-			localStorage.setItem("group_name", response.group_name);
-
-			api.createUsers([username]).done(function(response){
-				if(that.hasApiError(response, $section)) return;
-
-				localStorage.setItem("user_id", response.id);
-
-				api.addUsersToGroup(group_name, [username]).done(function (response) {
-					if(that.hasApiError(response, $section)) return;
-
-					loader.hide();
-					publisher.publish("changePage", [PageController, localStorage.getItem("first_page_id")]);
 				});
 			});
 		});
-		return;
 	}
+	
+	new EngineStarter();
+	loader.hide();
 };
 
 GroupController.prototype.hasErrors = function($section) {

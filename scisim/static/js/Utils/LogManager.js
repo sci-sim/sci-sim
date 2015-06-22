@@ -41,7 +41,7 @@ ChoiceLogManager.prototype.flushLog = function() {
     var actionString = "";
     for (var i = 0; i < user_ids.length; i++) {
         for (var j = 0; j < this.choices.length; j++) {
-            actionString = this.getActionString(this.choices[j], time);
+            actionString = this.getActionString(this.choices[j].choice, this.choices[j].page_context.last_choice_made_id, this.choices[j].page_context.id, time);
             requests.push([this.choices[j].page_id, user_ids[i], actionString]);
         }
     }
