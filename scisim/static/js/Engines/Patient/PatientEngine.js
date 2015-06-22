@@ -20,6 +20,7 @@ PatientEngine.prototype.renderPage = function(page_id){
             this.restorePage(chain.headId);
             chain.returnNext = true;
             chain.activePointer = chain.currentPointer;
+            $('.btn-return').removeClass('hidden');
             return;
         }
     }
@@ -82,6 +83,7 @@ PatientEngine.prototype.renderPage = function(page_id){
 		}
                               if (chain.activePointer != chain.currentPointer) {
                               $('.disabled').removeClass('disabled');
+                              $('.btn-return').addClass('hidden');
                               }
 	});
     
@@ -132,6 +134,7 @@ PatientEngine.prototype.onReturnToPrevPageClick = function(e){
     chain.returnNext = true;
     chain.headId = chain.getLastPageInChain().id;
     this.changePage($elem.context.id);
+    $('.btn-return').addClass('hidden');
 }
 
 
