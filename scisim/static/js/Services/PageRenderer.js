@@ -35,6 +35,9 @@ PageRenderer.prototype.composePage = function(context) {
     if (!context['containsImage']) {
         html += "<div class='break-here'></div>";
     }
+    if (context.random_choices) {
+    	context.choices = shuffle(context.choices);
+    }
 	for (var i = 0; i < context.choices.length; i++) {
 	 	var templateType = "";
 

@@ -62,6 +62,7 @@ heading_big = {Which resident of Katzville would you like to examine first?}
 text = {You may choose to examine patients in any order. You can examine anywhere from 3 to 6 patients total.}
 minimum_choices = {3}
 minimum_choices_reached = {conclusions1}
+random_choices = {true}
 choice = [
 		binary = {
 			Mr. Smith<br />
@@ -143,6 +144,7 @@ If you are not sure why a particular test is important, you can use the library 
 	heading_medium = {This is Mr. Smith}
 minimum_choices = {4}
 minimum_choices_reached ={patientsummary}
+random_choices = {true}
 
 choice = [
 	binary = {Ask resident how he feels today}
@@ -322,6 +324,7 @@ If you are not sure why a particular test is important, you can use the library 
 	minimum_choices = {3}
 minimum_choices_reached ={patientsummary}
 #text display on button “I’ve collected enough data”
+random_choices = {true}
 
 
 choice = [
@@ -502,6 +505,7 @@ If you are not sure why a particular test is important, you can use the library 
 	minimum_choices = {3}
 minimum_choices_reached ={patientsummary}
 #text display on button “I’ve collected enough data”
+random_choices = {true}
 
 
 choice = [
@@ -511,7 +515,7 @@ choice = [
 ]
 
 
-hoice = [
+choice = [
 		binary = {Listen to his heart}
 		goes_to_page = {andersonheart}
 		]
@@ -528,7 +532,7 @@ choice = [
 		binary = {Check his height, weight, and BMI}
 		goes_to_page = {Mr. Anderson’s BMI}
 		]
-	choice = [
+choice = [
 		binary = {Check his feet for sensation}
 		goes_to_page = {normal_sensation}
 		]
@@ -714,6 +718,7 @@ If you are not sure why a particular test is important, you can use the library 
 minimum_choices = {3}
 minimum_choices_reached ={patientsummary}
 #text display on button “I’ve collected enough data”
+random_choices = {true}
 
 
 choice = [
@@ -889,6 +894,7 @@ If you are not sure why a particular test is important, you can use the library 
 minimum_choices = {3}
 minimum_choices_reached ={patientsummary}
 #text display on button “I’ve collected enough data”
+random_choices = {true}
 
 
 choice = [
@@ -1083,6 +1089,7 @@ If you are not sure why a particular test is important, you can use the library 
 	minimum_choices = {3}
 minimum_choices_reached ={patientsummary}
 #text display on button “I’ve collected enough data”
+random_choices = {true}
 
 
 choice = [
@@ -1340,6 +1347,7 @@ heading_big = {Which resident of Katzville would you like to examine first?}
 text = {You may choose to examine patients in any order. You can examine anywhere from 3 to 6 patients total.}
 minimum_choices = {3}
 		minimum_choices_reached= {conclusions2}
+        random_choices = {true}
 choice = [
 		binary = {
 			Mr. Smith<br />
@@ -1424,6 +1432,7 @@ If you are not sure why a particular test is important, you can use the library 
 minimum_choices = {3}
 minimum_choices_reached ={patientsummary2}
 #text display on button “I’ve collected enough data”
+random_choices = {true}
 choice = [
 	binary = {Ask the resident if he has diabetes}
 	goes_to_page = {smithdiabetes}
@@ -1617,6 +1626,7 @@ If you are not sure why a particular test is important, you can use the library 
 minimum_choices = {3}
 minimum_choices_reached ={patientsummary2}
 #text display on button “I’ve collected enough data”
+random_choices = {true}
 
 
 choice = [
@@ -1798,6 +1808,7 @@ If you are not sure why a particular test is important, you can use the library 
 minimum_choices = {3}
 minimum_choices_reached ={patientsummary2}
 #text display on button “I’ve collected enough data”
+random_choices = {true}
 
 
 choice = [
@@ -1965,6 +1976,7 @@ If you are not sure why a particular test is important, you can use the library 
 minimum_choices = {3}
 minimum_choices_reached ={patientsummary2}
 #text display on button “I’ve collected enough data”
+random_choices = {true}
 
 
 choice = [
@@ -2125,6 +2137,7 @@ If you are not sure why a particular test is important, you can use the library 
 minimum_choices = {3}
 minimum_choices_reached ={patientsummary2}
 #text display on button “I’ve collected enough data”
+random_choices = {true}
 
 choice = [
 	binary = {Ask resident what he eats}
@@ -2292,6 +2305,7 @@ If you are not sure why a particular test is important, you can use the library 
 minimum_choices = {3}
 minimum_choices_reached ={patientsummary2}
 #text display on button “I’ve collected enough data”
+random_choices = {true}
 
 
 choice = [
