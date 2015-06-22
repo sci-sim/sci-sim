@@ -8,7 +8,7 @@ HypothesisManager.prototype.discover = function(){
 		that = this,
 		text = $.trim($('.page-header').text());
 	
-	if(text.indexOf("What health problems do the residents have?") > -1){
+	if(text.indexOf("What health problems do the residents have?") > -1 || text.indexOf("Why do the residents have these health problems?") > -1){
 		collection = new HypothesisCollection();
 		var choices = $('.choice');
 		$.each(choices, function (j, elem) {

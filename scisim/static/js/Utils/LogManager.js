@@ -66,3 +66,9 @@ ChoiceLogManager.prototype.getLoggableString = function (question, choice, patie
 	
 	return loggableString.replace("}", "");
 };
+
+ChoiceLogManager.prototype.getHypothesisString = function (question, choice) {
+	var hypothesisString = "";
+	
+	hypothesisString += ""
+}

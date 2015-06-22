@@ -1,8 +1,8 @@
 1. ~~I can't see any of the pictures~~. 
 
-2. The residents aren't appearing in random order each time a new simulation is starting. Same comment with the tests. 
+2. ~~The residents aren't appearing in random order each time a new simulation is starting. Same comment with the tests.~~ 
 
-3. Some of the residents have 7 tests that you can perform in the first half--Ms. Watson has all 8 and I think she is the only one with all 8. I also noticed that for Mr. Smith you have to do 4 tests and for the rest, you have to do 3 to move on. Everything in the second half looks more consistent. 
+3. ~~Some of the residents have 7 tests that you can perform in the first half--Ms. Watson has all 8 and I think she is the only one with all 8. I also noticed that for Mr. Smith you have to do 4 tests and for the rest, you have to do 3 to move on. Everything in the second half looks more consistent.~~ 
 
 4. ~~ Under the hypothesis testing page, the text reads " enter hypothesis on left side of the screen" there is no left side of the screen, so these directions don't make sense.~~ 
 
@@ -37,11 +37,11 @@
 
 7. Is it possible to have 'go back' features put in so students and go back and re-test a patient? Particularly if they find something out that is interesting and they want to go back and see something? 
 
-8. Conclusions for part 1--there is still no box for text entry
+8. ~~Conclusions for part 1--there is still no box for text entry~~
 
-Also, would it be possible to have "Your initial questions were....blah Your initial hypothesis was ....blah" instead of "your said?" 
+~~Also, would it be possible to have "Your initial questions were....blah Your initial hypothesis was ....blah" instead of "your said?"~~ 
 
-The way it is on resident's conclusions works. 
+~~The way it is on resident's conclusions works. ~~
 
 9. I just got booted out at the section on genetic testing...there is no continue/go back button. Or, better yet, a text box that says "What were this resident's results? Does this support or refute your hypothesis?"
 

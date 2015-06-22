@@ -191,6 +191,15 @@ choice = [
 	]
 ]
 page = [
+	page_name = {burningfeet}
+	heading_medium = {This patient is feeling a burning sensation in their feet}
+	popup_window={true}
+	add_to_notebook = [
+		text= {This patient is feeling a burning sensation in their feet}
+		tag = {patient}
+	]
+]
+page = [
 
 	page_name = {smithBMI}
 	heading_medium = {Mr. Smith is 5’8 and weighs 110 lbs. Use the BMI calculator to determine if he is underweight, healthy weight, overweight, or obese}
@@ -401,6 +410,7 @@ choice = [
 page = [
 	page_name={jonestemperature}
 	heading_medium = popup_window = {98.6 degrees. Ms. Jones does not have a fever.}
+	popup_window = {true}
 	add_to_notebook = [
 		text = {popup_window = {98.6 degrees. This resident does not have a fever.}
 		tag = {patient1}
@@ -1273,7 +1283,7 @@ tag = {patient1}
 page = [
 	page_name = {tired}
 	heading_medium = {Ms. Watson: “I feel tired”}
-s	popup_window = {true}
+	popup_window = {true}
 	add_to_notebook = [
 		text = {Ms. Watson: “I feel tired”}
 		tag = {patient1}
@@ -1351,11 +1361,6 @@ page = [
 	heading_big = {Why do the residents have these health problems?}
 minimum choices = {1}
 
-heading_big = {What health problems do the residents have?}
-minimum choices = {1}
-	text = {
-Your first job is to figure out what health problems the residents have. You will do this by asking questions and proposing hypotheses.
-}
 question = [
 text = {What questions would you like to answer when you examine the patients? <br/> What will you look for? <br/> What will help you determine why the residents in Katzville are unhealthy? <br/>Enter your questions in the text box below:}
 tag = {hypothesis2}
@@ -2533,11 +2538,9 @@ page = [
 
 
 page_name = {conclusions2}
-heading_big = {Here are your initial questions and hypotheses}
+heading_big = {Here are your initial questions and hypotheses. Mark if you think it was “supported” “refuted” or “neither” for each hypothesis and explain why}
 show_hypotheses = {true}
 
-text = {For each hypothesis, mark if you think it was “supported” “refuted” or “neither”
-In the box underneath, explain why you think your hypothesis was supported, refuted, or neither supported nor refuted. Use your lab notebook to include examples of evidence that you collected}
 goes_to_page = {finalrecommendation}
 ]
 page = [
