@@ -12,8 +12,16 @@ DOMHelper.prototype.showList = function(list){
 	
 	for (var i = 0; i < list.length; i++) {
 		var element = list[i];
-		
-		html += "<li class='list-item'>"+element+"</item>";
+        element = element.split(":")
+        if (element.length == 2) {
+            html += "<li class='list-item'><p>"+element[1]+"</p></item>";
+        } else if (element.length == 3) {
+            html += "<li class='list-item'><p class='question'>"+element[1].split("You said")[0]+"</p><p class='answer'>" + element[2] + "</p></item>";
+        } else if (element.length == 4) {
+            html += "<li class='list-item'><p class='question'>"+element[2].split("You said")[0]+"</p><p class='answer'>" + element[3] + "</p></item>";
+        } else {
+            html += "<li class='list-item'>"+element+"</item>";
+        }
 	}
 		
 	html += "</ul>";

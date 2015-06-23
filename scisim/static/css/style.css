@@ -183,7 +183,7 @@ div .choice-person{
 
 .menu-bar .menu-bar-item .menu-bar-list li.create-note{
 	cursor: pointer;
-	border-bottom:1px solid #7B4098;
+	border-bottom:1px solid black;
 }
 
 .menu-bar .menu-bar-item .menu-bar-list li:nth-child(even){
@@ -205,6 +205,30 @@ div .choice-person{
     border-radius:0;
 }
 
+.page-section .list-item p{
+    padding: 2px;
+    margin: 0px;
+    padding-left: 5px;
+    border-left: 2px solid #263A94;
+}
+
+
+.page-section .list-item{
+    margin-bottom: 7px;
+    padding-left: 5px;
+}
+
+.page-section .list-item .question {
+    font-size: .9em;
+    color: #555;
+}
+
+.page-section .list-item .answer {
+    font-style: bold;
+    padding-left: 70px;
+}
+
+
 .choice-yesno {
     height: 50px;
     font-size: 2em;
@@ -213,7 +237,7 @@ div .choice-person{
 .choice-yesno .clickable-well {
     padding: 0px;
     text-align: center;
-    text-transform: uppercase;
+    text-transform: capitalize;
     font-weight: bold;
 }
 
