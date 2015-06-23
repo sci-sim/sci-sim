@@ -34,3 +34,8 @@ publisher.subscribe("changePageInEngine", function() {
         playerFactory.soundPlaying.stop();
     }
 }, true);
+
+publisher.subscribe("userObtained", function() {
+    new EngineStarter();
+    loader.hide();
+});

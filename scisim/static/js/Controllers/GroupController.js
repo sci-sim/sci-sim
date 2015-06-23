@@ -1,5 +1,5 @@
 var GroupController = function(){
-	this.render();	
+	this.render();
 }
 
 GroupController.prototype.render = function() {
@@ -66,6 +66,7 @@ GroupController.prototype.addUsernameInput = function(e) {
 };
 
 GroupController.prototype.handleSubmit = function(e) {
+	console.log('handleSubmit called');
 	e.preventDefault();
 
 	var $section = $(e.target).parent().parent();
@@ -79,10 +80,13 @@ GroupController.prototype.handleSubmit = function(e) {
 		var username = $section.find('input[name=username]').val();
 		this.unsetApiError($section);
 
-		api.createUsers([username]).done(function(response){	
+		api.createUsers([username]).done(function(response){
 			if(!that.hasApiError(response, $section)){
 				localStorage.setItem("user_id", response.id);
+			} else {
+				return false;
 			}
+			publisher.publish("userObtained", []);
 		});
 	} else if(!this.sharingComputer && this.groupAlreadyCreated){
 		var username = $section.find('input[name=username]').val();
@@ -98,6 +102,7 @@ GroupController.prototype.handleSubmit = function(e) {
 
 				localStorage.setItem("group_name", response.group_name);
 			});
+			publisher.publish("userObtained", []);
 		});
 	}else if(!this.sharingComputer && !this.groupAlreadyCreated){
 		var username = $section.find('input[name=username]').val();
@@ -105,7 +110,7 @@ GroupController.prototype.handleSubmit = function(e) {
 
 		api.createGroup(group_name, 0).done(function(response){
 			if(that.hasApiError(response, $section)) return;
-			// TODO: what if users made a mistake, and then resubmit. The group would already be created and they couldn't get passed this point. 
+			// TODO: what if users made a mistake, and then resubmit. The group would already be created and they couldn't get passed this point.
 			// We could make it so that we ignore the error if we know it's going to fail
 			localStorage.setItem("group_name", response.group_name);
 
@@ -118,9 +123,10 @@ GroupController.prototype.handleSubmit = function(e) {
 					if(that.hasApiError(response, $section)) return;
 				});
 			});
+			publisher.publish("userObtained", []);
 		});
 	}
-	
+
 	if(this.sharingComputer){
 		var group_name = $section.find('input[name=group_name]').val();
 		var usernames = [];
@@ -128,7 +134,7 @@ GroupController.prototype.handleSubmit = function(e) {
 
 		for (var i = 1; i < inputs.length; i++) {
 			usernames.push(inputs.eq(i).val());
-		};
+		}
 
 		// TODO: refactor this so that there aren't so many nested callbacks. Sorry!!
 
@@ -152,7 +158,7 @@ GroupController.prototype.handleSubmit = function(e) {
 							if(inputs.eq(i).val() === responses[j]){
 								inputs.eq(i).fadeOut().remove();
 							}
-						};
+						}
 					}else{
 						errors = true;
 					}
@@ -171,14 +177,12 @@ GroupController.prototype.handleSubmit = function(e) {
 						if (!that.hasApiError(response[i], $section)) {
 							error = true
 						}
-					};
+					}
 				});
 			});
+			publisher.publish("userObtained", []);
 		});
 	}
-	
-	new EngineStarter();
-	loader.hide();
 };
 
 GroupController.prototype.hasErrors = function($section) {
