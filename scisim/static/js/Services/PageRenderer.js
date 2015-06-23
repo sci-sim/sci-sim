@@ -35,6 +35,10 @@ PageRenderer.prototype.composePage = function(context) {
     if (!context['containsImage']) {
         html += "<div class='break-here'></div>";
     }
+    // QUICKFIX for randomizing patient page: Should be refactored later
+    if (context.random_choices && context.choices.length == 6)
+        context.choices = shuffle(context.choices);
+
 	for (var i = 0; i < context.choices.length; i++) {
 	 	var templateType = "";
 

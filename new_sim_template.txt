@@ -1253,7 +1253,7 @@ page = [
     page_name = {conclusions1}
 	heading_big = {Here is your original hypothesis:}
     show_hypotheses = {true}
-	
+
 	question = [
 		text = {What observations did you make that supported this hypothesis?}
 		tag = {conclusion1}
@@ -1270,13 +1270,14 @@ page = [
 		text = {Why was your hypothesis supported, refuted, or neither supported or refuted?}
 		tag = {conclusion1}
 	]
-	
+
     goes_to_page = {hypothesis2}
 ]
 
 page = [
 	page_name = {hypothesis2}
 	heading_big = {Why do the residents have these health problems?}
+    heading_small = {Now that you know what health problems the residents have, your next job is to determine why they have them.}
     minimum choices = {1}
     question = [
         text = {What questions would you like to answer when you examine the patients? <br/> What will you look for? <br/> What will help you determine why the residents in Katzville are unhealthy? <br/>Enter your questions in the text box below:}
@@ -1949,7 +1950,7 @@ page = [
     	binary = {Ask resident if he has family members who have had a stroke}
     	goes_to_page = {lanefamilystroke}
     ]
-   
+
 ]
 
 page = [
@@ -2210,7 +2211,7 @@ page = [
     page_name = {conclusions2}
 	heading_big = {Here is your original hypothesis:}
     show_hypotheses = {true}
-	
+
 	question = [
 		text = {What observations did you make that supported this hypothesis?}
 		tag = {conclusion1}
@@ -2227,7 +2228,7 @@ page = [
 		text = {Why was your hypothesis supported, refuted, or neither supported or refuted?}
 		tag = {conclusion1}
 	]
-	
+
     goes_to_page = {finalrecommendation}
 ]
 
@@ -2258,7 +2259,7 @@ page = [
     Thank you for helping the residents of Katzville!
 
     You have completed the Medical Mystery Science Classroom Inquiry Simulation.}
-	
+
 	link = [
 		text = {Please click here to take the post survey.}
 		url = {https://gsu.qualtrics.com/jfe/form/SV_79ZbfoAf30NXcnr}
