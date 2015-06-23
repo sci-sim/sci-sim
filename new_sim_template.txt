@@ -1251,9 +1251,26 @@ page = [
 
 page = [
     page_name = {conclusions1}
-	heading_big = {Here are your initial questions and hypotheses.  noif you think it was “supported” “refuted” or “neither” for each hypothesis and explain why}
+	heading_big = {Here is your original hypothesis:}
     show_hypotheses = {true}
-
+	
+	question = [
+		text = {What observations did you make that supported this hypothesis?}
+		tag = {conclusion1}
+	]
+	question = [
+		text = {What observations did you make that would support another hypothesis?}
+		tag = {conclusion1}
+	]
+	question = [
+		text = {Do you think your hypothesis was supported or refuted? Enter "Supported", "Refuted", or "Neither" into the box below.}
+		tag = {conclusion1}
+	]
+	question = [
+		text = {Why was your hypothesis supported, refuted, or neither supported or refuted?}
+		tag = {conclusion1}
+	]
+	
     goes_to_page = {hypothesis2}
 ]
 
@@ -2191,8 +2208,26 @@ page = [
 
 page = [
     page_name = {conclusions2}
-    heading_big = {Here are your initial questions and hypotheses. Mark if you think it was “supported” “refuted” or “neither” for each hypothesis and explain why}
+	heading_big = {Here is your original hypothesis:}
     show_hypotheses = {true}
+	
+	question = [
+		text = {What observations did you make that supported this hypothesis?}
+		tag = {conclusion1}
+	]
+	question = [
+		text = {What observations did you make that would support another hypothesis?}
+		tag = {conclusion1}
+	]
+	question = [
+		text = {Do you think your hypothesis was supported or refuted? Enter "Supported", "Refuted", or "Neither" into the box below.}
+		tag = {conclusion1}
+	]
+	question = [
+		text = {Why was your hypothesis supported, refuted, or neither supported or refuted?}
+		tag = {conclusion1}
+	]
+	
     goes_to_page = {finalrecommendation}
 ]
 

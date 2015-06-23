@@ -9,18 +9,10 @@ HypothesisManager.prototype.discover = function(){
 		text = $.trim($('.page-header').text());
 	
 	if(text.indexOf("What health problems do the residents have?") > -1 || text.indexOf("Why do the residents have these health problems?") > -1){
-		collection = new HypothesisCollection();
 		var choices = $('.choice');
-		$.each(choices, function (j, elem) {
-			var collectionData = {
-				'answer': "You said: " + $(elem).find('input').val(),
-				'question': $(elem).find('p').text(),
-				'choice_id': $(elem).find('input').data("choice-id")
-			};
-			collection.hypotheses.push(collectionData);
-		});
+		var hypothesis = choices.eq(1).find('input').val();
 		
-		that.hypotheses.push(collection);
+		that.hypotheses.push(hypothesis);
 	}
 	
 	return collection;

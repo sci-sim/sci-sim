@@ -25,7 +25,7 @@ PatientPageDirectiveApplicator.prototype.applyActions = function () {
 				break;
 				
 			case "show_hypotheses":
-				DOMHelper.showListWithInputs(this.hypothesisManager.getCurrentHypothesis().hypotheses);
+				DOMHelper.showList([this.hypothesisManager.getCurrentHypothesis()]);
 				break;
 		}
 	}
