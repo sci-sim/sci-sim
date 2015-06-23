@@ -727,6 +727,17 @@ page = [
 ]
 
 page = [
+page_name = {wiliamslungs}
+heading_medium = {Ms. WIlliams has normal lungs.}
+popup_window = {true}
+add_to_notebook = [
+text = {Ms. WIlliams has normal lungs.}
+tag = {patient1}
+]
+]
+
+
+page = [
 	page_name = {williamsfeels}
 	heading_medium = {Ms. Williams: “I can’t sleep laying down”}
 	choice = [
@@ -1240,7 +1251,7 @@ page = [
 
 page = [
     page_name = {conclusions1}
-	heading_big = {Here are your initial questions and hypotheses. Mark if you think it was “supported” “refuted” or “neither” for each hypothesis and explain why}
+	heading_big = {Here are your initial questions and hypotheses.  noif you think it was “supported” “refuted” or “neither” for each hypothesis and explain why}
     show_hypotheses = {true}
 
     goes_to_page = {hypothesis2}
