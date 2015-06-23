@@ -13,9 +13,9 @@ ChoiceLogManager.prototype.logChoice = function(choiceInfo) {
     labnotebook.add(loggableString);
     if (chain.currentPointer != chain.activePointer) {
         for (i=chain.findChainLinkById(chain.getActivePage().id); i < chain.chain.length; i ++) {
-             
+
              if (chain.chain[i].hasOwnProperty("patient")) {
-             
+
                  var c = chain.chain[i];
                  for (i=0; i < c.patient.choices.length; i++) {
                      if (c.patient.choices[i].split(':')[1] == loggableString.split(':')[1]) {
@@ -27,10 +27,10 @@ ChoiceLogManager.prototype.logChoice = function(choiceInfo) {
              chain.updateContext(c);
              i=chain.chain.length;
              }
-             
+
         }
     } else if (!choiceInfo.page_context.hasOwnProperty("patient") && chain.getLastPage().hasOwnProperty("patient")) {
-		
+
 		// the patient can't be discovered for some choices, so we'll assume that the last page was the one that contains the patient we need.
 		var c = chain.getLastPage();
 		c.patient.choices.push(loggableString);
@@ -50,6 +50,7 @@ ChoiceLogManager.prototype.flushLog = function() {
     console.log(time);
 
     var user_ids = storageHelper.getJson("user_id");
+    console.log(user_ids);
     if(!$.isArray(user_ids)){
         user_ids = [user_ids];
     }
@@ -58,8 +59,9 @@ ChoiceLogManager.prototype.flushLog = function() {
     var actionString = "";
     for (var i = 0; i < user_ids.length; i++) {
         for (var j = 0; j < this.choices.length; j++) {
+            console.log(user_ids[i]);
             actionString = this.getActionString(this.choices[j].choice, this.choices[j].page_context.last_choice_made_id, this.choices[j].page_context.id, time);
-            requests.push([this.choices[j].page_id, user_ids[i], actionString]);
+            requests.push([this.choices[j].page_context.id, user_ids[i], actionString]);
         }
     }
     api.aggregateRequests(api.logUserAction, requests);

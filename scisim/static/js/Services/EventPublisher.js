@@ -19,7 +19,6 @@ EventPublisher.prototype.subscribe = function(eventName, func, recurring) {
 	if(typeof recurring == "undefined") recurring = false;
 
 	this.subscribers.push({"name": eventName, "func": func, "recurring": recurring});
-	console.log(this.subscribers);
 };
 
 EventPublisher.prototype.publish = function(eventName, params) {
