@@ -173,6 +173,7 @@ PatientEngine.prototype.onBinaryChoiceClick = function(e){
 };
 
 PatientEngine.prototype.changePage = function(destination) {
+	publisher.publish("changePageInEngine", []);
 	this.choiceLogger.flushLog();
 
 	if (typeof destination === "object") {
