@@ -15,7 +15,7 @@ localStorage.setItem("choices_made", JSON.stringify([]));
 
 window.onbeforeunload = function(){
 	return "If you leave this page, you'll lose all you have so far!";
-}
+};
 
 $("#labNotebookToggle").click(function(e){
 	if(e.target === this){
@@ -27,4 +27,10 @@ new SimulationController(); // this kicks everything else off
 
 publisher.subscribe("changePage", function(ctlr, param){
 	new ctlr(param);
+}, true);
+
+publisher.subscribe("changePageInEngine", function() {
+    if(playerFactory.soundPlaying) {
+        playerFactory.soundPlaying.stop();
+    }
 }, true);

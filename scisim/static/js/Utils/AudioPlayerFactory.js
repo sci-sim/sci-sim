@@ -1,5 +1,6 @@
 var AudioPlayerFactory = function() {
     this.soundEnabled = true;
+    this.soundPlaying = null;
     // Determine if we can play sound in this browser
     if (!createjs.Sound.initializeDefaultPlugins()) {
         console.log("This browser does not support audio.");
@@ -34,8 +35,18 @@ AudioPlayerFactory.prototype.createAudioPlayer = function(mp3, options) {
 AudioPlayerFactory.prototype.addListeners = function() {
     $('.audio-player-play').click(function(e) {
         var id = $(e.currentTarget).attr('id');
-        createjs.Sound.play(id);
-    });
+        if(this.soundPlaying) {
+            this.soundPlaying.stop();
+        }
+        this.soundPlaying = createjs.Sound.play(id);
+    }.bind(this));
+    $('.well .clickable-well').click(function() {
+        console.log("hello");
+        if(this.soundPlaying) {
+            console.log(this);
+            this.soundPlaying.stop();
+        }
+    }.bind(this));
 };
 
 var AudioPlayer = function(soundID, options) {
