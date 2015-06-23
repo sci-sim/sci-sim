@@ -727,6 +727,17 @@ page = [
 ]
 
 page = [
+page_name = {wiliamslungs}
+heading_medium = {Ms. WIlliams has normal lungs.}
+popup_window = {true}
+add_to_notebook = [
+text = {Ms. WIlliams has normal lungs.}
+tag = {patient1}
+]
+]
+
+
+page = [
 	page_name = {williamsfeels}
 	heading_medium = {Ms. Williams: “I can’t sleep laying down”}
 	choice = [
@@ -1240,9 +1251,26 @@ page = [
 
 page = [
     page_name = {conclusions1}
-	heading_big = {Here are your initial questions and hypotheses. Mark if you think it was “supported” “refuted” or “neither” for each hypothesis and explain why}
+	heading_big = {Here is your original hypothesis:}
     show_hypotheses = {true}
-
+	
+	question = [
+		text = {What observations did you make that supported this hypothesis?}
+		tag = {conclusion1}
+	]
+	question = [
+		text = {What observations did you make that would support another hypothesis?}
+		tag = {conclusion1}
+	]
+	question = [
+		text = {Do you think your hypothesis was supported or refuted? Enter "Supported", "Refuted", or "Neither" into the box below.}
+		tag = {conclusion1}
+	]
+	question = [
+		text = {Why was your hypothesis supported, refuted, or neither supported or refuted?}
+		tag = {conclusion1}
+	]
+	
     goes_to_page = {hypothesis2}
 ]
 
@@ -2180,8 +2208,26 @@ page = [
 
 page = [
     page_name = {conclusions2}
-    heading_big = {Here are your initial questions and hypotheses. Mark if you think it was “supported” “refuted” or “neither” for each hypothesis and explain why}
+	heading_big = {Here is your original hypothesis:}
     show_hypotheses = {true}
+	
+	question = [
+		text = {What observations did you make that supported this hypothesis?}
+		tag = {conclusion1}
+	]
+	question = [
+		text = {What observations did you make that would support another hypothesis?}
+		tag = {conclusion1}
+	]
+	question = [
+		text = {Do you think your hypothesis was supported or refuted? Enter "Supported", "Refuted", or "Neither" into the box below.}
+		tag = {conclusion1}
+	]
+	question = [
+		text = {Why was your hypothesis supported, refuted, or neither supported or refuted?}
+		tag = {conclusion1}
+	]
+	
     goes_to_page = {finalrecommendation}
 ]
 

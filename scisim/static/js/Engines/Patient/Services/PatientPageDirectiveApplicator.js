@@ -15,12 +15,17 @@ PatientPageDirectiveApplicator.prototype.applyActions = function () {
 				break;
 				
 			case "show_patient_choices":
-				var f = chain.getActivePage();
+                if (chain.activePointer == chain.currentPointer) {
+                    var f = chain.getActivePage();
+                    chain.patient_choices_for_ret = f;
+                } else {
+                    var f = chain.patient_choices_for_ret;
+                }
 				DOMHelper.showList(f.patient.choices);
 				break;
 				
 			case "show_hypotheses":
-				DOMHelper.showListWithInputs(this.hypothesisManager.getCurrentHypothesis().hypotheses);
+				DOMHelper.showList([this.hypothesisManager.getCurrentHypothesis()]);
 				break;
 		}
 	}
