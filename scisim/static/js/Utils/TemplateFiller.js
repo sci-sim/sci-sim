@@ -52,6 +52,9 @@ TemplateFiller.prototype.getTemplate = function(pageName) {
             
         case "page_header":
             return '<div class="page-header"> {content} </div>';
+            
+        case "bmi_calc":
+            return '<div class="page-section bmi-calc"> {content} </div>';
 
 		case "binary_choice":
 			return '<div class="choice choice-binary"> <div class="well clickable-well" data-choice-id="{id}" data-destination="{destination}"> {text} </div> </div>';
