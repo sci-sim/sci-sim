@@ -125,7 +125,7 @@ page = [
     page_name = {Examine Mr. Smith }
 	heading_big = {
     What would you like to do first?
-    If you are not sure why a particular test is important, you can use the library button to get more information
+    If you are not sure why a particular test is important, you can <a id="library-link">use the library button</a> to get more information
     }
 	media = {mrsmith.jpg}
 	heading_medium = {This is Mr. Smith}
@@ -304,7 +304,7 @@ page = [
 	heading_big = {
     What would you like to do first?
 
-    If you are not sure why a particular test is important, you can use the library button to get more information
+    If you are not sure why a particular test is important, you can <a id="library-link">use the library button</a> to get more information
     }
 	media = {msjones.jpg}
 	heading_medium = {This is Ms. Jones}
@@ -488,7 +488,7 @@ page = [
 	heading_big = {
     What would you like to do first?
 
-    If you are not sure why a particular test is important, you can use the library button to get more information
+    If you are not sure why a particular test is important, you can <a id="library-link">use the library button</a> to get more information
     }
 	media = {mranderson.jpg}
 	heading_medium = {This is Mr. Anderson}
@@ -684,7 +684,7 @@ page = [
 	heading_big = {
     What would you like to do first?
 
-    If you are not sure why a particular test is important, you can use the library button to get more information
+    If you are not sure why a particular test is important, you can <a id="library-link">use the library button</a> to get more information
     }
 	media = {mswilliams.jpg}
 	heading_medium = {This is Ms. Williams}
@@ -871,7 +871,7 @@ page = [
 	heading_big = {
     What would you like to do first?
 
-    If you are not sure why a particular test is important, you can use the library button to get more information
+    If you are not sure why a particular test is important, you can <a id="library-link">use the library button</a> to get more information
     }
 	media = {mrlane.jpg}
 	heading_medium = {This is Mr. Lane}
@@ -1048,7 +1048,7 @@ page = [
 
     What would you like to do first?
 
-    If you are not sure why a particular test is important, you can use the library button to get more information
+    If you are not sure why a particular test is important, you can <a id="library-link">use the library button</a> to get more information
     }
 	media = {mswatson.jpg}
 	heading_medium = {This is Ms. Watson}
@@ -1365,7 +1365,7 @@ page = [
 	heading_big = {
     What would you like to do first?
 
-    If you are not sure why a particular test is important, you can use the library button to get more information
+    If you are not sure why a particular test is important, you can <a id="library-link">use the library button</a> to get more information
     }
 	media = {mrsmith.jpg}
 	heading_medium = {This is Mr. Smith}
@@ -1513,7 +1513,7 @@ page = [
 
     What would you like to do first?
 
-    If you are not sure why a particular test is important, you can use the library button to get more information
+    If you are not sure why a particular test is important, you can <a id="library-link">use the library button</a> to get more information
     }
 	media = {msjones.jpg}
 	heading_medium = {This is Ms. Jones}
@@ -1662,7 +1662,7 @@ page = [
 
     What would you like to do first?
 
-    If you are not sure why a particular test is important, you can use the library button to get more information
+    If you are not sure why a particular test is important, you can <a id="library-link">use the library button</a> to get more information
     }
 	media = {mranderson.jpg}
 	heading_medium = {This is Mr. Anderson}
@@ -1797,7 +1797,7 @@ page = [
 	heading_big = {
     What would you like to do first?
 
-    If you are not sure why a particular test is important, you can use the library button to get more information
+    If you are not sure why a particular test is important, you can <a id="library-link">use the library button</a> to get more information
     }
 	media = {mswilliams.jpg}
 	heading_medium = {This is Ms. Williams}
@@ -1916,7 +1916,7 @@ page = [
 
     What would you like to do first?
 
-    If you are not sure why a particular test is important, you can use the library button to get more information
+    If you are not sure why a particular test is important, you can <a id="library-link">use the library button</a> to get more information
     }
 	media = {mrlane.jpg}
 	heading_medium = {This is Mr. Lane}
@@ -2050,7 +2050,7 @@ page = [
 
     What would you like to do first?
 
-    If you are not sure why a particular test is important, you can use the library button to get more information
+    If you are not sure why a particular test is important, you can <a id="library-link">use the library button</a> to get more information
     }
 	media = {mswatson.jpg}
 	heading_medium = {This is Ms. Watson}
