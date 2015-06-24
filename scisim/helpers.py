@@ -3,6 +3,7 @@ from datetime import datetime
 from flask import Response
 from scisim import app
 from scisim.models import *
+from sim_parser import debug
 
 def unpack_model(model):
     # iterate over the models to make the output: ['model': {'key': 'value'}]
@@ -98,7 +99,7 @@ def check_for_params(params, request):
 
 def update_user_session(new_page_id, username=None, user_id=None):
     if user_id:
-        user = User.query.filter(User.id == user_id)
+        user = User.query.filter(User.id == user_id).first()
     elif username:
         user = User.query.filter(User.name == username).first()
         
@@ -110,5 +111,4 @@ def update_user_session(new_page_id, username=None, user_id=None):
         return error_message("Page with id " + new_page_id + " was not found")
 
     user.last_page = page.id
-
     db.session.commit()
