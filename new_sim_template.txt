@@ -129,7 +129,7 @@ page = [
     }
 	media = {mrsmith.jpg}
 	heading_medium = {This is Mr. Smith}
-    minimum_choices = {3}
+    minimum_choices = {6}
     minimum_choices_reached ={patientsummary}
     random_choices = {true}
     choice = [
@@ -167,6 +167,35 @@ page = [
     choice = [
 	   binary = {Check his temperature}
 	   goes_to_page ={smithtemperature}
+    ]
+    
+    choice = [
+    	binary = {Ask the resident if he has diabetes}
+    	goes_to_page = {smithdiabetes}
+    ]
+    choice = [
+    	binary = {Ask resident if he smokes}
+    	goes_to_page = {smithsmoke}
+    ]
+    choice = [
+    	binary= {Ask resident what he eats}
+    	goes_to_page = {smithdiet}
+    ]
+    choice = [
+    	binary = {Ask resident how much he exercises}
+    	goes_to_page = {smithexcercise}
+    ]
+    choice = [
+    	binary = {Ask resident if he has family members with diabetes }
+    	goes_to_page = {smithfamilydiabetes}
+    ]
+    choice = [
+    	binary = {Ask resident if he has family members who are obese}
+    	goes_to_page = {smithfamilyobese}
+    ]
+    choice = [
+    	binary = {Ask resident if he has family members who have had a stroke}
+    	goes_to_page = {smithfamilystroke}
     ]
 ]
 
@@ -308,7 +337,7 @@ page = [
     }
 	media = {msjones.jpg}
 	heading_medium = {This is Ms. Jones}
-	minimum_choices = {3}
+	minimum_choices = {6}
     minimum_choices_reached ={patientsummary}
     #text display on button “I’ve collected enough data”
     random_choices = {true}
@@ -343,6 +372,38 @@ page = [
     choice = [
     	binary = {Check her temperature}
     	goes_to_page = {jonestemperature}
+    ]
+    
+     choice = [
+    	binary = {Ask resident what she eats}
+    	goes_to_page = {jonesdiet}
+    ]
+
+    choice = [
+    	binary = {Ask resident if she smokes}
+    	goes_to_page = {jonessmoke}
+    ]
+    choice = [
+    	binary = {Ask the resident if she has diabetes}
+    	goes_to_page = {jonesdiabetes}
+	]
+    choice = [
+    	binary = {Ask resident how much she exercises}
+    	goes_to_page = {jonesexcercise}
+    ]
+    choice = [
+    	binary = {Ask resident if she has family members with diabetes }
+    	goes_to_page = {jonesfamilydiabetes}
+    ]
+
+    choice = [
+    	binary = {Ask resident if she has family members who are obese}
+    	goes_to_page = {jonesfamilyobese}
+    ]
+
+    choice = [
+    	binary = {Ask resident if she has family members who have had a stroke}
+    	goes_to_page = {jonesfamilystroke}
     ]
 ]
 
@@ -492,7 +553,7 @@ page = [
     }
 	media = {mranderson.jpg}
 	heading_medium = {This is Mr. Anderson}
-	minimum_choices = {3}
+	minimum_choices = {6}
     minimum_choices_reached ={patientsummary}
     #text display on button “I’ve collected enough data”
     random_choices = {true}
@@ -531,6 +592,36 @@ page = [
     choice = [
 	    binary = {Check his temperature}
 	    goes_to_page = {andersontemperature}
+    ]
+    
+     choice = [
+    	binary = {Ask resident what he eats}
+    	goes_to_page = {Andersondiet}
+    ]
+    choice = [
+    	binary = {Ask resident if he smokes}
+    	goes_to_page = {andersonsmoke}
+    ]
+    choice = [
+    	binary = {Ask the resident if he has diabetes}
+    	goes_to_page = {andersondiabetes}
+    ]
+    choice = [
+    	binary = {Ask resident if he has family members with diabetes }
+    	goes_to_page = {andersonfamilydiabetes}
+    ]
+    choice = [
+    	binary = {Ask resident how much he exercises}
+    	goes_to_page = {andersonexcercise}
+    ]
+
+    choice = [
+    	binary = {Ask resident if he has family members who are obese}
+    	goes_to_page = {andersonfamilyobese}
+    ]
+    choice = [
+    	binary = {Ask resident if he has family members who have had a stroke}
+    	goes_to_page = {andersonfamilystroke}
     ]
 ]
 
@@ -688,7 +779,7 @@ page = [
     }
 	media = {mswilliams.jpg}
 	heading_medium = {This is Ms. Williams}
-    minimum_choices = {3}
+    minimum_choices = {6}
     minimum_choices_reached ={patientsummary}
     #text display on button “I’ve collected enough data”
     random_choices = {true}
@@ -723,6 +814,41 @@ page = [
     choice = [
 	    binary = {Check her temperature}
 	    goes_to_page = {williamstemperature}
+    ]
+    
+    
+    choice = [
+    	binary = {Ask resident what she eats}
+    	goes_to_page = {williamsdiet}
+    ]
+    choice = [
+    	binary = {Ask resident if she smokes}
+    	goes_to_page = {williamssmoke}
+    ]
+
+    choice = [
+    	binary = {Ask the resident if she has diabetes}
+    	goes_to_page = {williamsdiabetes}
+    ]
+
+    choice = [
+    	binary = {Ask resident how much she exercises}
+    	goes_to_page = {williamsexcercise}
+    ]
+
+    choice = [
+    	binary = {Ask resident if she has family members with diabetes }
+    	goes_to_page = {williamsfamilydiabetes}
+    ]
+
+    choice = [
+    	binary = {Ask resident if she has family members who have had a stroke}
+    	goes_to_page = {williamsfamilystroke}
+    ]
+
+    choice = [
+    	binary = {Ask resident if she has family members who are obese}
+    	goes_to_page = {williamsfamilyobese}
     ]
 ]
 
@@ -875,7 +1001,7 @@ page = [
     }
 	media = {mrlane.jpg}
 	heading_medium = {This is Mr. Lane}
-    minimum_choices = {3}
+    minimum_choices = {6}
     minimum_choices_reached ={patientsummary}
     #text display on button “I’ve collected enough data”
     random_choices = {true}
@@ -910,6 +1036,32 @@ page = [
 	choice = [
 		binary = {Check his temperature}
         goes_to_page = {lanetemperature}
+    ]
+    
+     choice = [
+    	binary = {Ask resident what he eats}
+    	goes_to_page = {lanediet}
+    ]
+
+    choice = [
+    	binary = {Ask the resident if he has diabetes}
+    	goes_to_page = {lanediabetes}
+    ]
+    choice =[
+    	binary = {Ask resident how much he exercises}
+    	goes_to_page = {laneexcercise}
+    ]
+    choice = [
+    	binary = {Ask resident if he has family members with diabetes }
+    	goes_to_page = {lanefamilydiabetes}
+    ]
+    choice = [
+    	binary = {Ask resident if he has family members who are obese}
+    	goes_to_page = {lanefamilyobese}
+    ]
+    choice = [
+    	binary = {Ask resident if he has family members who have had a stroke}
+    	goes_to_page = {lanefamilystroke}
     ]
 ]
 
@@ -1052,7 +1204,7 @@ page = [
     }
 	media = {mswatson.jpg}
 	heading_medium = {This is Ms. Watson}
-	minimum_choices = {3}
+	minimum_choices = {6}
     minimum_choices_reached ={patientsummary}
     #text display on button “I’ve collected enough data”
     random_choices = {true}
@@ -1088,6 +1240,39 @@ page = [
     	binary = {Check her temperature}
     	goes_to_page = {watsontemperature}
     ]
+    choice = [
+    	binary = {Ask resident what she eats}
+    	goes_to_page = {watsondiet}
+    ]
+
+    choice = [
+    	binary = {Ask resident if she smokes}
+    	goes_to_page = {watsonsmoke}
+    ]
+
+    choice = [
+    	binary = {Ask the resident if she has diabetes}
+    	goes_to_page = {watsondiabetes}
+    ]
+    choice = [
+    	binary = {Ask resident how much she exercises}
+    	goes_to_page = {watsonexcercise}
+    ]
+    choice = [
+    	binary = {Ask resident if she has family members with diabetes }
+    	goes_to_page = {watsonfamilydiabetes}
+    ]
+
+    choice = [
+    	binary = {Ask resident if she has family members who are obese}
+    	goes_to_page = {watsonfamilyobese}
+    ]
+
+    choice = [
+    	binary = {Ask resident if she has family members who have had a stroke}
+    	goes_to_page = {watsonfamilystroke}
+    ]
+]    
 
 page = [
 	page_name = {watsonbloodsugar}
@@ -1271,7 +1456,7 @@ page = [
 		tag = {conclusion1}
 	]
 
-    goes_to_page = {hypothesis2}
+    goes_to_page = {finalrecommendation}
 ]
 
 page = [
@@ -1307,7 +1492,7 @@ page = [
     page_name = {choose patient2}
     heading_big = {Which resident of Katzville would you like to examine first?}
     text = {You may choose to examine patients in any order. You can examine anywhere from 3 to 6 patients total.}
-    minimum_choices = {3}
+    minimum_choices = {6}
 	minimum_choices_reached= {conclusions2}
     random_choices = {true}
     choice = [
@@ -1360,48 +1545,6 @@ page = [
     ]
 ]
 
-page = [
-    page_name = {Examine Mr. Smith2}
-	heading_big = {
-    What would you like to do first?
-
-    If you are not sure why a particular test is important, you can <a id="library-link">use the library button</a> to get more information
-    }
-	media = {mrsmith.jpg}
-	heading_medium = {This is Mr. Smith}
-    minimum_choices = {3}
-    minimum_choices_reached ={patientsummary2}
-    #text display on button “I’ve collected enough data”
-    random_choices = {true}
-    choice = [
-    	binary = {Ask the resident if he has diabetes}
-    	goes_to_page = {smithdiabetes}
-    ]
-    choice = [
-    	binary = {Ask resident if he smokes}
-    	goes_to_page = {smithsmoke}
-    ]
-    choice = [
-    	binary= {Ask resident what he eats}
-    	goes_to_page = {smithdiet}
-    ]
-    choice = [
-    	binary = {Ask resident how much he exercises}
-    	goes_to_page = {smithexcercise}
-    ]
-    choice = [
-    	binary = {Ask resident if he has family members with diabetes }
-    	goes_to_page = {smithfamilydiabetes}
-    ]
-    choice = [
-    	binary = {Ask resident if he has family members who are obese}
-    	goes_to_page = {smithfamilyobese}
-    ]
-    choice = [
-    	binary = {Ask resident if he has family members who have had a stroke}
-    	goes_to_page = {smithfamilystroke}
-    ]
-]
 
 page = [
     page_name = {smithdiet}
@@ -1507,53 +1650,6 @@ page = [
 	]
 ]
 
-page = [
-    page_name = {Examine Ms. Jones2}
-	heading_big = {
-
-    What would you like to do first?
-
-    If you are not sure why a particular test is important, you can <a id="library-link">use the library button</a> to get more information
-    }
-	media = {msjones.jpg}
-	heading_medium = {This is Ms. Jones}
-    minimum_choices = {3}
-    minimum_choices_reached ={patientsummary2}
-    #text display on button “I’ve collected enough data”
-    random_choices = {true}
-
-    choice = [
-    	binary = {Ask resident what she eats}
-    	goes_to_page = {jonesdiet}
-    ]
-
-    choice = [
-    	binary = {Ask resident if she smokes}
-    	goes_to_page = {jonessmoke}
-    ]
-    choice = [
-    	binary = {Ask the resident if she has diabetes}
-    	goes_to_page = {jonesdiabetes}
-	]
-    choice = [
-    	binary = {Ask resident how much she exercises}
-    	goes_to_page = {jonesexcercise}
-    ]
-    choice = [
-    	binary = {Ask resident if she has family members with diabetes }
-    	goes_to_page = {jonesfamilydiabetes}
-    ]
-
-    choice = [
-    	binary = {Ask resident if she has family members who are obese}
-    	goes_to_page = {jonesfamilyobese}
-    ]
-
-    choice = [
-    	binary = {Ask resident if she has family members who have had a stroke}
-    	goes_to_page = {jonesfamilystroke}
-    ]
-]
 
 page = [
     page_name = {jonesdiet}
@@ -1657,52 +1753,6 @@ page = [
 ]
 
 page = [
-    page_name = {Examine Mr. Anderson2}
-	heading_big = {
-
-    What would you like to do first?
-
-    If you are not sure why a particular test is important, you can <a id="library-link">use the library button</a> to get more information
-    }
-	media = {mranderson.jpg}
-	heading_medium = {This is Mr. Anderson}
-    minimum_choices = {3}
-    minimum_choices_reached ={patientsummary2}
-    #text display on button “I’ve collected enough data”
-    random_choices = {true}
-
-    choice = [
-    	binary = {Ask resident what he eats}
-    	goes_to_page = {Andersondiet}
-    ]
-    choice = [
-    	binary = {Ask resident if he smokes}
-    	goes_to_page = {andersonsmoke}
-    ]
-    choice = [
-    	binary = {Ask the resident if he has diabetes}
-    	goes_to_page = {andersondiabetes}
-    ]
-    choice = [
-    	binary = {Ask resident if he has family members with diabetes }
-    	goes_to_page = {andersonfamilydiabetes}
-    ]
-    choice = [
-    	binary = {Ask resident how much he exercises}
-    	goes_to_page = {andersonexcercise}
-    ]
-
-    choice = [
-    	binary = {Ask resident if he has family members who are obese}
-    	goes_to_page = {andersonfamilyobese}
-    ]
-    choice = [
-    	binary = {Ask resident if he has family members who have had a stroke}
-    	goes_to_page = {andersonfamilystroke}
-    ]
-]
-
-page = [
     page_name = {Andersondiet}
     popup_window = {true}
     heading_medium = {Mr. Anderson: “I eat fried chicken, hamburgers, French fries and I drink coke and Mountain Dew”}
@@ -1793,54 +1843,6 @@ page = [
 ]
 
 page = [
-    page_name = {Examine Ms. Williams2}
-	heading_big = {
-    What would you like to do first?
-
-    If you are not sure why a particular test is important, you can <a id="library-link">use the library button</a> to get more information
-    }
-	media = {mswilliams.jpg}
-	heading_medium = {This is Ms. Williams}
-    minimum_choices = {3}
-    minimum_choices_reached ={patientsummary2}
-    #text display on button “I’ve collected enough data”
-    random_choices = {true}
-
-    choice = [
-    	binary = {Ask resident what she eats}
-    	goes_to_page = {williamsdiet}
-    ]
-    choice = [
-    	binary = {Ask resident if she smokes}
-    	goes_to_page = {williamssmoke}
-    ]
-
-    choice = [
-    	binary = {Ask the resident if she has diabetes}
-    	goes_to_page = {williamsdiabetes}
-    ]
-
-    choice = [
-    	binary = {Ask resident how much she exercises}
-    	goes_to_page = {williamsexcercise}
-    ]
-
-    choice = [
-    	binary = {Ask resident if she has family members with diabetes }
-    	goes_to_page = {williamsfamilydiabetes}
-    ]
-
-    choice = [
-    	binary = {Ask resident if she has family members who have had a stroke}
-    	goes_to_page = {williamsfamilystroke}
-    ]
-
-    choice = [
-    	binary = {Ask resident if she has family members who are obese}
-    	goes_to_page = {williamsfamilyobese}
-    ]
-]
-page = [
     page_name = {williamsdiet}
     popup_window = {true}
     heading_medium = {Ms. Williams: “I eat fried chicken, hamburgers, French fries and I drink coke and Mountain Dew”}
@@ -1908,49 +1910,6 @@ page = [
     	text = {Ms. Williams: “My Dad had a stroke”}
     	tag = {patient2}
 	]
-]
-
-page = [
-    page_name = {Examine Mr. Lane2}
-	heading_big = {
-
-    What would you like to do first?
-
-    If you are not sure why a particular test is important, you can <a id="library-link">use the library button</a> to get more information
-    }
-	media = {mrlane.jpg}
-	heading_medium = {This is Mr. Lane}
-    minimum_choices = {3}
-    minimum_choices_reached ={patientsummary2}
-    #text display on button “I’ve collected enough data”
-    random_choices = {true}
-
-    choice = [
-    	binary = {Ask resident what he eats}
-    	goes_to_page = {lanediet}
-    ]
-
-    choice = [
-    	binary = {Ask the resident if he has diabetes}
-    	goes_to_page = {lanediabetes}
-    ]
-    choice =[
-    	binary = {Ask resident how much he exercises}
-    	goes_to_page = {laneexcercise}
-    ]
-    choice = [
-    	binary = {Ask resident if he has family members with diabetes }
-    	goes_to_page = {lanefamilydiabetes}
-    ]
-    choice = [
-    	binary = {Ask resident if he has family members who are obese}
-    	goes_to_page = {lanefamilyobese}
-    ]
-    choice = [
-    	binary = {Ask resident if he has family members who have had a stroke}
-    	goes_to_page = {lanefamilystroke}
-    ]
-
 ]
 
 page = [
@@ -2042,56 +2001,6 @@ page = [
     	text = {Mr. Lane  has a few genes that are risk factors for developing obesity}
     	tag = {patient2}
 	]
-]
-
-page = [
-    page_name = {Examine Ms. Watson2}
-	heading_big = {
-
-    What would you like to do first?
-
-    If you are not sure why a particular test is important, you can <a id="library-link">use the library button</a> to get more information
-    }
-	media = {mswatson.jpg}
-	heading_medium = {This is Ms. Watson}
-    minimum_choices = {3}
-    minimum_choices_reached ={patientsummary2}
-    #text display on button “I’ve collected enough data”
-    random_choices = {true}
-
-    choice = [
-    	binary = {Ask resident what she eats}
-    	goes_to_page = {watsondiet}
-    ]
-
-    choice = [
-    	binary = {Ask resident if she smokes}
-    	goes_to_page = {watsonsmoke}
-    ]
-
-    choice = [
-    	binary = {Ask the resident if she has diabetes}
-    	goes_to_page = {watsondiabetes}
-    ]
-    choice = [
-    	binary = {Ask resident how much she exercises}
-    	goes_to_page = {watsonexcercise}
-    ]
-    choice = [
-    	binary = {Ask resident if she has family members with diabetes }
-    	goes_to_page = {watsonfamilydiabetes}
-    ]
-
-    choice = [
-    	binary = {Ask resident if she has family members who are obese}
-    	goes_to_page = {watsonfamilyobese}
-    ]
-
-    choice = [
-    	binary = {Ask resident if she has family members who have had a stroke}
-    	goes_to_page = {watsonfamilystroke}
-    ]
-
 ]
 
 page = [
