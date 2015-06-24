@@ -29,7 +29,7 @@ ChoiceLogManager.prototype.logChoice = function(choiceInfo) {
              }
 
         }
-    } else if (!choiceInfo.page_context.hasOwnProperty("patient") && chain.getLastPage().hasOwnProperty("patient")) {
+    } else if (!choiceInfo.page_context.hasOwnProperty("patient") && chain.count() > 1 && chain.getLastPage().hasOwnProperty("patient")) {
 
 		// the patient can't be discovered for some choices, so we'll assume that the last page was the one that contains the patient we need.
 		var c = chain.getLastPage();

@@ -82,8 +82,10 @@ def api_users_last_session():
     user = User.query.filter(User.name == username).first()
     if not user:
         return error_message("User with username " + username + " was not found")
-
-    return dumps({"page": user.last_page})
+        
+    sim_id = Sim_User_Pivot.query.filter(Sim_User_Pivot.user_id == user.id).first()
+    
+    return respond_json(dumps({"page": user.last_page, "sim_id": sim_id.sim_id}))
 
 @app.route('/api/users/notes', methods=['POST'])
 def api_users_notes():
