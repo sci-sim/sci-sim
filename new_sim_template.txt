@@ -325,6 +325,10 @@ page = [
 	    binary = {overweight}
 	    goes_to_page = {Examine Mr. Smith}
     ]
+    choice = [
+	    binary = {obese}
+	    goes_to_page = {Examine Mr. Smith}
+    ]
 ]
 
 
@@ -542,6 +546,10 @@ page = [
 	    binary = {overweight}
 	    goes_to_page = {Examine Ms. Jones}
     ]
+    choice = [
+	    binary = {obese}
+	    goes_to_page = {Examine Ms. Jones}
+    ]
 ]
 
 page = [
@@ -742,6 +750,10 @@ page = [
     ]
     choice = [
 	    binary = {overweight}
+	    goes_to_page = {Examine Mr. Anderson}
+    ]
+    choice = [
+	    binary = {obese}
 	    goes_to_page = {Examine Mr. Anderson}
     ]
 ]
@@ -990,6 +1002,10 @@ page = [
 	    binary = {overweight}
 	    goes_to_page = {Examine Ms. Williams}
     ]
+    choice = [
+	    binary = {obese}
+	    goes_to_page = {Examine Ms. Williams}
+    ]
 ]
 
 page = [
@@ -1190,6 +1206,10 @@ page = [
     ]
     choice = [
 	    binary = {overweight}
+	    goes_to_page = {Examine Mr. Lane}
+    ]
+    choice = [
+	    binary = {obese}
 	    goes_to_page = {Examine Mr. Lane}
     ]
 ]
@@ -1400,7 +1420,10 @@ page = [
     	binary = {overweight}
     	goes_to_page = {Examine Ms. Watson}
     ]
-	#Text on button “I’ve collected enough data”
+    choice = [
+	    binary = {obese}
+	    goes_to_page = {Examine Ms. Watson}
+    ]
 ]
 
 page = [
