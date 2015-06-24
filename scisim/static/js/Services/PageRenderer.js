@@ -20,6 +20,8 @@ PageRenderer.prototype.composePage = function(context) {
         	var audioPlayer = playerFactory.createAudioPlayer(audioFile);
         	console.log(audioPlayer.getPlayerAsHTML());
         	section_html += tf.fillTemplate({"content": audioPlayer.getPlayerAsHTML()}, "page_section");
+        } else if(context.sections[i].content.indexOf("BMI Calculator") != -1){
+            section_html += tf.fillTemplate({"content": context.sections[i].content}, "bmi_calc");
         } else {
             section_html = tf.fillTemplate({"content": context.sections[i].content}, "page_section");
         }

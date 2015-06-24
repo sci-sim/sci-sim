@@ -181,6 +181,22 @@ div .choice-person{
 	padding:13px 15px;
 }
 
+
+.screen .bmi-calc a{
+    background: #eee;
+    border: 4px solid #30B41B;
+    padding: 40px;
+    font-weight: bold;
+    margin: 1px;
+    width: 190px;
+    display: block;
+}
+
+.screen .bmi-calc a:hover{
+    transition: background-color ease-in-out .2s;
+    background: #ccc;
+}
+
 .menu-bar .menu-bar-item .menu-bar-list li.create-note{
 	cursor: pointer;
 	border-bottom:1px solid black;
