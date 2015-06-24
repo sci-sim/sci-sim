@@ -8,12 +8,17 @@ SimulationController.prototype.render = function() {
 
 	api.getSimulations().then(function(sims){
 		// TODO: make a backup plan if this fails
-		var html = "";
-		for (var i = 1; i < sims.length; i++) {
-			var templateInfo = {"title": sims[i].title, "desc": sims[i].desc, "first_page_id": sims[i].first_page_id, "id": sims[i].id };
+        var html = "";
+        if ($.isArray(sims)) {
+            for (var i = 1; i < sims.length; i++) {
+    			var templateInfo = {"title": sims[i].title, "desc": sims[i].desc, "first_page_id": sims[i].first_page_id, "id": sims[i].id };
+    			html += tf.fillTemplate(templateInfo, "choose_simulation");
+    		};
+        } else {
+			var templateInfo = {"title": sims.title, "desc": sims.desc, "first_page_id": sims.first_page_id, "id": sims.id };
 			html += tf.fillTemplate(templateInfo, "choose_simulation");
-		};
-
+        }
+        
 		html = tf.wrapInParent(html);
 		
 		ps.transitionPage(html);
