@@ -2,3 +2,4 @@ flask
 flask-sqlalchemy
 gunicorn
 flask-htauth
+alembic
