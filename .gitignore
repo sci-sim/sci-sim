@@ -2,3 +2,4 @@
 app.db
 latest.tar.gz
 .DS_STORE
+alembic.ini
