@@ -168,7 +168,7 @@ page = [
 	   binary = {Check his temperature}
 	   goes_to_page ={smithtemperature}
     ]
-    
+
     choice = [
     	binary = {Ask the resident if he has diabetes}
     	goes_to_page = {smithdiabetes}
@@ -377,7 +377,7 @@ page = [
     	binary = {Check her temperature}
     	goes_to_page = {jonestemperature}
     ]
-    
+
      choice = [
     	binary = {Ask resident what she eats}
     	goes_to_page = {jonesdiet}
@@ -601,7 +601,7 @@ page = [
 	    binary = {Check his temperature}
 	    goes_to_page = {andersontemperature}
     ]
-    
+
      choice = [
     	binary = {Ask resident what he eats}
     	goes_to_page = {Andersondiet}
@@ -827,8 +827,8 @@ page = [
 	    binary = {Check her temperature}
 	    goes_to_page = {williamstemperature}
     ]
-    
-    
+
+
     choice = [
     	binary = {Ask resident what she eats}
     	goes_to_page = {williamsdiet}
@@ -1053,7 +1053,7 @@ page = [
 		binary = {Check his temperature}
         goes_to_page = {lanetemperature}
     ]
-    
+
      choice = [
     	binary = {Ask resident what he eats}
     	goes_to_page = {lanediet}
@@ -1292,7 +1292,7 @@ page = [
     	binary = {Ask resident if she has family members who have had a stroke}
     	goes_to_page = {watsonfamilystroke}
     ]
-]    
+]
 
 page = [
 	page_name = {watsonbloodsugar}

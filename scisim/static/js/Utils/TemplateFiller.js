@@ -23,7 +23,7 @@ TemplateFiller.prototype.fillTemplate = function(data, pageName) {
 
 TemplateFiller.prototype.compose = function(dataList, pageList) {
 	var html = "";
-	
+
 	for (var i = 0; i < pageList.length; i++) {
 		html += this.fillTemplate(dataList[i], pageList[i]);
 	};
@@ -46,22 +46,22 @@ TemplateFiller.prototype.getTemplate = function(pageName) {
 
 		case "page_section":
 			return '<div class="page-section"> {content} </div>';
-            
+
         case "section_with_img":
             return '<div class="page-section-with-img"> {content} </div>';
-            
+
         case "page_header":
             return '<div class="page-header"> {content} </div>';
-            
+
         case "bmi_calc":
             return '<div class="page-section bmi-calc"> {content} </div>';
 
 		case "binary_choice":
 			return '<div class="choice choice-binary"> <div class="well clickable-well" data-choice-id="{id}" data-destination="{destination}"> {text} </div> </div>';
-            
+
         case "binary_choice_person":
             return '<div class="choice choice-binary choice-person"> <div class="well clickable-well" data-choice-id="{id}" data-destination="{destination}"><img class="person_header" src="img/{name}_thumb.jpg"></img> {text} </div> </div>';
-            
+
         case "binary_yesno_choice":
             return '<div class="choice choice-binary choice-yesno"> <div class="well clickable-well" data-choice-id="{id}" data-destination="{destination}"> {text} </div> </div>';
 
@@ -73,7 +73,7 @@ TemplateFiller.prototype.getTemplate = function(pageName) {
 
 		case "btn":
 			return "<button id='{id}' class='btn btn-default'>{text}<span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span></button>";
-		
+
 		case "list_question_choice":
 			return '<li class="choice choice-question"> <p>{text}</p> <input class="form-control" type="text" data-choice-id="{id}" data-destination="{destination}" placeholder="Enter your response here"> </li>';
 
