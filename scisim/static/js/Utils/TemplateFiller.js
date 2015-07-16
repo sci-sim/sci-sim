@@ -37,6 +37,8 @@ TemplateFiller.prototype.wrapInParent = function(html) {
 
 TemplateFiller.prototype.getTemplate = function(pageName) {
 	switch(pageName){
+        case "admin_menu":
+            return '<div class="list-group-item clickable"><div class="media"><div class="media-body"> <h4 class="media-heading list-item-heading">{title}</h4> <p> {desc} </p> <input type="hidden" value="{value}"> </div> </div> </div>';
 		case "choose_simulation":
 			return '<div class="list-group-item simluation-item clickable"><span class="badge"></span> <div class="media"> <div class="media-left"> <a href="#"> <img class="media-object" src="img/sim_demo/page_1_s.jpg"> </a> </div> <div class="media-body"> <h4 class="media-heading list-item-heading">{title}</h4> <p>{desc}</p> <input type="hidden" value="{first_page_id}" name="first_page_id"> <input type="hidden" value="{id}" name="sim_id"> </div> </div> </div>';
 
