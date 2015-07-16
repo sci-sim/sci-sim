@@ -26,7 +26,7 @@ def page_error(error):
     return render_template('server_error.html', error=error), 500
 
 
-@app.route('/preview')
+@app.route('/admin/preview')
 def preview():
     # build a page to list all the current pages
     sims = Simulation.query.all()
@@ -34,7 +34,7 @@ def preview():
 
 
 
-@app.route("/preview/<int:page_id>", methods=['GET', 'POST'])
+@app.route("/admin/preview/<int:page_id>", methods=['GET', 'POST'])
 def preview_view_page(page_id):
     page = Page.query.get(page_id)
     if not page:
@@ -97,18 +97,22 @@ def index():
     return render_template('index.html', login_error=login_error, last_username=username, last_sim_id=sim_id, simulations=simulations)
 
 
-@app.route('/view_users')
+@app.route('/admin/view_users')
 def view_users():
     # This is an administrative page, but isn't yet protected TODO
     sims = Simulation.query.all()
     return render_template('view_users.html', sims=sims)
 
 
-@app.route('/dump_users')
+@app.route('/admin/dump_users')
 def dump_users():
     # This is an administrative page, but isn't yet protected TODO
     sims = Simulation.query.all()
     return render_template('dump_users.html', sims=sims)
+
+@app.route('/admin')
+def admin_index():
+    return render_template('admin.html')
 
 
 @app.route('/reset')
@@ -139,7 +143,7 @@ def library():
         add_manual_notebook_entry(user, request.form["notebook_append"])
         # To avoid breaking the refresh button, we redirect to the same page but without the POST data
         return redirect(url_for('library'))
-    
+
     # We don't even need to tell the library page where to send the user,
     # we can just point them at / and it will bounce them to the right place
     return render_template("library.html", sim=sim, user=user)

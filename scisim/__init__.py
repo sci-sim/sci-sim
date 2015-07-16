@@ -5,6 +5,9 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext import htauth
 
 
+PROJECT_ROOT = os.path.dirname(os.path.realpath(__file__))
+
+
 defines = {
     "MAX_LOG_NOTE_LENGTH": 2000,
     "VARIABLE_NAME_LEN": 50,
@@ -35,7 +38,9 @@ def fix_id(my_id):
    """ Strips away the random digits and returns just the true proper page ID. """
    return my_id / 100 # NOTE This needs to be integer division, so watch out if we ever use python 3!
 
-PROJECT_ROOT = os.path.dirname(os.path.realpath(__file__))
+def load_models():
+    from scisim import models
+
 
 app = Flask(__name__, static_folder=os.path.join(PROJECT_ROOT, '../scisim/static'), static_url_path='/static')
 
@@ -56,7 +61,9 @@ if 'ENABLE_DEBUG' in os.environ:
 else:
     app.debug = False
 
-
 db = SQLAlchemy(app)
 
-from scisim import models, api
+load_models()
+
+
+from scisim import api, views
