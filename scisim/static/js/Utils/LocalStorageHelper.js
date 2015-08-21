@@ -5,7 +5,7 @@ LocalStorageHelper.prototype.store = function(name, value){
 };
 
 LocalStorageHelper.prototype.get = function(name){
-	return localStorage.getItem(name);	
+	return localStorage.getItem(name);
 };
 
 LocalStorageHelper.prototype.initJsonArray = function(name){

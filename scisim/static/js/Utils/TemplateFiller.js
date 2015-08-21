@@ -10,7 +10,7 @@ var TemplateFiller = function(){};
  */
 TemplateFiller.prototype.fillTemplate = function(data, pageName) {
 	var template = this.getTemplate(pageName);
-
+    console.log(data);
 	if(data === null) return template;
 
 	for(var key in data){
@@ -31,12 +31,14 @@ TemplateFiller.prototype.compose = function(dataList, pageList) {
 	return html;
 };
 
-TemplateFiller.prototype.wrapInParent = function(html) {
-	return "<div class='screen'>" + html + "</div>";
+TemplateFiller.prototype.wrapInParent = function(className, html) {
+	return "<div class='"+className+"'>" + html + "</div>";
 };
 
 TemplateFiller.prototype.getTemplate = function(pageName) {
 	switch(pageName){
+        case "admin_menu":
+            return '<div class="list-group-item clickable"><div class="media"><div class="media-body"> <h4 class="media-heading list-item-heading">{title}</h4> <p> {desc} </p> <input type="hidden" value="{value}"> </div> </div> </div>';
 		case "choose_simulation":
 			return '<div class="list-group-item simluation-item clickable"><span class="badge"></span> <div class="media"> <div class="media-left"> <a href="#"> <img class="media-object" src="img/sim_demo/page_1_s.jpg"> </a> </div> <div class="media-body"> <h4 class="media-heading list-item-heading">{title}</h4> <p>{desc}</p> <input type="hidden" value="{first_page_id}" name="first_page_id"> <input type="hidden" value="{id}" name="sim_id"> </div> </div> </div>';
 
@@ -79,6 +81,12 @@ TemplateFiller.prototype.getTemplate = function(pageName) {
 
 		case "go_back_btn":
 			return "<button id='go-back' class='btn btn-default'>Go Back</button>"
+
+        case "admin_login":
+            return '<div class="admin-login-container"><input type="text" name="username" placeholder="Username" class="form-control"><input type="password" name="password" placeholder="Password" class="form-control"><button id="show_admin_submit" class="btn btn-default">Submit</button><button id="show_admin_cancel" class="btn btn-danger">Cancel</button></div>';
+
+        case "admin_page_selection_item":
+            return '<div class="choice choice-binary page-selection-item"> <hgroup class="well clickable-well" data-id="{id}"><h2>{title}</h2> <h3>{first_section}</h3><h4>Text Blocks - {section_count}</h4><h4>Actions - {action_count} | Choices - {choice_count}</h4></hgroup></div>';
 
 		default:
 			throw "No template associated with a " + pageName + " page";

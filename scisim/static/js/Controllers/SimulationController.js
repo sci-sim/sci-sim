@@ -18,8 +18,9 @@ SimulationController.prototype.render = function() {
 			var templateInfo = {"title": sims.title, "desc": sims.desc, "first_page_id": sims.first_page_id, "id": sims.id };
 			html += tf.fillTemplate(templateInfo, "choose_simulation");
         }
-        
-		html = tf.wrapInParent(html);
+
+        html += tf.fillTemplate({"id" : "open-admin-btn", "text": "Go to Admin view"}, "btn");
+		html = tf.wrapInParent('screen',html);
 		
 		ps.transitionPage(html);
 		loader.hide();
@@ -32,16 +33,49 @@ SimulationController.prototype.init = function() {
 	var $simItems = $('.list-group-item');
 	for (var i = 0; i < $simItems.length; i++) {
 		var $item = $($simItems[i]);
-		$item.click(this.onItemClick.bind(this));
+		$item.click(this.onSimItemClick.bind(this));
 	};
+
+    var $adminBtn = $('#open-admin-btn');
+    $adminBtn.click(this.openAdminSection.bind(this));
+
 };
 
-SimulationController.prototype.onItemClick = function(e) {
-	var page_id = $(e.currentTarget).find("input[name=first_page_id]").val()
-	var sim_id = $(e.currentTarget).find("input[name=sim_id]").val()
+SimulationController.prototype.onSimItemClick = function(e) {
+	var page_id = $(e.currentTarget).find("input[name=first_page_id]").val();
+	var sim_id = $(e.currentTarget).find("input[name=sim_id]").val();
 	
-	localStorage.setItem('first_page_id', page_id);
-	localStorage.setItem('sim_id', sim_id);
+	storageHelper.store('first_page_id', page_id);
+	storageHelper.store('sim_id', sim_id);
+    storageHelper.store("is_admin" , true);
 
-	publisher.publish("changePage", [GroupController]);
+    if(storageHelper.get("is_admin")){
+        new EngineStarter();
+    }else{
+        publisher.publish("changePage", [GroupController]);
+    }
+
+};
+
+SimulationController.prototype.openAdminSection = function(e){
+    // TODO: extract this to a LoginController
+    var adminHtml = tf.fillTemplate(null, 'admin_login');
+    $('body').append(adminHtml);
+    var $loginContainer = $('.admin-login-container');
+
+    $('#show_admin_submit').click(function(e){
+        var username = $loginContainer.find("input").eq('0').val();
+        var password = $loginContainer.find("input").eq('1').val();
+
+        if(username === "admin" && password === "secret"){
+            storageHelper.store('is_admin', true);
+            $('#open-admin-btn').text("Admin mode activated");
+        }
+
+        $loginContainer.hide().remove();
+    });
+
+    $('#show_admin_cancel').click(function(e){
+        $loginContainer.hide().remove();
+    });
 };

@@ -59,7 +59,7 @@ API.prototype.getPage = function(page_id) {
 
 API.prototype.logUserAction = function(current_page, user_id, action_string) {
 	return $.ajax({
-		url: "api/users/log",
+		url: "/api/users/log",
 		type: "POST",
 		data: {"page_id": current_page, "user_id": user_id, "action_string": action_string}
 	});
@@ -72,6 +72,14 @@ API.prototype.aggregateRequests = function(func, params) {
 	};
 
 	return $.when.apply(this, deffereds);
+};
+
+API.prototype.getAllPages = function(sim_id){
+    return $.ajax({
+        url:'/api/simulations/pages',
+        type:'POST',
+        data: {'sim_id':sim_id}
+    });
 };
 
 API.prototype.getResponses = function() {

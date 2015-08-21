@@ -4,7 +4,7 @@ var GroupController = function(){
 
 GroupController.prototype.render = function() {
 	var template = tf.fillTemplate(null, "group_chooser");
-	ps.transitionPage(tf.wrapInParent(template));
+	ps.transitionPage(tf.wrapInParent('screen', template));
 	this.$html = $('.section');
 
 	this.init();

@@ -3,16 +3,19 @@ var EngineStarter = function(){
 };
 
 EngineStarter.prototype.start = function(){
-	var sim_id = parseInt(localStorage.getItem("sim_id"));
-		
+    if(storageHelper.get('is_admin')){
+        new AdminEngine();
+        return;
+    }
+
+    var sim_id = storageHelper.get(("sim_id"));
+
 	switch(sim_id){
 		case 2:
 			new PatientEngine();
 			break;
-		case 3:
-		
 		
 		default:
-			throw "No simulation for sim id" + sim_id + " is set.";
+            throw "No simulation for sim id" + sim_id + " is set.";
 	}	
 };

@@ -19,7 +19,7 @@ PageSwitcher.prototype.transitionPage = function(newHtml) {
 	
 		var $newHtml = $(newHtml);
 		if($newHtml.find(".screen").length === 0){
-			$newHtml = $(tf.wrapInParent(newHtml)); // we need there to be a parent so that we can remove it whenever. 
+			$newHtml = $(tf.wrapInParent('screen', newHtml)); // we need there to be a parent so that we can remove it whenever.
 		}
 		
 

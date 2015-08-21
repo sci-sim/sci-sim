@@ -78,8 +78,8 @@ input.has-error{
     height: 100px;
     padding: -18px;
     position:absolute;
-    top:0px;
-    left:0px;
+    top:0;
+    left:0;
 }
 
 div .choice-person{
@@ -90,7 +90,6 @@ div .choice-person{
 }
 
 #in_group_button .active{
-    background: #263A94;
     color: white;
     background-color: #30B41B;
     border-color: #30B41B;
@@ -108,7 +107,7 @@ div .choice-person{
 
 .choice-question{
     clear:both;
-	margin:20px 0px;
+	margin:20px 0;
 }
 
 
@@ -157,7 +156,6 @@ div .choice-person{
 
 .menu-bar .menu-bar-item .btn{
 	font-size: .95em;
-	border-radius: 2;
 	margin-bottom: 2px;
 }
 
@@ -227,17 +225,34 @@ div .choice-person{
 
 .choice-binary{
     width: 150px;
-	margin: 0px 30px 30px;
+	margin: 0 30px 30px;
     display: block;
     float: left;
     height: 140px;
     border-radius:0;
 }
 
+.page-selection-item.choice-binary{
+    width: 29.333%;
+    margin: 0 2% 110px;
+}
+
+.page-selection-item.choice-binary h2{
+    font-size:1.7em;
+    line-height: 1.3em;
+}
+
+.page-selection-item.choice-binary h3{
+    font-size:1.4em;
+}
+
+.page-selection-item.choice-binary h3{
+    font-size:1.2em;
+}
+
 .page-section .list-item p{
-    padding: 2px;
-    margin: 0px;
-    padding-left: 5px;
+    padding: 2px 2px 2px 5px;
+    margin: 0;
     border-left: 2px solid #263A94;
 }
 
@@ -253,7 +268,6 @@ div .choice-person{
 }
 
 .page-section .list-item .answer {
-    font-style: bold;
     padding-left: 70px;
 }
 
@@ -264,7 +278,7 @@ div .choice-person{
 }
 
 .choice-yesno .clickable-well {
-    padding: 0px;
+    padding: 0;
     text-align: center;
     text-transform: capitalize;
     font-weight: bold;
@@ -272,7 +286,7 @@ div .choice-person{
 
 .choice-binary div{
     height: 100%;
-    border:0px;
+    border:0;
     padding:10px;
 }
 
@@ -292,7 +306,7 @@ div .choice-person{
     font-size: 1.1em;
     text-align: center;
     vertical-align:middle;
-    border-radius:0px;
+    border-radius:0;
 }
 
 .clickable-well:hover{
@@ -321,10 +335,6 @@ div .choice-person{
 	border-bottom-right-radius: 0;
 }
 
-.panel div:last-child{
-    border-bottom-left-radius: 4;
-    border-bottom-right-radius: 4;
-}
 
 .choose_group_panel{
 	text-align: center;
@@ -384,15 +394,16 @@ div .choice-person{
   	opacity:.4;
 }
 
-.loader{
-	position:fixed;
-	top:49%;
-	left:49%;
-	background-image: url("../img/loader.gif");
-	width:24px;
-	height:24px;
-	z-index:9999;
-=======
+.loader {
+    position: fixed;
+    top: 49%;
+    left: 49%;
+    background-image: url("../img/loader.gif");
+    width: 24px;
+    height: 24px;
+    z-index: 9999;
+}
+
 ul{
 	list-style: none;
 	padding:0;
@@ -474,8 +485,8 @@ input.has-error{
     height: 100px;
     padding: -18px;
     position:absolute;
-    top:0px;
-    left:0px;
+    top:0;
+    left:0;
 }
 
 div .choice-person{
@@ -486,7 +497,6 @@ div .choice-person{
 }
 
 #in_group_button .active{
-    background: #263A94;
     color: white;
     background-color: #30B41B;
     border-color: #30B41B;
@@ -555,7 +565,6 @@ div .choice-person{
 
 .menu-bar .menu-bar-item .btn{
 	font-size: .95em;
-	border-radius: 2;
 	margin-bottom: 2px;
 }
 
@@ -596,7 +605,7 @@ div .choice-person{
 
 .choice-binary{
     width: 150px;
-	margin: 0px 30px 30px;
+	margin: 0 30px 30px;
     display: block;
     float: left;
     height: 140px;
@@ -609,7 +618,7 @@ div .choice-person{
 }
 
 .choice-yesno .clickable-well {
-    padding: 0px;
+    padding: 0;
     text-align: center;
     text-transform: uppercase;
     font-weight: bold;
@@ -617,7 +626,7 @@ div .choice-person{
 
 .choice-binary div{
     height: 100%;
-    border:0px;
+    border:0;
     padding:10px;
 }
 
@@ -637,7 +646,7 @@ div .choice-person{
     font-size: 1.1em;
     text-align: center;
     vertical-align:middle;
-    border-radius:0px;
+    border-radius:0;
 }
 
 .clickable-well:hover{
@@ -664,11 +673,6 @@ div .choice-person{
 	box-shadow: none;
 	border-bottom-left-radius: 0;
 	border-bottom-right-radius: 0;
-}
-
-.panel div:last-child{
-    border-bottom-left-radius: 4;
-    border-bottom-right-radius: 4;
 }
 
 .choose_group_panel{
@@ -707,6 +711,7 @@ div .choice-person{
 	transition:background-color ease-in-out .2s;
     background-color:#E9EBF4;
     border: 1px solid #263A94;
+    margin:10px 0;
 }
 
 
@@ -737,4 +742,21 @@ div .choice-person{
 	width:24px;
 	height:24px;
 	z-index:9999;
+}
+
+
+#open-admin-btn{
+    margin-top:10px;
+}
+
+.admin-login-container{
+    position:absolute;
+    top:25%;
+    left:25%;
+    width:50%;
+    height:50%;
+    padding:6.5%;
+    background-color:#efefef;
+    border:2px solid #fff;
+    border-radius: 5px;
 }
