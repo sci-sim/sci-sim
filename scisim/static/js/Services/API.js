@@ -82,6 +82,14 @@ API.prototype.getAllPages = function(sim_id){
     });
 };
 
+API.prototype.updateModel = function(model, id, data){
+    return $.ajax({
+        url:"/api/models/update",
+        type: 'PUT',
+        data: $.extend({'model':model, 'id':id}, data)
+    });
+};
+
 API.prototype.getResponses = function() {
 	return Array.prototype.slice.call(arguments, 0, arguments.length - 2);
 };

@@ -760,3 +760,15 @@ div .choice-person{
     border:2px solid #fff;
     border-radius: 5px;
 }
+
+#admin-back-btn{
+    margin-bottom:15px;
+}
+
+.label{
+    color:inherit;
+}
+
+.errors{
+    color:red;
+}

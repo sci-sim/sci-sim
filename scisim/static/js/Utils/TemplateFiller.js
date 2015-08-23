@@ -10,7 +10,6 @@ var TemplateFiller = function(){};
  */
 TemplateFiller.prototype.fillTemplate = function(data, pageName) {
 	var template = this.getTemplate(pageName);
-    console.log(data);
 	if(data === null) return template;
 
 	for(var key in data){
@@ -80,13 +79,28 @@ TemplateFiller.prototype.getTemplate = function(pageName) {
 			return '<li class="choice choice-question"> <p>{text}</p> <input class="form-control" type="text" data-choice-id="{id}" data-destination="{destination}" placeholder="Enter your response here"> </li>';
 
 		case "go_back_btn":
-			return "<button id='go-back' class='btn btn-default'>Go Back</button>"
+			return "<button id='go-back' class='btn btn-default'>Go Back</button>";
 
         case "admin_login":
             return '<div class="admin-login-container"><input type="text" name="username" placeholder="Username" class="form-control"><input type="password" name="password" placeholder="Password" class="form-control"><button id="show_admin_submit" class="btn btn-default">Submit</button><button id="show_admin_cancel" class="btn btn-danger">Cancel</button></div>';
 
         case "admin_page_selection_item":
-            return '<div class="choice choice-binary page-selection-item"> <hgroup class="well clickable-well" data-id="{id}"><h2>{title}</h2> <h3>{first_section}</h3><h4>Text Blocks - {section_count}</h4><h4>Actions - {action_count} | Choices - {choice_count}</h4></hgroup></div>';
+            return '<div class="choice choice-binary page-selection-item" data-id="{id}"> <hgroup class="well clickable-well"><h2>{title}</h2> <h3>{first_section}</h3><h4>Text Blocks - {section_count}</h4><h4>Actions - {action_count} | Choices - {choice_count}</h4></hgroup></div>';
+
+        case "admin_edit_title":
+            return '<div class="form-group well title-item"><p class="label">page name:</p><h2 class="title" id="edit_page_title">{title}</h2></div>';
+
+        case "admin_edit_section_item":
+            return '<div class="form-group section-item" data-id="{id}"><h3 class="heading">Text Section:</h3><div class="form-group"><p class="label">text:</p><div contenteditable="true" class="section-text">{text}</div></div></div>';
+
+        case "admin_edit_choice_item":
+            return '<div class="form-group choice-item" data-id="{id}"><h3 class="heading">Choice:</h3><div class="form-group"><p class="label">Text: </p><p contenteditable="true" class="choice-text">{text}</p></div><div class="form-group"><p class="label">Destination: </p><p class="choice-destination">{destination}</p></div><div class="form-group"><p class="label">Type:</p><p class="choice-type">{type}</p></div></div>';
+
+        case "admin_edit_modifier_item":
+            return '<div class="form-group modifier-item" data-id="{id}"><h3 class="heading">Page Modifier:</h3><div class="form-group"><p class="label">Modifier Name:</p><p contenteditable="true" class="modifier-name">{name}</p></div><div class="form-group"><p class="label">Modifier Value:</p><p contenteditable="true" class="modifier-value">{value}</p></div></div>';
+
+        case "admin_edit_action_item":
+            return '<div class="form-group action-item" data-id="{id}"><h3 class="heading">Action Items:</h3><div class="form-group"><p class="label">Action Name:</p><p contenteditable="true" class="action-name">{name}</p></div><div class="form-group"><p class="label">Action Value:</p><p contenteditable="true" class="action-value">{value}</p></div></div>';
 
 		default:
 			throw "No template associated with a " + pageName + " page";

@@ -61,9 +61,6 @@ class Page(db.Model):
     # Manuallynually doing the bidirectional one-to-many / many-to-one linking of relationships
     #   
 
-    def __repr__(self):
-        return "<Page %d - \"%s\">" % (int(self.id), self.title)
-
 # this is to tell the client that the page needs to be modified somehow
 # Like if the page needs to have a minimum number of choices chosen, we specify it here.
 class Page_Modifier(db.Model):
@@ -75,9 +72,6 @@ class Page_Modifier(db.Model):
 
     page_id = db.Column(db.Integer, db.ForeignKey("pages.id"))
     page = db.relationship("Page")
-
-    def __repr__(self):
-        return "<Page_Modifier %d - \"%s\">" % (int(self.id), self.title)
 
 
 class Choice(db.Model):
@@ -99,9 +93,6 @@ class Choice(db.Model):
 
     page_id = db.Column(db.Integer, db.ForeignKey("pages.id"))
     page = db.relationship("Page")
-
-    def __repr__(self):
-        return "<Choice %d - \"%s\">" % (int(self.id), self.title)
 
 # this is to tell the client what needs to be done when the page loads.
 # So if when the page loads we need to add something to the lab notebook, we can tell it to here.

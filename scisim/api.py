@@ -307,6 +307,37 @@ def api_notes_destroy():
 
     return success_message('Note destroyed')
 
+@app.route('/api/models/update', methods=['PUT'])
+def api_update():
+	error = check_for_params(['id', 'model'], request)
+	if error:
+		return error_message(error)
+		
+	try:
+		model = get_class(request.form['model'].title())
+	except KeyError, e:
+		return error_message("Model not found")
+	
+	if not model:
+		return error_message("This object does not exist.")
+	if type(model) is not type(db.Model):
+		return error_message("The object you supplied is not a model.")
+		
+	model_obj = model.query.filter(model.id == request.form['id']).first()
+	
+	if not model_obj:
+		return error_message("model with id: " + request.form['id'] + " does not exist")
+	
+	form = request.form.copy()
+	
+	del form['id']
+	
+	fillModel(model_obj, form.to_dict())
+	
+	db.session.commit()
+	
+	return success_message("record updated successfully")
+
 @app.route('/api/media/upload', methods=['POST'])
 def api_media_upload():
     file = request.files['file']
@@ -314,3 +345,11 @@ def api_media_upload():
     file.save('/vagrant/app/scisim/media/' + file.filename)
 
     return success_message("File uploaded")
+	
+def fillModel(model, value_dict):
+	model_dict = model.__dict__
+	for title,value in value_dict.iteritems():
+		if(title in list(model_dict.keys())):
+			setattr(model, title, value)
+
+get_class = lambda x: globals()[x]
