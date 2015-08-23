@@ -210,18 +210,27 @@ AdminEngine.prototype.updatePage = function(e){
                 'value': value
             }
         ]);
-        elems.push($mo);
+        elems.push($modifier);
     }
-
-    console.log(params);
+    
     api.aggregateRequests(api.updateModel, params).then(function(){
         var args = $.extend({}, arguments);
+        var errors = false;
+
         for(var i = 0; i < args; i++){
             var response = args[i][0];
             if(!response.hasOwnProperty('success')){
                 elems[i].addClass('errors');
+                errors = true;
             }
         }
 
+        if(errors){
+             var message = 'Oh no! Something went wrong. The sections in red could not be saved.';
+        }else{
+            var message = "Everything was saved successfully!";
+        }
+
+        smoke.alert(message, function (e) {}, {ok: "Okay, thanks!"});
     });
 };
