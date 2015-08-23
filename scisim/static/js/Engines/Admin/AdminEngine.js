@@ -210,9 +210,10 @@ AdminEngine.prototype.updatePage = function(e){
                 'value': value
             }
         ]);
+
         elems.push($modifier);
     }
-    
+
     api.aggregateRequests(api.updateModel, params).then(function(){
         var args = $.extend({}, arguments);
         var errors = false;

@@ -47,7 +47,7 @@ SimulationController.prototype.onSimItemClick = function(e) {
 	
 	storageHelper.store('first_page_id', page_id);
 	storageHelper.store('sim_id', sim_id);
-    storageHelper.store("is_admin" , true);
+    //storageHelper.store("is_admin" , true);
 
     if(storageHelper.get("is_admin")){
         new EngineStarter();
@@ -67,7 +67,7 @@ SimulationController.prototype.openAdminSection = function(e){
         var username = $loginContainer.find("input").eq('0').val();
         var password = $loginContainer.find("input").eq('1').val();
 
-        if(username === "admin" && password === "secret"){
+        if(username === "melanie" && password === "secretadminpassword153"){
             storageHelper.store('is_admin', true);
             $('#open-admin-btn').text("Admin mode activated");
         }
