@@ -121,3 +121,8 @@ if (!Array.prototype.remove) {
 		return this.push.apply(this, rest);
 	};	
 }
+
+
+String.prototype.capitalizeFirstLetter = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+}

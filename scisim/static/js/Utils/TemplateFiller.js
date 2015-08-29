@@ -75,6 +75,12 @@ TemplateFiller.prototype.getTemplate = function(pageName) {
 		case "btn":
 			return "<button id='{id}' class='btn btn-default'>{text}<span class='glyphicon glyphicon-chevron-right' aria-hidden='true'></span></button>";
 
+        case "input":
+            return "<label for='{id}'>{label}</label><input id='{id}' class='form-control' placeholder='{placeholder}' type='{type}' name='{name}'/>";
+
+        case "container":
+            return "<div id='{id}'></div>";
+
 		case "list_question_choice":
 			return '<li class="choice choice-question"> <p>{text}</p> <input class="form-control" type="text" data-choice-id="{id}" data-destination="{destination}" placeholder="Enter your response here"> </li>';
 
@@ -105,8 +111,19 @@ TemplateFiller.prototype.getTemplate = function(pageName) {
         case "admin_edit_action_item":
             return '<div class="form-group action-item" data-id="{id}"><h3 class="heading">Action Items:</h3><div class="form-group"><p class="label">Action Name:</p><p contenteditable="true" class="action-name">{name}</p></div><div class="form-group"><p class="label">Action Value:</p><p contenteditable="true" class="action-value">{value}</p></div></div>';
 
+        case "admin-create-section-field":
+            return '<div class="form-group section-item"><h3 class="heading">Text Section</h3><div class="form-group"><p class="label">text:</p><textarea name="section" cols="100" rows="5"></textarea> </div></div>';
+
+        case "admin-create-action-field":
+            return '<div class="form-group action-item"><h3 class="heading">Action:</h3><div class="form-group"><p class="label">Name:</p> <input type="text" name="action-name" class="form-control"></div><div class="form-group"><p class="label">Value:</p><select class="form-control" name="action-value"></select></div></div>';
+
+        case "admin-create-choice-field":
+            return '<div class="form-group choice-item"><h3 class="heading">Choice:</h3><div class="form-group"><p class="label">Text: </p><textarea name="choice-text" cols="100" rows="5"></textarea></div><div class="form-group"><p class="label">Destination: </p> <select name="choice-destination"></select> </div><div class="form-group"><p class="label">Type:</p><select name="choice-type"></select></div></div>';
+
+        case "admin-create-modifier-field":
+            return '<div class="form-group action-item"><h3 class="heading">Modifier:</h3><div class="form-group"><p class="label">Name:</p> <input type="text" name="modifier-name" class="form-control"></div><div class="form-group"><p class="label">Value:</p><select class="form-control" name="modifier-value"></select></div></div>';
         case "admin_create_page_form":
-            return '<div class="admin-create-page-form"><label for="page-title">Page Title:</label> <input type="text" placeholder="ex: introduction1" class="form-control" id="page-title" name="page-title"> <div class="clearfix"> <div class="choice choice-binary page-selection-item" id="admin-add-section"> <hgroup class="well clickable-well"> <h2>Add Text Section</h2> </hgroup> </div> <div class="choice choice-binary page-selection-item" id="admin-add-choice"> <hgroup class="well clickable-well"> <h2>Add Choice</h2> </hgroup> </div> <div class="choice choice-binary page-selection-item" id="admin-add-action"> <hgroup class="well clickable-well"> <h2>Add Action</h2> </hgroup> </div> <div class="choice choice-binary page-selection-item" id="admin-add-modifier"> <hgroup class="well clickable-well"> <h2>Add Modifier</h2> </hgroup> </div></div> </div>';
+            return '<div class="admin-create-page-form"> <div class="clearfix pages-container"> <div class="choice choice-binary page-selection-item" id="admin-add-section"> <hgroup class="well clickable-well"> <h2>Add Text Section</h2> </hgroup> </div> <div class="choice choice-binary page-selection-item" id="admin-add-choice"> <hgroup class="well clickable-well"> <h2>Add Choice</h2> </hgroup> </div> <div class="choice choice-binary page-selection-item" id="admin-add-action"> <hgroup class="well clickable-well"> <h2>Add Action</h2> </hgroup> </div> <div class="choice choice-binary page-selection-item" id="admin-add-modifier"> <hgroup class="well clickable-well"> <h2>Add Modifier</h2> </hgroup> </div></div> </div>';
 
 		default:
 			throw "No template associated with a " + pageName + " page";

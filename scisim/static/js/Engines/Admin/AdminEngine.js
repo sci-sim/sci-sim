@@ -117,9 +117,11 @@ AdminEngine.prototype.render = function(page_id){
         // 3 - add new page
         case 3:
             storageHelper.store('current_admin_page', 3);
+
             this.startMiniEngine(PageCreationMiniEngine).done(function(e){
                 this.render(1);
             }.bind(this));
+
             break;
         default:
             throw "Page "+page_id+" does not exist";
