@@ -1,7 +1,11 @@
 var AdminEngine = function () {
     // 1 - view all pages
+    // 2 - edit page
+    // 3 - create page
     this.render(1);
 };
+
+AdminEngine.prototype = Object.create(Engine.prototype);
 
 AdminEngine.prototype.render = function(page_id){
     var html = "";
@@ -16,6 +20,7 @@ AdminEngine.prototype.render = function(page_id){
         // 1 - view all pages
         case 1:
             html = '';
+            html += tf.fillTemplate(null, "admin_create_page_item");
             promise = api.getAllPages(storageHelper.get('sim_id')).then(function(pages){
                 for(var i = 0; i < pages.length; i++){
                     var current = pages[i];
@@ -34,7 +39,7 @@ AdminEngine.prototype.render = function(page_id){
                 html = tf.wrapInParent('page-selection-container', html);
 
                 $dfd.resolve(html);
-                return $dfd.promise();
+                return $dfd.finish();
             });
 
             storageHelper.store('current_admin_page', 1);
@@ -105,16 +110,24 @@ AdminEngine.prototype.render = function(page_id){
                 html += tf.fillTemplate({'id' : 'admin-edit-page-submit', 'text': 'update'}, 'btn');
 
                 $dfd.resolve(html);
-                return $dfd.promise();
+                return $dfd.finish();
             });
             storageHelper.store('current_admin_page', 2);
             break;
         // 3 - add new page
         case 3:
             storageHelper.store('current_admin_page', 3);
+            this.startMiniEngine(PageCreationMiniEngine).done(function(e){
+                this.render(1);
+            }.bind(this));
             break;
         default:
             throw "Page "+page_id+" does not exist";
+    }
+
+    if(promise === undefined){
+        loader.hide();
+        return;
     }
 
     promise.done(function(html){
@@ -133,12 +146,20 @@ AdminEngine.prototype.init = function(){
         this.render(storageHelper.get('current_admin_page') - 1);
     }.bind(this));
 
+    $('.section-text img').click(this.openImageUploader.bind(this));
+
     $('#admin-edit-page-submit').click(this.updatePage.bind(this));
+
+    $('#admin-create-page').click(function(){this.render(3)}.bind(this))
 };
 
 AdminEngine.prototype.editSelectedPage = function(e){
     storageHelper.store('current_page_id', $(e.currentTarget).data('id'));
     this.render(2); // 2 = edit page
+};
+
+AdminEngine.prototype.openImageUploader = function(e){
+
 };
 
 AdminEngine.prototype.updatePage = function(e){
@@ -232,6 +253,8 @@ AdminEngine.prototype.updatePage = function(e){
             var message = "Everything was saved successfully!";
         }
 
-        smoke.alert(message, function (e) {}, {ok: "Okay, thanks!"});
+        smoke.alert(message, function (e) {
+           this.render(storageHelper.get('current_page_id'));
+        }.bind(this), {ok: "Okay, thanks!"});
     });
 };

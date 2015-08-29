@@ -232,9 +232,13 @@ div .choice-person{
     border-radius:0;
 }
 
-.page-selection-item.choice-binary{
+.page-selection-item.choice-binary, #admin-create-page{
     width: 29.333%;
     margin: 0 2% 110px;
+
+}
+#admin-create-page .well{
+    min-height:200px;
 }
 
 .page-selection-item.choice-binary h2{
@@ -771,4 +775,8 @@ div .choice-person{
 
 .errors{
     color:red;
+}
+
+.section-text img{
+    max-width: 300px;
 }

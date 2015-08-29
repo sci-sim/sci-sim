@@ -84,6 +84,9 @@ TemplateFiller.prototype.getTemplate = function(pageName) {
         case "admin_login":
             return '<div class="admin-login-container"><input type="text" name="username" placeholder="Username" class="form-control"><input type="password" name="password" placeholder="Password" class="form-control"><button id="show_admin_submit" class="btn btn-default">Submit</button><button id="show_admin_cancel" class="btn btn-danger">Cancel</button></div>';
 
+        case "admin_create_page_item":
+            return '<div class="choice choice-binary" id="admin-create-page"> <hgroup class="well clickable-well"><h2>Create new page</h2><h3>Click here to create a new page in the simulation.</h3></hgroup></div>';
+
         case "admin_page_selection_item":
             return '<div class="choice choice-binary page-selection-item" data-id="{id}"> <hgroup class="well clickable-well"><h2>{title}</h2> <h3>{first_section}</h3><h4>Text Blocks - {section_count}</h4><h4>Actions - {action_count} | Choices - {choice_count}</h4></hgroup></div>';
 
@@ -101,6 +104,9 @@ TemplateFiller.prototype.getTemplate = function(pageName) {
 
         case "admin_edit_action_item":
             return '<div class="form-group action-item" data-id="{id}"><h3 class="heading">Action Items:</h3><div class="form-group"><p class="label">Action Name:</p><p contenteditable="true" class="action-name">{name}</p></div><div class="form-group"><p class="label">Action Value:</p><p contenteditable="true" class="action-value">{value}</p></div></div>';
+
+        case "admin_create_page_form":
+            return '<div class="admin-create-page-form"><label for="page-title">Page Title:</label> <input type="text" placeholder="ex: introduction1" class="form-control" id="page-title" name="page-title"> <div class="clearfix"> <div class="choice choice-binary page-selection-item" id="admin-add-section"> <hgroup class="well clickable-well"> <h2>Add Text Section</h2> </hgroup> </div> <div class="choice choice-binary page-selection-item" id="admin-add-choice"> <hgroup class="well clickable-well"> <h2>Add Choice</h2> </hgroup> </div> <div class="choice choice-binary page-selection-item" id="admin-add-action"> <hgroup class="well clickable-well"> <h2>Add Action</h2> </hgroup> </div> <div class="choice choice-binary page-selection-item" id="admin-add-modifier"> <hgroup class="well clickable-well"> <h2>Add Modifier</h2> </hgroup> </div></div> </div>';
 
 		default:
 			throw "No template associated with a " + pageName + " page";

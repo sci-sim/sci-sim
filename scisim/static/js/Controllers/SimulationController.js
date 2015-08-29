@@ -47,7 +47,7 @@ SimulationController.prototype.onSimItemClick = function(e) {
 	
 	storageHelper.store('first_page_id', page_id);
 	storageHelper.store('sim_id', sim_id);
-    //storageHelper.store("is_admin" , true);
+    storageHelper.store("is_admin" , true);
 
     if(storageHelper.get("is_admin")){
         new EngineStarter();

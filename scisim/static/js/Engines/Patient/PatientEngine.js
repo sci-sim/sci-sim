@@ -135,7 +135,7 @@ PatientEngine.prototype.onReturnToPrevPageClick = function(e){
     chain.headId = chain.getLastPageInChain().id;
     this.changePage($elem.context.id);
     $('.btn-return').addClass('hidden');
-}
+};
 
 
 
