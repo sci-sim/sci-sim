@@ -1,5 +1,5 @@
 from scisim import app, db, clean_text
-from flask import request
+from flask import request, Response
 from scisim.models import *
 from scisim.helpers import *
 from sqlalchemy import and_
@@ -312,32 +312,27 @@ def api_update():
 	error = check_for_params(['id', 'model'], request)
 	if error:
 		return error_message(error)
-		
-	try:
-		model = get_class(request.form['model'].title())
-	except KeyError, e:
-		return error_message("Model not found")
 	
-	if not model:
-		return error_message("This object does not exist.")
-	if type(model) is not type(db.Model):
-		return error_message("The object you supplied is not a model.")
-		
-	model_obj = model.query.filter(model.id == request.form['id']).first()
+	action = doModelAction("update", request.form['model'].title())
 	
-	if not model_obj:
-		return error_message("model with id: " + request.form['id'] + " does not exist")
-	
-	form = request.form.copy()
-	
-	del form['id']
-	
-	fillModel(model_obj, form.to_dict())
-	
-	db.session.commit()
+	if type(action) is Response:
+		return action
 	
 	return success_message("record updated successfully")
 
+@app.route('/api/models/create', methods=['POST'])
+def api_create():
+	error = check_for_params(['model'], request)
+	if error:
+		return error_message(error)
+	
+	action = doModelAction("create", request.form['model'].title())
+	
+	if type(action) is Response:
+		return action
+	
+	return respond_object(unpack_model(action))
+		
 @app.route('/api/media/upload', methods=['POST'])
 def api_media_upload():
     file = request.files['file']
@@ -347,9 +342,38 @@ def api_media_upload():
     return success_message("File uploaded")
 	
 def fillModel(model, value_dict):
-	model_dict = model.__dict__
-	for title,value in value_dict.iteritems():
-		if(title in list(model_dict.keys())):
+	model_keys = model.__table__.columns._data.keys()
+	for title,value in value_dict.iteritems():	
+		if(title in model_keys):
 			setattr(model, title, value)
 
 get_class = lambda x: globals()[x]
+
+def doModelAction(action, model):
+	try:
+		model = get_class(request.form['model'].title())
+	except KeyError, e:
+		return error_message("Model not found")
+	
+	if not model:
+		return error_message("This object does not exist.")
+	if type(model) is not type(db.Model):
+		return error_message("The object you supplied is not a model.")
+	
+	values = request.values.copy()
+	
+	if action == "update":
+		model_obj = model.query.filter(model.id == values['id']).first()
+		del values['id']
+		if not model_obj:
+			return error_message("model with id: " + values['id'] + " does not exist")
+			
+	elif action == "create":
+		model_obj = model()
+	
+	fillModel(model_obj, values.to_dict())
+	
+	db.session.add(model_obj)
+	db.session.commit()
+
+	return model_obj

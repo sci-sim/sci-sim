@@ -79,6 +79,9 @@ def error_message(message):
 
 def success_message(message = "Success!"):
     return respond_json(dumps({"success":message}))
+	
+def respond_object(obj):
+	return respond_json(dumps(obj))
 
 def check_for_params(params, request):
     # TODO: check yet if we NEED the request object passed in or not

@@ -78,6 +78,9 @@ TemplateFiller.prototype.getTemplate = function(pageName) {
         case "input":
             return "<label for='{id}'>{label}</label><input id='{id}' class='form-control' placeholder='{placeholder}' type='{type}' name='{name}'/>";
 
+        case "option":
+            return "<option value='{value}'>{text}</option>";
+
         case "container":
             return "<div id='{id}'></div>";
 
@@ -115,13 +118,13 @@ TemplateFiller.prototype.getTemplate = function(pageName) {
             return '<div class="form-group section-item"><h3 class="heading">Text Section</h3><div class="form-group"><p class="label">text:</p><textarea name="section" cols="100" rows="5"></textarea> </div></div>';
 
         case "admin-create-action-field":
-            return '<div class="form-group action-item"><h3 class="heading">Action:</h3><div class="form-group"><p class="label">Name:</p> <input type="text" name="action-name" class="form-control"></div><div class="form-group"><p class="label">Value:</p><select class="form-control" name="action-value"></select></div></div>';
+            return '<div class="form-group action-item"><h3 class="heading">Action:</h3><div class="form-group"><p class="label">Name:</p> <select class="form-control" name="action-value"></select></div><div class="form-group"><p class="label">Value:</p> <input type="text" name="action-name" class="form-control"></div></div>';
 
         case "admin-create-choice-field":
             return '<div class="form-group choice-item"><h3 class="heading">Choice:</h3><div class="form-group"><p class="label">Text: </p><textarea name="choice-text" cols="100" rows="5"></textarea></div><div class="form-group"><p class="label">Destination: </p> <select name="choice-destination"></select> </div><div class="form-group"><p class="label">Type:</p><select name="choice-type"></select></div></div>';
 
         case "admin-create-modifier-field":
-            return '<div class="form-group action-item"><h3 class="heading">Modifier:</h3><div class="form-group"><p class="label">Name:</p> <input type="text" name="modifier-name" class="form-control"></div><div class="form-group"><p class="label">Value:</p><select class="form-control" name="modifier-value"></select></div></div>';
+            return '<div class="form-group modifier-item"><h3 class="heading">Modifier:</h3><div class="form-group"><p class="label">Name:</p><select class="form-control" name="modifier-value"></select></div><div class="form-group"><p class="label">Value:</p>  <input type="text" name="modifier-name" class="form-control"></div></div>';
         case "admin_create_page_form":
             return '<div class="admin-create-page-form"> <div class="clearfix pages-container"> <div class="choice choice-binary page-selection-item" id="admin-add-section"> <hgroup class="well clickable-well"> <h2>Add Text Section</h2> </hgroup> </div> <div class="choice choice-binary page-selection-item" id="admin-add-choice"> <hgroup class="well clickable-well"> <h2>Add Choice</h2> </hgroup> </div> <div class="choice choice-binary page-selection-item" id="admin-add-action"> <hgroup class="well clickable-well"> <h2>Add Action</h2> </hgroup> </div> <div class="choice choice-binary page-selection-item" id="admin-add-modifier"> <hgroup class="well clickable-well"> <h2>Add Modifier</h2> </hgroup> </div></div> </div>';
 

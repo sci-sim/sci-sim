@@ -24,10 +24,15 @@ AdminEngine.prototype.render = function(page_id){
             promise = api.getAllPages(storageHelper.get('sim_id')).then(function(pages){
                 for(var i = 0; i < pages.length; i++){
                     var current = pages[i];
+                    if(current['sections'].length > 0){
+                        var first_section = $(current['sections'][0]['content']).text().substr(0, 50)
+                    }else{
+                        var first_section = "No text";
+                    }
                     var tmplData = {
                         'title': current['title'],
                         'id': current['id'],
-                        'first_section': $(current['sections'][0]['content']).text().substr(0, 50),
+                        'first_section': first_section,
                         'section_count': current['sections'].length - 1,
                         'action_count': current['page_actions'].length,
                         'choice_count': current['choices'].length

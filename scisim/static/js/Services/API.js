@@ -90,6 +90,14 @@ API.prototype.updateModel = function(model, id, data){
     });
 };
 
+API.prototype.createModel = function(model, data){
+    return $.ajax({
+        url:"/api/models/create",
+        type: 'POST',
+        data: $.extend({'model':model}, data)
+    });
+};
+
 API.prototype.getResponses = function() {
 	return Array.prototype.slice.call(arguments, 0, arguments.length - 2);
 };
