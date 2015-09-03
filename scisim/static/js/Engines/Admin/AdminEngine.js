@@ -62,7 +62,7 @@ AdminEngine.prototype.render = function(page_id){
         case 3:
             storageHelper.store('current_admin_page', 3);
 
-            this.startMiniEngine(PageFieldFormPopulator).done(function(e){
+            this.startMiniEngine(PageCreationMiniEngine).done(function(e){
                 this.render(1);
             }.bind(this));
 

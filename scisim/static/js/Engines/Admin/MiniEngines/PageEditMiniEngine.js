@@ -78,6 +78,7 @@ PageEditMiniEngine.prototype.render = function() {
 };
 
 PageEditMiniEngine.prototype.init = function(e){
+   this.populator = new PageFieldFormPopulator($('.edit_page_container'));
     $('#admin-edit-page-submit').click(this.updatePage.bind(this));
     $('.section-text img').click(this.openImageUploader.bind(this));
 
@@ -175,14 +176,27 @@ PageEditMiniEngine.prototype.updatePage = function(e){
             }
         }
 
-        if(errors){
-            var message = 'Oh no! Something went wrong. The sections in red could not be saved.';
-        }else{
-            var message = "Everything was saved successfully!";
-        }
+        this.populator.save().then(function(){
+            var args = $.extend({}, arguments);
+            errors = false;
 
-        smoke.alert(message, function (e) {
-            this.finish();
-        }.bind(this), {ok: "Okay, thanks!"});
+            for(var i = 0; i < args; i++){
+                var response = args[i][0];
+                if(!response.hasOwnProperty('success')){
+                    errors = true;
+                }
+            }
+
+            if(errors){
+                var message = 'Oh no! Something went wrong. The sections in red could not be saved.';
+            }else{
+                var message = "Everything was saved successfully!";
+            }
+
+            smoke.alert(message, function (e) {
+                this.finish();
+            }.bind(this), {ok: "Okay, thanks!"});
+        }.bind(this));
+
     }.bind(this));
 };

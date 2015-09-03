@@ -1,5 +1,9 @@
 var PageFieldFormPopulator = function ($container) {
     this.$container = $container;
+
+    this.$container.append(tf.fillTemplate({"id": "admin-create-page-fields"}, 'container'));
+    $('#admin-create-page-fields').append(tf.fillTemplate(null, "admin_create_page_form"));
+
     $('.page-selection-item').click(this.findFieldToAdd.bind(this));
 };
 
@@ -50,6 +54,59 @@ PageFieldFormPopulator.prototype.findFieldToAdd = function(e){
 };
 
 PageFieldFormPopulator.prototype.addField = function(field){
-    this.$container.append(tf.fillTemplate(null, "admin-create-"+field+"-field"));
+    $('#admin-create-page-fields').before(tf.fillTemplate(null, "admin-create-"+field+"-field"));
     this.fillSelectBoxes();
+};
+
+PageFieldFormPopulator.prototype.save = function(){
+    var valObj = {
+        "sections": [],
+        "choices": [],
+        "modifiers": [],
+        "actions": []
+    };
+
+    loader.show();
+
+    var deferreds = [];
+    // collect all the values
+    for(var key in valObj){
+        var singular = key.substr(0, key.length - 1);
+        var $elems = $("." + singular + "-item");
+
+        for(var i = 0; i < $elems.length; i++){
+            var $elem = $elems.eq(i);
+            var sectionVaues = {};
+
+            switch(key){
+                case "sections":
+                    sectionVaues['content'] = $elem.find('textarea').val();
+                    sectionVaues['show'] = true;
+                    break;
+
+                case "choices":
+                    sectionVaues['text'] = $elem.find('textarea').val();
+                    sectionVaues['destination'] = $elem.find('select[name="choice-destination"]').val();
+                    sectionVaues['type'] = $elem.find('select[name="choice-type"]').val();
+                    break;
+
+                case "modifiers":
+                    singular = "page_modifier";
+                    sectionVaues['name'] = $elem.find('select[name="modifier-value"]').val();
+                    sectionVaues['value'] = $elem.find('input[name="modifier-name"]').val();
+                    break;
+
+                case "actions":
+                    singular = "page_action";
+                    sectionVaues['name'] = $elem.find('select[name="action-value"]').val();
+                    sectionVaues['value'] = $elem.find('input[name="action-name"]').val();
+                    break;
+            }
+
+            sectionVaues['page_id'] = storageHelper.get('current_page_id');
+            deferreds.push(api.createModel(singular, sectionVaues));
+        }
+    }
+
+    return $.when.apply(this, deferreds);
 };
