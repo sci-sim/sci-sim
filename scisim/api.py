@@ -364,7 +364,6 @@ def doModelAction(action, model):
 	
 	if action == "update":
 		model_obj = model.query.filter(model.id == values['id']).first()
-		del values['id']
 		if not model_obj:
 			return error_message("model with id: " + values['id'] + " does not exist")
 			

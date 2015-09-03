@@ -1,11 +1,11 @@
-var PageCreationMiniEngine = function (deferred) {
+var PageFieldFormPopulator = function (deferred) {
     MiniEngine.call(this, deferred);
     this.render();
 };
 
-PageCreationMiniEngine.prototype = Object.create(MiniEngine.prototype);
+PageFieldFormPopulator.prototype = Object.create(MiniEngine.prototype);
 
-PageCreationMiniEngine.prototype.render = function(){
+PageFieldFormPopulator.prototype.render = function(){
     var html = "";
     html += tf.fillTemplate(null, 'go_back_btn');
     html += "<br/>";
@@ -18,76 +18,24 @@ PageCreationMiniEngine.prototype.render = function(){
     this.init();
 };
 
-PageCreationMiniEngine.prototype.init = function(){
+PageFieldFormPopulator.prototype.init = function(){
+    new PageFieldFormPopulator();
+
     $('#submit-btn').click(this.createPage.bind(this));
     $('button#go-back').click(function(){
         this.finish();
     }.bind(this));
-
-    $('.page-selection-item').click(this.findFieldToAdd.bind(this));
 };
 
-PageCreationMiniEngine.prototype.fillSelectBoxes = function(){
-    // {"name": "inputType"}
-    var actionValues = {'add_to_notebook': 'text', 'show_patient_choices': 'boolean'};
-    var modifierValues = ['goes_to_page', 'minimum_choices', 'minimum_choices_reached'];
-    var $selectBoxes = $('select[name="action-value"]');
 
-    for(var name in actionValues){
-        var value = actionValues[name];
-
-        var $html = $(tf.fillTemplate({'value': name, 'text': name.replace(/_/g, " ")}, 'option'));
-        $selectBoxes.last().append($html);
-
-        //  TODO: finish this. when you switch an option, the value should update with an appropriate box.
-        //var $sibling = $html.parent().next().find('input');
-        //
-        //switch(value){
-        //    case "text":
-        //        break;
-        //    case "boolean":
-        //        var $newHtml = $('<select class="form-control" name="'+$sibling.attr('name')+'"></select>');
-        //        $newHtml.html(
-        //            tf.fillTemplate({'value': 'true','text': 'True'}, 'option') +
-        //            tf.fillTemplate({'value': 'true','text': 'True'}, 'option')
-        //        );
-        //
-        //        $sibling.replaceWith($newHtml);
-        //        break;
-        //}
-    }
-
-    for(var i = 0; i< modifierValues.length; i++){
-        var html = tf.fillTemplate({'value': modifierValues[i], 'text': modifierValues[i].replace('_', " ")}, 'option');
-        html = $(html).css('text-transform', 'capitalize');
-
-        $('select[name="modifier-value"]').html(html);
-    }
-};
-
-PageCreationMiniEngine.prototype.findFieldToAdd = function(e){
-    var $elem = $(e.currentTarget);
-    var id = $elem.attr('id');
-    var field= id.slice(id.lastIndexOf('-')+1);
-
-    this.addField(field);
-};
-
-PageCreationMiniEngine.prototype.addField = function(field){
-    var $container = $('#admin-create-page-fields');
-    $container.append(tf.fillTemplate(null, "admin-create-"+field+"-field"));
-
-    this.fillSelectBoxes();
-};
-
-PageCreationMiniEngine.prototype.createPage = function(){
+PageFieldFormPopulator.prototype.createPage = function(){
     api.createModel('page', {'title': $('input[name="page-title"]').val(), 'sim_id': storageHelper.get('sim_id')}).then(function(page){
         storageHelper.store('current_page_id', page.id);
         this.finishPageCreation();
     }.bind(this));
 };
 
-PageCreationMiniEngine.prototype.finishPageCreation = function(){
+PageFieldFormPopulator.prototype.finishPageCreation = function(){
     var valObj = {
         "sections": [],
         "choices": [],
