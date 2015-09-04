@@ -1,0 +1,3 @@
+var PageDeleter = function () {
+    // constructor
+};

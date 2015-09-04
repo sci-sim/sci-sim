@@ -99,7 +99,3 @@ AdminEngine.prototype.editSelectedPage = function(e){
     storageHelper.store('current_page_id', $(e.currentTarget).data('id'));
     this.render(2); // 2 = edit page
 };
-
-AdminEngine.prototype.openImageUploader = function(e){
-
-};

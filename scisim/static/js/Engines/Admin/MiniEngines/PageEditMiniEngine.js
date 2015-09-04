@@ -176,7 +176,13 @@ PageEditMiniEngine.prototype.updatePage = function(e){
             }
         }
 
-        this.populator.save().then(function(){
+        var saver = this.populator.save();
+        if(!saver){
+            this.finish();
+            return;
+        }
+
+        saver.then(function(){
             var args = $.extend({}, arguments);
             errors = false;
 

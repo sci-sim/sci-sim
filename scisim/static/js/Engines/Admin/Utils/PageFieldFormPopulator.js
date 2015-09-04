@@ -107,6 +107,11 @@ PageFieldFormPopulator.prototype.save = function(){
             deferreds.push(api.createModel(singular, sectionVaues));
         }
     }
+    loader.hide();
 
-    return $.when.apply(this, deferreds);
+    if(deferreds.length === 0){
+        return false;
+    }else{
+        return $.when.apply(this, deferreds);
+    }
 };
