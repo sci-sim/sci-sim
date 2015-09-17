@@ -81,10 +81,23 @@ PageEditMiniEngine.prototype.init = function(e){
    this.populator = new PageFieldFormPopulator($('.edit_page_container'));
     $('#admin-edit-page-submit').click(this.updatePage.bind(this));
     $('.section-text img').click(this.openImageUploader.bind(this));
+    $('.delete-btn').click(this.deleteSection.bind(this));
 
     $('button#go-back').click(function(){
         this.finish();
     }.bind(this));
+};
+
+PageEditMiniEngine.prototype.deleteSection = function(e){
+    var confirmDelete = confirm("Are you sure you want to delete this section?");
+    if(confirmDelete === true){
+        var $elem = $(e.currentTarget).parent();
+        $elem.remove();
+        var modelClass = $elem.attr('class').split(/\s+/)[1];
+        var model = modelClass.substring(0, modelClass.indexOf("-"));
+        api.deleteModel(model, $elem.data('id'));
+        console.log("deleted")
+    }
 };
 
 PageEditMiniEngine.prototype.openImageUploader = function(){

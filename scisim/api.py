@@ -332,7 +332,21 @@ def api_create():
 		return action
 	
 	return respond_object(unpack_model(action))
-		
+
+@app.route('/api/models/delete', methods=['POST'])
+def api_delete():
+	error = check_for_params(['model'], request)
+	if error:
+		return error_message(error)
+	
+	action = doModelAction("delete", request.form['model'].title())
+	
+	if type(action) is Response:
+		return action
+	
+	return success_message("Deleted Success")
+	
+	
 @app.route('/api/media/upload', methods=['POST'])
 def api_media_upload():
     file = request.files['file']
@@ -369,6 +383,12 @@ def doModelAction(action, model):
 			
 	elif action == "create":
 		model_obj = model()
+	
+	elif action == "delete":
+		model_obj = model.query.filter(model.id == values['id']).first()
+		db.session.delete(model_obj)
+		db.session.commit()
+		return True
 	
 	fillModel(model_obj, values.to_dict())
 	

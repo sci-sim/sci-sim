@@ -54,8 +54,19 @@ PageFieldFormPopulator.prototype.findFieldToAdd = function(e){
 };
 
 PageFieldFormPopulator.prototype.addField = function(field){
-    $('#admin-create-page-fields').before(tf.fillTemplate(null, "admin-create-"+field+"-field"));
+    var $newField = $(tf.fillTemplate(null, "admin-create-"+field+"-field"));
+    $('#admin-create-page-fields').before($newField);
+
+    $newField.find(".delete-btn").click(this.removeField.bind(this));
+
     this.fillSelectBoxes();
+};
+
+PageFieldFormPopulator.prototype.removeField = function(e){
+    var confirmDelete = confirm("Are you sure you want to delete this section?");
+    if(confirmDelete === true){
+        $(e.currentTarget).parent().remove();
+    }
 };
 
 PageFieldFormPopulator.prototype.save = function(){

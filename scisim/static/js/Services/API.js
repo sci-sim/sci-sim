@@ -98,6 +98,14 @@ API.prototype.createModel = function(model, data){
     });
 };
 
+API.prototype.deleteModel = function(model, id){
+    return $.ajax({
+        url:"/api/models/delete",
+        type: 'POST',
+        data: {'model':model, 'id': id}
+    });
+};
+
 API.prototype.getResponses = function() {
 	return Array.prototype.slice.call(arguments, 0, arguments.length - 2);
 };
