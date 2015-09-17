@@ -344,7 +344,7 @@ def api_delete():
 	if type(action) is Response:
 		return action
 	
-	return success_message("Deleted Success")
+	return success_message("Deleted Success")	
 	
 	
 @app.route('/api/media/upload', methods=['POST'])

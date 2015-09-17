@@ -11,30 +11,16 @@ PageFieldFormPopulator.prototype.fillSelectBoxes = function(){
     // {"name": "inputType"}
     var actionValues = {'add_to_notebook': 'text', 'show_patient_choices': 'boolean'};
     var modifierValues = ['goes_to_page', 'minimum_choices', 'minimum_choices_reached'];
+    var choiceTypeValues = ["binary", "prompt"];
     var $selectBoxes = $('select[name="action-value"]');
+    var $choiceTypeBoxes = $('select[name="choice-type"]');
+    var $choiceDestinationBoxed = $('select[name="choice-destination"]');
 
     for(var name in actionValues){
         var value = actionValues[name];
 
         var $html = $(tf.fillTemplate({'value': name, 'text': name.replace(/_/g, " ")}, 'option'));
         $selectBoxes.last().append($html);
-
-        //  TODO: finish this. when you switch an option, the value should update with an appropriate box.
-        //var $sibling = $html.parent().next().find('input');
-        //
-        //switch(value){
-        //    case "text":
-        //        break;
-        //    case "boolean":
-        //        var $newHtml = $('<select class="form-control" name="'+$sibling.attr('name')+'"></select>');
-        //        $newHtml.html(
-        //            tf.fillTemplate({'value': 'true','text': 'True'}, 'option') +
-        //            tf.fillTemplate({'value': 'true','text': 'True'}, 'option')
-        //        );
-        //
-        //        $sibling.replaceWith($newHtml);
-        //        break;
-        //}
     }
 
     for(var i = 0; i< modifierValues.length; i++){
@@ -43,6 +29,18 @@ PageFieldFormPopulator.prototype.fillSelectBoxes = function(){
 
         $('select[name="modifier-value"]').html(html);
     }
+
+    for(var i = 0; i < choiceTypeValues.length; i++){
+        var html = tf.fillTemplate({"value": choiceTypeValues[i], "text": choiceTypeValues[i]}, "option");
+        $choiceTypeBoxes.last().append(html);
+    }
+
+    api.getAllPages(storageHelper.get("sim_id")).then(function(pages){
+        for(var i = 0; i < pages.length; i++){
+            var html = tf.fillTemplate({"value": pages[i].id, "text": pages[i].title}, "option");
+            $choiceDestinationBoxed.last().append(html);
+        }
+    });
 };
 
 PageFieldFormPopulator.prototype.findFieldToAdd = function(e){
