@@ -11,7 +11,6 @@ PageCreationMiniEngine.prototype.render = function(){
     html += "<br/>";
     html += tf.fillTemplate({'id':'page-title', 'placeholder' :'ex: introduction1', 'type':'text','name':'page-title', 'label': 'Page title:'}, 'input');
     html+= tf.fillTemplate({"id": "admin-create-page-fields"}, 'container');
-    html += tf.fillTemplate(null, "admin_create_page_form");
     html += tf.fillTemplate({'id': 'submit-btn', 'text': 'Create Page'}, 'btn');
 
     ps.transitionPage(html);
@@ -32,5 +31,6 @@ PageCreationMiniEngine.prototype.createPage = function(){
     api.createModel('page', {'title': $('input[name="page-title"]').val(), 'sim_id': storageHelper.get('sim_id')}).then(function(page){
         storageHelper.store('current_page_id', page.id);
         this.populator.save();
+        this.finish();
     }.bind(this));
 };

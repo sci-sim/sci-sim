@@ -12,9 +12,6 @@ ssh root@104.131.26.12 <<'ENDSSH'
 	rm -rf ./*
 	rm -rf src/.git
 	tar -zxvf ../latest.tar.gz
-	pip install -r requirements
-	#python db_create.py
-	python sim_parser.py new_sim_template.txt
 ENDSSH
 
 echo Done!

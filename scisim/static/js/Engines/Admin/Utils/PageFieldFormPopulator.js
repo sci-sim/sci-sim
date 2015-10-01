@@ -5,6 +5,7 @@ var PageFieldFormPopulator = function ($container) {
     $('#admin-create-page-fields').append(tf.fillTemplate(null, "admin_create_page_form"));
 
     $('.page-selection-item').click(this.findFieldToAdd.bind(this));
+    this.fillSelectBoxes();
 };
 
 PageFieldFormPopulator.prototype.fillSelectBoxes = function(){
@@ -52,6 +53,11 @@ PageFieldFormPopulator.prototype.findFieldToAdd = function(e){
 };
 
 PageFieldFormPopulator.prototype.addField = function(field){
+    if(field === "image") {
+        new ImageUploader();
+        return;
+    }
+
     var $newField = $(tf.fillTemplate(null, "admin-create-"+field+"-field"));
     $('#admin-create-page-fields').before($newField);
 

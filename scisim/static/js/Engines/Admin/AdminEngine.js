@@ -25,7 +25,7 @@ AdminEngine.prototype.render = function(page_id){
                 for(var i = 0; i < pages.length; i++){
                     var current = pages[i];
                     if(current['sections'].length > 0){
-                        var first_section = $(current['sections'][0]['content']).text().substr(0, 50)
+                        var first_section = $($.parseHTML(current['sections'][0]['content'])).text().substr(0, 50)
                     }else{
                         var first_section = "No text";
                     }

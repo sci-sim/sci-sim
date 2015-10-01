@@ -14,7 +14,7 @@ TemplateFiller.prototype.fillTemplate = function(data, pageName) {
 
 	for(var key in data){
 		var fkey = "{" + key + "}";
-		template = template.replace(fkey, data[key]);
+		template = template.replace(new RegExp(fkey, 'g'), data[key]);
 	}
 
 	return  template;
@@ -97,22 +97,31 @@ TemplateFiller.prototype.getTemplate = function(pageName) {
             return '<div class="choice choice-binary" id="admin-create-page"> <hgroup class="well clickable-well"><h2>Create new page</h2><h3>Click here to create a new page in the simulation.</h3></hgroup></div>';
 
         case "admin_page_selection_item":
-            return '<div class="choice choice-binary page-selection-item" data-id="{id}"> <hgroup class="well clickable-well"><h2>{title}</h2> <h3>{first_section}</h3><h4>Text Blocks - {section_count}</h4><h4>Actions - {action_count} | Choices - {choice_count}</h4></hgroup></div>';
+            return '<div class="choice choice-binary page-selection-item" data-id="{id}"> <hgroup class="well clickable-well"><h2>{title} ({id})</h2> <h3>{first_section}</h3><h4>Text Blocks - {section_count}</h4><h4>Actions - {action_count} | Choices - {choice_count}</h4></hgroup></div>';
 
         case "admin_edit_title":
-            return '<div class="form-group well title-item"><p class="label">page name:</p><h2 class="title" id="edit_page_title">{title}</h2></div>';
+            return '<div class="form-group well title-item"><p class="label">page name:</p><h2 class="title" id="edit_page_title">{title} ({id})</h2></div>';
 
         case "admin_edit_section_item":
-            return '<div class="form-group section-item" data-id="{id}"><button class="btn btn-default delete-btn">Delete Section</button><h3 class="heading">Text Section:</h3><div class="form-group"><p class="label">text:</p><div contenteditable="true" class="section-text">{text}</div></div></div>';
+            return '<div class="form-group section-item" data-id="{id}"><button class="btn btn-default delete-btn">Delete Section</button><h3 class="heading">Text Section:</h3><div class="form-group"><p class="label">text:</p><textarea cols="80" rows="15" class="section-text">{text}</textarea></div></div>';
 
         case "admin_edit_choice_item":
-            return '<div class="form-group choice-item" data-id="{id}"><button class="btn btn-default delete-btn">Delete Section</button><h3 class="heading">Choice:</h3><div class="form-group"><p class="label">Text: </p><p contenteditable="true" class="choice-text">{text}</p></div><div class="form-group"><p class="label">Destination: </p><p class="choice-destination">{destination}</p></div><div class="form-group"><p class="label">Type:</p><p class="choice-type">{type}</p></div></div>';
+            return '<div class="form-group choice-item" data-id="{id}"><button class="btn btn-default delete-btn">Delete Section</button><h3 class="heading">Choice:</h3><div class="form-group"><p class="label">Text: </p><p contenteditable="true" class="choice-text">{text}</p></div><div class="form-group"><p class="label">Destination: </p><p contenteditable="true" class="choice-destination">{destination}</p></div><div class="form-group"><p class="label">Type:</p><p contenteditable="true" class="choice-type">{type}</p></div></div>';
 
         case "admin_edit_modifier_item":
             return '<div class="form-group modifier-item" data-id="{id}"><button class="btn btn-default delete-btn">Delete Section</button><h3 class="heading">Page Modifier:</h3><div class="form-group"><p class="label">Modifier Name:</p><p contenteditable="true" class="modifier-name">{name}</p></div><div class="form-group"><p class="label">Modifier Value:</p><p contenteditable="true" class="modifier-value">{value}</p></div></div>';
 
         case "admin_edit_action_item":
             return '<div class="form-group action-item" data-id="{id}"><button class="btn btn-default delete-btn">Delete Section</button><h3 class="heading">Action Items:</h3><div class="form-group"><p class="label">Action Name:</p><p contenteditable="true" class="action-name">{name}</p></div><div class="form-group"><p class="label">Action Value:</p><p contenteditable="true" class="action-value">{value}</p></div></div>';
+        //
+        //case "admin_edit_modifier_item":
+        //    return '<div class="form-group modifier-item" data-id="{id}"><button class="btn btn-default delete-btn">Delete Section</button><h3 class="heading">Page Modifier:</h3><div class="form-group"><p class="label">Modifier Name:</p><select name="modifier-{id}-name" class="modifier-name"><option value="{name}">{name}</option></select></div><div class="form-group"><p class="label">Modifier Value:</p><select class="modifier-value"><option value="{value}">{value}</option></select></div></div>';
+        //
+        //case "admin_edit_action_item":
+        //    return '<div class="form-group action-item" data-id="{id}"><button class="btn btn-default delete-btn">Delete Section</button><h3 class="heading">Action Items:</h3><div class="form-group"><p class="label">Action Name:</p><p contenteditable="true" class="action-name">{name}</p></div><div class="form-group"><p class="label">Action Value:</p><p contenteditable="true" class="action-value">{value}</p></div></div>';
+
+        case "admin-upload-image":
+            return 'Upload: <input type="image">';
 
         case "admin-create-section-field":
             return '<div class="form-group section-item"><button class="btn btn-default delete-btn">Delete Section</button><h3 class="heading">Text Section</h3><div class="form-group"><p class="label">text:</p><textarea name="section" cols="100" rows="5"></textarea> </div></div>';
@@ -125,8 +134,9 @@ TemplateFiller.prototype.getTemplate = function(pageName) {
 
         case "admin-create-modifier-field":
             return '<div class="form-group modifier-item"><button class="btn btn-default delete-btn">Delete Section</button><h3 class="heading">Modifier:</h3><div class="form-group"><p class="label">Name:</p><select class="form-control" name="modifier-value"></select></div><div class="form-group"><p class="label">Value:</p>  <input type="text" name="modifier-name" class="form-control"></div></div>';
+
         case "admin_create_page_form":
-            return '<div class="admin-create-page-form"> <div class="clearfix pages-container"> <div class="choice choice-binary page-selection-item" id="admin-add-section"> <hgroup class="well clickable-well"> <h2>Add Text Section</h2> </hgroup> </div> <div class="choice choice-binary page-selection-item" id="admin-add-choice"> <hgroup class="well clickable-well"> <h2>Add Choice</h2> </hgroup> </div> <div class="choice choice-binary page-selection-item" id="admin-add-action"> <hgroup class="well clickable-well"> <h2>Add Action</h2> </hgroup> </div> <div class="choice choice-binary page-selection-item" id="admin-add-modifier"> <hgroup class="well clickable-well"> <h2>Add Modifier</h2> </hgroup> </div></div> </div>';
+            return '<div class="admin-create-page-form"> <div class="clearfix pages-container"> <div class="choice choice-binary page-selection-item" id="admin-add-section"> <hgroup class="well clickable-well"> <h2>Add Text Section</h2> </hgroup> </div> <div class="choice choice-binary page-selection-item" id="admin-add-choice"> <hgroup class="well clickable-well"> <h2>Add Choice</h2> </hgroup> </div> <div class="choice choice-binary page-selection-item" id="admin-add-action"> <hgroup class="well clickable-well"> <h2>Add Action</h2> </hgroup> </div> <div class="choice choice-binary page-selection-item" id="admin-add-modifier"> <hgroup class="well clickable-well"> <h2>Add Modifier</h2> </hgroup> </div><div class="choice choice-binary page-selection-item" id="admin-upload-image"> <hgroup class="well clickable-well"> <h2>Upload Image</h2> </hgroup> </div></div> </div>';
 
 		default:
 			throw "No template associated with a " + pageName + " page";

@@ -16,7 +16,7 @@ PageEditMiniEngine.prototype.render = function() {
             actions = page['page_actions'],
             choices = page['choices'];
 
-        html += tf.fillTemplate({'title': page['title']}, 'admin_edit_title');
+        html += tf.fillTemplate({'title': page['title'], "id": page['id']}, 'admin_edit_title');
 
         var section_section = '';
         for (var i = 0; i < sections.length; i++) {
@@ -48,8 +48,8 @@ PageEditMiniEngine.prototype.render = function() {
             var modifier = modifiers[i];
             modifiers_section += tf.fillTemplate({
                 'id': modifier['id'],
-                'value': modifier['value'],
-                'name': modifier['name']
+                'name': modifier['name'],
+                'value': modifier['value']
             }, 'admin_edit_modifier_item');
         }
 
@@ -95,6 +95,9 @@ PageEditMiniEngine.prototype.deleteSection = function(e){
         $elem.remove();
         var modelClass = $elem.attr('class').split(/\s+/)[1];
         var model = modelClass.substring(0, modelClass.indexOf("-"));
+        if(model === "modifier" || model === "action"){
+            model = "page_" + model;
+        };
         api.deleteModel(model, $elem.data('id'));
         console.log("deleted")
     }
