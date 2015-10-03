@@ -16,6 +16,7 @@ EngineStarter.prototype.start = function(){
 			break;
 		
 		default:
-            throw "No simulation for sim id" + sim_id + " is set.";
+            new PatientEngine();
+            //throw "No simulation for sim id" + sim_id + " is set.";
 	}	
 };

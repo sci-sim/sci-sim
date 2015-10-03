@@ -18,7 +18,7 @@ PatientManager.prototype.discoverFromDOM = function(){
 
 PatientManager.prototype.discoverFromResponse = function (sections) {
 	for (var i = 0; i < sections.length; i++) {
-		var text = $(sections[i].content).text();
+		var text = $($.parseHTML(sections[i].content)).text();
 		var patient = this.discover(text);
 		
 		if(patient) break;

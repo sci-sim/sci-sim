@@ -39,7 +39,7 @@ PageController.prototype.composePage = function(pageResponse) {
 	 	html = "";
 
 	 for (var i = 0; i < sections.length; i++) {
-	 	var section_html = tf.fillTemplate({"content": sections[i].content}, "page_section");
+	 	var section_html = tf.fillTemplate({"content": $.parseHTML(sections[i].content)}, "page_section");
 
 	 	if(sections[i].content.search("Mr") > 0 || sections[i].content.search("Ms") > 0){
 			 var split = sections[i].content.split(" ");
@@ -52,7 +52,7 @@ PageController.prototype.composePage = function(pageResponse) {
 		}
 
 	 	html += section_html;
-	 };
+	 }
 
 	if(this.isPopup){
 		smoke.alert($(html).text() + " (this was added to your lab notebook)", function(e){}, {ok: "Okay, thanks!"});
@@ -213,7 +213,7 @@ PageController.prototype.processButtonClick = function(e) {
 		var input = $inputs.eq(i);
 		var value = input.val(),
 			id = input.data("choice-id"),
-			time = this.stopwatch.stop();
+			time = this.stopwatch.stop(),
 			actionString = getActionString(value, id, this.page_id, time);
 
 		if(input.val().length === 0){

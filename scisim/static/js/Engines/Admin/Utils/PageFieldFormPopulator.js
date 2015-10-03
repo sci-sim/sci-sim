@@ -4,6 +4,7 @@ var PageFieldFormPopulator = function ($container) {
     this.$container.append(tf.fillTemplate({"id": "admin-create-page-fields"}, 'container'));
     $('#admin-create-page-fields').append(tf.fillTemplate(null, "admin_create_page_form"));
     this.init();
+    this.newFields = [];
 
     this.fillSelectBoxes();
 };
@@ -19,7 +20,7 @@ PageFieldFormPopulator.prototype.startImageUpload = function(elem){
     var c = confirm("Upload '" + filename + "'? You will have to reference it by this name later.");
 
     if(c){
-        api.uploadImage($('.image-uploader')[0].files[0]).then(function(e){
+        api.uploadImage($('.image-uploader')[0].files[0]).then(function(){
             smoke.alert("The image was uploaded!", function(){}, {ok: "Okay, thanks!!!"})
         });
     }
@@ -31,21 +32,22 @@ PageFieldFormPopulator.prototype.fillSelectBoxes = function(){
     var modifierValues = ['goes_to_page', 'minimum_choices', 'minimum_choices_reached'];
     var choiceTypeValues = ["binary", "prompt"];
     var $selectBoxes = $('select[name="action-value"]');
+    var $modifierBoxes = $('select[name="modifier-value"]');
     var $choiceTypeBoxes = $('select[name="choice-type"]');
     var $choiceDestinationBoxed = $('select[name="choice-destination"]');
 
     for(var name in actionValues){
         var value = actionValues[name];
 
-        var $html = $(tf.fillTemplate({'value': name, 'text': name.replace(/_/g, " ")}, 'option'));
+        var $html = $(tf.fillTemplate({'value': name, 'text': name.replace(new RegExp("_", "g"), " ")}, 'option'));
         $selectBoxes.last().append($html);
     }
 
     for(var i = 0; i< modifierValues.length; i++){
-        var html = tf.fillTemplate({'value': modifierValues[i], 'text': modifierValues[i].replace('_', " ")}, 'option');
+        var html = tf.fillTemplate({'value': modifierValues[i], 'text': modifierValues[i].replace(new RegExp("_", "g"), " ")}, 'option');
         html = $(html).css('text-transform', 'capitalize');
 
-        $('select[name="modifier-value"]').html(html);
+        $modifierBoxes.last().append((html));
     }
 
     for(var i = 0; i < choiceTypeValues.length; i++){
@@ -73,10 +75,12 @@ PageFieldFormPopulator.prototype.addField = function(field){
     if(field === "image"){
         return;
     }
-    var $newField = $(tf.fillTemplate(null, "admin-create-"+field+"-field"));
+    var $newField = $(tf.fillTemplate(null, "admin-create-"+field+"-field")).addClass("newField");
     $('#admin-create-page-fields').before($newField);
 
     $newField.find(".delete-btn").click(this.removeField.bind(this));
+
+    this.newFields.push($newField);
 
     this.fillSelectBoxes();
 };
@@ -134,7 +138,12 @@ PageFieldFormPopulator.prototype.save = function(){
             }
 
             sectionVaues['page_id'] = storageHelper.get('current_page_id');
-            deferreds.push(api.createModel(singular, sectionVaues));
+            if($elem.hasClass("newField")){
+                deferreds.push(api.createModel(singular, sectionVaues));
+            }else{
+                deferreds.push(api.updateModel(singular, $elem.data('id'),sectionVaues));
+            }
+
         }
     }
     loader.hide();
