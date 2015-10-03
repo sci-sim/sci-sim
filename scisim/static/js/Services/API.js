@@ -106,6 +106,19 @@ API.prototype.deleteModel = function(model, id){
     });
 };
 
+API.prototype.uploadImage = function(file){
+    var fd = new FormData();
+    fd.append("file", file);
+
+    return $.ajax({
+        url:"/api/media/upload",
+        type:"POST",
+        data:fd,
+        contentType:false,
+        processData: false
+    });
+};
+
 API.prototype.getResponses = function() {
 	return Array.prototype.slice.call(arguments, 0, arguments.length - 2);
 };

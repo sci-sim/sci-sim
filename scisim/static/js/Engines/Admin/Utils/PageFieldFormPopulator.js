@@ -3,9 +3,26 @@ var PageFieldFormPopulator = function ($container) {
 
     this.$container.append(tf.fillTemplate({"id": "admin-create-page-fields"}, 'container'));
     $('#admin-create-page-fields').append(tf.fillTemplate(null, "admin_create_page_form"));
+    this.init();
 
-    $('.page-selection-item').click(this.findFieldToAdd.bind(this));
     this.fillSelectBoxes();
+};
+
+PageFieldFormPopulator.prototype.init = function(){
+    $('.page-selection-item').click(this.findFieldToAdd.bind(this));
+    $('.image-uploader').change(this.startImageUpload.bind(this));
+};
+
+PageFieldFormPopulator.prototype.startImageUpload = function(elem){
+    var filename = $(elem.currentTarget).val();
+    filename = filename.substr(filename.lastIndexOf("\\") + 1);
+    var c = confirm("Upload '" + filename + "'? You will have to reference it by this name later.");
+
+    if(c){
+        api.uploadImage($('.image-uploader')[0].files[0]).then(function(e){
+            smoke.alert("The image was uploaded!", function(){}, {ok: "Okay, thanks!!!"})
+        });
+    }
 };
 
 PageFieldFormPopulator.prototype.fillSelectBoxes = function(){
@@ -53,11 +70,9 @@ PageFieldFormPopulator.prototype.findFieldToAdd = function(e){
 };
 
 PageFieldFormPopulator.prototype.addField = function(field){
-    if(field === "image") {
-        new ImageUploader();
+    if(field === "image"){
         return;
     }
-
     var $newField = $(tf.fillTemplate(null, "admin-create-"+field+"-field"));
     $('#admin-create-page-fields').before($newField);
 

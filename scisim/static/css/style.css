@@ -769,6 +769,13 @@ div .choice-person{
     margin-bottom:15px;
 }
 
+.admin-create-page-form .page-selection-item{
+    position: relative;
+}
+
+.image-uploader{
+    cursor: pointer;
+}
 .label{
     color:inherit;
 }
