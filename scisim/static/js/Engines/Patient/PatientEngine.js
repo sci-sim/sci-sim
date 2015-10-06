@@ -65,9 +65,9 @@ PatientEngine.prototype.renderPage = function(page_id){
 
 		if(!pageContext.popup_window) {
 			chain.add(pageContext);
-                              if(pageContext.hasBinary && pageContext.page_modifiers.length == 0 && chain.activePointer == chain.currentPointer) {
-                                labnotebook.addButtonToLast(pageContext.id)
-                              }
+                              //if(pageContext.hasBinary && pageContext.page_modifiers.length == 0 && chain.activePointer == chain.currentPointer) {
+                              //  labnotebook.addButtonToLast(pageContext.id)
+                              //}
 			that.applyListeners();
 
 		} else {
@@ -181,7 +181,13 @@ PatientEngine.prototype.onBinaryChoiceClick = function(e){
 	e.stopImmediatePropagation();
 	var $elem = $(e.currentTarget);
 	var context = chain.getActivePage();
-	if($elem.parent().hasClass("disabled")) return;
+    var isDisabled = false;
+
+	if($elem.parent().hasClass("disabled")){
+        isDisabled = true;
+        var conf = confirm("Would you like perform this test again?");
+        if(!conf) return;
+    };
 
 	var value = $elem.text(),
 		choiceId = $elem.data('choice-id'),
@@ -201,7 +207,9 @@ PatientEngine.prototype.onBinaryChoiceClick = function(e){
 
 	storageHelper.appendJsonArray("choices_made", choiceId);
 
-	$elem.parent().addClass("disabled");
+    if(!isDisabled) {
+        $elem.parent().addClass("disabled");
+    }
 
 	this.changePage(destinationId);
 };
