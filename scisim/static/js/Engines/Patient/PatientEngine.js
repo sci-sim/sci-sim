@@ -136,8 +136,6 @@ PatientEngine.prototype.onReturnToPrevPageClick = function(e){
     $('.btn-return').addClass('hidden');
 };
 
-
-
 PatientEngine.prototype.onContinueClick = function(){
 	this.changePage(chain.getActivePage().goes_to_page);
 };
@@ -184,8 +182,6 @@ PatientEngine.prototype.onBinaryChoiceClick = function(e){
 
 	if($elem.parent().hasClass("disabled")){
         isDisabled = true;
-        var conf = confirm("Would you like perform this test again?");
-        if(!conf) return;
     };
 
 	var value = $elem.text(),

@@ -10,6 +10,8 @@ ChoiceLogManager.prototype.logChoice = function(choiceInfo) {
     this.choices.push(choiceInfo);
 
 	var loggableString = this.getLoggableString(choiceInfo.question, choiceInfo.choice, choiceInfo.page_context.patient);
+    console.log(choiceInfo);
+    console.log(loggableString);
     labnotebook.add(loggableString);
     if (chain.currentPointer != chain.activePointer) {
         for (i=chain.findChainLinkById(chain.getActivePage().id); i < chain.chain.length; i ++) {
@@ -47,10 +49,8 @@ ChoiceLogManager.prototype.flushLog = function() {
     if(this.choices.length === 0) return;
 
     var time = this.stopwatch.stop();
-    console.log(time);
 
     var user_ids = storageHelper.getJson("user_id");
-    console.log(user_ids);
     if(!$.isArray(user_ids)){
         user_ids = [user_ids];
     }
@@ -59,7 +59,6 @@ ChoiceLogManager.prototype.flushLog = function() {
     var actionString = "";
     for (var i = 0; i < user_ids.length; i++) {
         for (var j = 0; j < this.choices.length; j++) {
-            console.log(user_ids[i]);
             actionString = this.getActionString(this.choices[j].choice, this.choices[j].page_context.last_choice_made_id, this.choices[j].page_context.id, time);
             requests.push([this.choices[j].page_context.id, user_ids[i], actionString]);
         }
@@ -78,7 +77,12 @@ ChoiceLogManager.prototype.getLoggableString = function (question, choice, patie
 	if (patient) {
 		loggableString += patient.name + ": ";
 	} else {
-        loggableString += "Question: " + question + " You said: ";
+
+        if(question !== ""){
+            loggableString += "Question: " + question + " ";
+        }
+
+        loggableString += "You said: ";
     }
 
 
