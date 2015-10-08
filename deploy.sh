@@ -16,7 +16,7 @@ ssh root@104.131.26.12 <<'ENDSSH'
 	rm -rf src/.git
 	tar -zxvf ../latest.tar.gz
 	cp ../backup.db app.db
-	cp ../media/* src/scisim/static/media/
+	cp ../media/* scisim/static/media/
 ENDSSH
 
 echo Done!

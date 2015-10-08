@@ -1,6 +1,6 @@
 *.pyc
 .idea
-app.db
+*.db
 latest.tar.gz
 .DS_STORE
 alembic.ini

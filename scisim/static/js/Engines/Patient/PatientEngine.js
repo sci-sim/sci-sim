@@ -32,7 +32,6 @@ PatientEngine.prototype.renderPage = function(page_id){
 			throw "this page doesn't exist:";
 		}
 
-		console.log(response);
 		var pageContext = response;
 		var patient = that.patientManager.discoverFromResponse(response.sections);
 
