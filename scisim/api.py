@@ -106,9 +106,11 @@ def api_users_continue():
     action_string = request.form['action_string']
 
     log = Log(timestamp=datetime.datetime.now(), content=action_string, user_id=user_id)
+    db.session.add(log)
+    db.session.commit()
     # Assume that this page is the last page that the user was on
     update_user_session(page_id, user_id=user_id)
-
+	
     return success_message("Logged the user's action")
 
 @app.route('/api/users/logout', methods=["POST"])
